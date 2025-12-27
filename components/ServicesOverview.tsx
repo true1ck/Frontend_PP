@@ -45,8 +45,8 @@ const ServicesOverview = () => {
   ];
 
   return (
-    <Section className="bg-gradient-to-b from-blue-900/10 to-purple-900/10">
-      <div className="text-center mb-16">
+    <Section className="pt-0 -mt-12 sm:-mt-16 md:-mt-20 lg:-mt-24 -mb-12 sm:-mb-16 md:-mb-20 lg:-mb-24">
+      <div className="text-center mb-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

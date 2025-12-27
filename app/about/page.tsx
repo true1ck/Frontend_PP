@@ -29,7 +29,7 @@ export default function AboutPage() {
             <JsonLd data={organizationSchema} />
 
             {/* Hero Section */}
-            <Section className="pt-32 pb-20">
+            <Section className="pt-32 pb-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <ScrollReveal variant="fadeIn">
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-display mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
@@ -46,7 +46,7 @@ export default function AboutPage() {
             </Section>
 
             {/* Our Story */}
-            <Section className="py-20">
+            <Section className="py-4">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="slideUp">
                         <div className="glass p-6 sm:p-8 md:p-12 rounded-2xl border border-gray-700">
@@ -110,7 +110,7 @@ export default function AboutPage() {
             </Section>
 
             {/* Core Values */}
-            <Section className="py-20">
+            <Section className="py-4">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-center mb-12 sm:mb-16 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
@@ -168,7 +168,7 @@ export default function AboutPage() {
             </Section>
 
             {/* Why PandaPaths */}
-            <Section className="py-20">
+            <Section className="py-4">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">

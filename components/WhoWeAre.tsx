@@ -5,7 +5,7 @@ import Section from './Section';
 
 const WhoWeAre = () => {
   return (
-    <Section className="bg-gradient-to-b from-transparent to-blue-900/10">
+    <Section className="pb-0 -mt-12 sm:-mt-16 md:-mt-20 lg:-mt-24 -mb-12 sm:-mb-16 md:-mb-20 lg:-mb-24">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ const WhoWeAre = () => {
           production-ready digital products. We specialize in building scalable, maintainable
           software systems that grow with your business.
         </p>
-        <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-6 sm:mb-8 px-4">
+        <p className="text-base sm:text-lg text-gray-300 leading-relaxed px-4">
           Our architecture-first mindset ensures every solution we deliver is built on solid foundations,
           optimized for performance, and designed for the future. From startups to enterprises, we engineer
           digital paths that lead to success.

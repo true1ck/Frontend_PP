@@ -12,27 +12,33 @@ const FeaturedProjects = () => {
       client: 'RetailTech Inc.',
       description: 'Built a scalable e-commerce platform handling 100K+ daily transactions with AI-powered recommendations.',
       technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'Redis'],
-      impact: '3x increase in conversion rate',
+      badge: '8 Engineers',
+      badgeIcon: '👥',
+      badgeColor: 'cyan',
     },
     {
       title: 'Healthcare AI Assistant',
       client: 'MedHealth Solutions',
       description: 'Developed an intelligent chatbot using RAG and LLMs to assist patients with medical queries.',
       technologies: ['Python', 'LangChain', 'OpenAI', 'FastAPI'],
-      impact: '80% reduction in support tickets',
+      badge: '6 Month Build',
+      badgeIcon: '⏱️',
+      badgeColor: 'purple',
     },
     {
       title: 'FinTech Mobile App',
       client: 'PayFlow',
       description: 'Cross-platform mobile app for seamless money transfers with biometric authentication.',
       technologies: ['Flutter', 'Firebase', 'AWS', 'Stripe'],
-      impact: '500K+ downloads in 6 months',
+      badge: 'Full Stack',
+      badgeIcon: '🚀',
+      badgeColor: 'yellow',
     },
   ];
 
   return (
-    <Section className="bg-gradient-to-b from-purple-900/10 to-transparent">
-      <div className="text-center mb-16">
+    <Section className="pb-0 -mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
+      <div className="text-center mb-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,9 +86,15 @@ const FeaturedProjects = () => {
                   </div>
                 </div>
                 <div className="flex flex-col justify-center">
-                  <div className="glass p-4 sm:p-6 rounded-lg text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-2">✓</div>
-                    <div className="text-sm sm:text-base text-white font-semibold">{project.impact}</div>
+                  <div className={`glass p-4 sm:p-6 rounded-lg text-center border-2 ${project.badgeColor === 'yellow' ? 'border-yellow-400/30' :
+                    project.badgeColor === 'cyan' ? 'border-cyan-400/30' :
+                      'border-purple-400/30'
+                    }`}>
+                    <div className="text-3xl sm:text-4xl mb-2">{project.badgeIcon}</div>
+                    <div className={`text-sm sm:text-base font-bold ${project.badgeColor === 'yellow' ? 'text-yellow-400' :
+                      project.badgeColor === 'cyan' ? 'text-cyan-400' :
+                        'text-purple-400'
+                      }`}>{project.badge}</div>
                   </div>
                 </div>
               </div>

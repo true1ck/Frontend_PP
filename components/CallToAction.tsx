@@ -6,9 +6,8 @@ import Button from './Button';
 
 const CallToAction = () => {
   return (
-    <Section className="relative overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 blur-3xl" />
+    <Section className="relative overflow-hidden -mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
+
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
