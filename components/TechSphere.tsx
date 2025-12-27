@@ -31,7 +31,7 @@ function NetworkSphere() {
 
     // Optimized connection algorithm: limit connections per node to reduce complexity
     const linePositions: number[] = [];
-    const maxDistance = 1.8; // Increased to match larger sphere
+    const maxDistance = 1.3; // Increased to match larger sphere
     const maxConnectionsPerNode = 4; // Limit connections to prevent O(n²) explosion
 
     for (let i = 0; i < nodes.length; i++) {
@@ -162,7 +162,7 @@ const TechSphere = () => {
   return (
     <Canvas
       camera={{ position: [0, 0, 8], fov: 60 }}
-      style={{ background: 'transparent', width: '100%', height: '100%' }}
+      style={{ background: 'transparent', width: '100%', height: '90%' }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       dpr={[1, 2]}
     >

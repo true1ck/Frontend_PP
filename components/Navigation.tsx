@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,12 +123,20 @@ const Navigation = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white dark:bg-gray-900 shadow-2xl z-[60] lg:hidden overflow-y-auto"
+            className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] shadow-2xl z-[60] lg:hidden overflow-y-auto ${
+              theme === 'light' 
+                ? 'bg-white' 
+                : 'bg-gray-900'
+            }`}
           >
             {/* Close Button */}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="absolute top-4 right-4 p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
+                theme === 'light'
+                  ? 'text-gray-900 hover:bg-gray-100'
+                  : 'text-white hover:bg-gray-800'
+              }`}
               aria-label="Close menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,7 +156,11 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-4 pb-2 flex items-center justify-between px-4 -mx-4">
-                <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400">Theme</span>
+                <span className={`text-sm sm:text-base ${
+                  theme === 'light'
+                    ? 'text-gray-500'
+                    : 'text-gray-400'
+                }`}>Theme</span>
               </div>
               <Link href="/contact" className="block pt-2" onClick={() => setIsMobileMenuOpen(false)}>
                 <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white text-sm sm:text-base font-semibold neon-glow touch-manipulation min-h-[44px]">
