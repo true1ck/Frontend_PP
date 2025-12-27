@@ -63,7 +63,7 @@ const FeaturedProjects = () => {
             viewport={{ once: true }}
           >
             <Card>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 <div className="lg:col-span-2">
                   <div className="text-xs sm:text-sm text-cyan-400 mb-2">{project.client}</div>
                   <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">{project.title}</h3>

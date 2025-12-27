@@ -163,7 +163,8 @@ const TechSphere = () => {
     <Canvas
       camera={{ position: [0, 0, 8], fov: 60 }}
       style={{ background: 'transparent', width: '100%', height: '100%' }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      dpr={[1, 2]}
     >
       <NetworkSphere />
       <OrbitControls

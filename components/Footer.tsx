@@ -5,11 +5,11 @@ const Footer = () => {
 
   return (
     <footer className="glass border-t border-gray-800/50">
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* Company Info */}
-          <div className="col-span-1 sm:col-span-2">
-            <h3 className="text-xl sm:text-2xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-3 sm:mb-4">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-3 sm:mb-4">
               🐼 PandaPaths
             </h3>
             <p className="footer-text text-sm sm:text-base mb-4">
@@ -53,7 +53,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800/50 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center footer-text text-sm">
+        <div className="border-t border-gray-800/50 mt-6 sm:mt-8 md:mt-10 pt-6 sm:pt-8 md:pt-10 text-center footer-text text-xs sm:text-sm">
           <p>&copy; {currentYear} PandaPaths. All rights reserved.</p>
         </div>
       </div>
