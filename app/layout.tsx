@@ -8,17 +8,20 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 const inter = Inter({
   subsets: ["latin"],
   variable: '--font-inter',
+  display: 'swap', // Prevents render blocking - shows fallback font until custom font loads
 });
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
   subsets: ["latin"],
   variable: '--font-poppins',
+  display: 'swap', // Prevents render blocking
 });
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: '--font-space',
+  display: 'swap', // Prevents render blocking
 });
 
 export const metadata: Metadata = {
@@ -45,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${poppins.variable} ${spaceGrotesk.variable} antialiased`}>
+      <body className={`${inter.variable} ${poppins.variable} ${spaceGrotesk.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <Navigation />
           <main className="min-h-screen">
