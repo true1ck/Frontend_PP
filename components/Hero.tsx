@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Button from './Button';
@@ -8,7 +8,7 @@ import Section from './Section';
 import { useTheme } from '@/contexts/ThemeContext';
 
 // Lazy load heavy 3D components to improve initial page load
-const TechSphere = dynamic(() => import('./TechSphere'), { 
+const TechSphere = dynamic(() => import('./TechSphereWrapper'), { 
   ssr: false,
   loading: () => (
     <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
@@ -39,10 +39,14 @@ const Hero = () => {
       {mounted && (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center">
           <div className={theme === 'light' ? 'block w-full h-full' : 'hidden w-full h-full'}>
-            <FluidCursor />
+            <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />}>
+              <FluidCursor />
+            </Suspense>
           </div>
           <div className={theme === 'dark' ? 'block w-full h-full' : 'hidden w-full h-full'}>
-            <TechSphere />
+            <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />}>
+              <TechSphere />
+            </Suspense>
           </div>
         </div>
       )}

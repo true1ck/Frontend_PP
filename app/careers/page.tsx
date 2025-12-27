@@ -182,13 +182,13 @@ export default function CareersPage() {
                                 Future Openings Coming Soon
                             </h2>
                             <p className="text-xl text-gray-300 mb-8">
-                                We're always looking for exceptional engineers. Sign up to be notified when we have openings that match your skills.
+                                We&apos;re always looking for exceptional engineers. Sign up to be notified when we have openings that match your skills.
                             </p>
 
                             {isSubmitted ? (
                                 <div className="glass p-6 rounded-xl border border-green-500/50 bg-green-900/20">
                                     <p className="text-green-400 text-lg">
-                                        ✓ Thanks! We'll notify you when positions open up.
+                                        ✓ Thanks! We&apos;ll notify you when positions open up.
                                     </p>
                                 </div>
                             ) : (

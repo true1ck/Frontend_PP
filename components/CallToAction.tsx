@@ -34,7 +34,7 @@ const CallToAction = () => {
           viewport={{ once: true }}
           className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto px-4"
         >
-          Let's transform your vision into a powerful digital product.
+          Let&apos;s transform your vision into a powerful digital product.
           Get a free consultation with our expert team today.
         </motion.p>
 

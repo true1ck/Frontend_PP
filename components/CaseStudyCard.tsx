@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface CaseStudyCardProps {
@@ -38,10 +39,11 @@ const CaseStudyCard = ({
                     {/* Image */}
                     <div className="relative h-48 bg-gradient-to-br from-blue-900/30 to-purple-900/30 overflow-hidden">
                         {image ? (
-                            <img
+                            <Image
                                 src={image}
                                 alt={title}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center">

@@ -162,7 +162,7 @@ export default function ProcessTechPage() {
                             Ready to Experience Our Process?
                         </h2>
                         <p className="text-xl text-gray-300 mb-8">
-                            Let's start building your next great product together.
+                            Let&apos;s start building your next great product together.
                         </p>
                         <a
                             href="/contact"
