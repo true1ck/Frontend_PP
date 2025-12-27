@@ -7,8 +7,10 @@ import Input from '@/components/ui/Input';
 import Textarea from '@/components/ui/Textarea';
 import Select from '@/components/ui/Select';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function ContactPage() {
+    const { theme } = useTheme();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -21,13 +23,15 @@ export default function ContactPage() {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [customBudget, setCustomBudget] = useState('');
 
     const budgetOptions = [
-        { value: 'under-25k', label: 'Under $25,000' },
-        { value: '25k-50k', label: '$25,000 - $50,000' },
-        { value: '50k-100k', label: '$50,000 - $100,000' },
-        { value: '100k-250k', label: '$100,000 - $250,000' },
-        { value: 'over-250k', label: 'Over $250,000' },
+        { value: 'under-2l', label: 'Under ₹2,00,000' },
+        { value: '2l-5l', label: '₹2,00,000 - ₹5,00,000' },
+        { value: '5l-10l', label: '₹5,00,000 - ₹10,00,000' },
+        { value: '10l-20l', label: '₹10,00,000 - ₹20,00,000' },
+        { value: 'over-20l', label: 'Over ₹20,00,000' },
+        { value: 'custom', label: 'Custom' },
     ];
 
     const timelineOptions = [
@@ -140,7 +144,7 @@ export default function ContactPage() {
                                                 <div>
                                                     <div className="text-sm text-gray-400">Email</div>
                                                     <div className="text-cyan-400 font-semibold">
-                                                        hello@pandapaths.com
+                                                        contactpanda@pandapath.in
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,7 +156,7 @@ export default function ContactPage() {
                                                 <div>
                                                     <div className="text-sm text-gray-400">Location</div>
                                                     <div className="text-gray-300">
-                                                        San Francisco, CA
+                                                        Panaji Goa, India
                                                     </div>
                                                 </div>
                                             </div>
@@ -179,7 +183,7 @@ export default function ContactPage() {
                                                 <a
                                                     key={social}
                                                     href="#"
-                                                    className="glass px-4 py-2 rounded-lg border border-gray-700 hover:border-blue-500/50 text-sm text-gray-300 hover:text-blue-400 transition-all duration-300"
+                                                    className={`glass px-4 py-2 rounded-lg border border-gray-700 hover:border-blue-500/50 text-sm ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'} hover:text-blue-400 transition-all duration-300`}
                                                 >
                                                     {social}
                                                 </a>
@@ -260,13 +264,27 @@ export default function ContactPage() {
                                             />
 
                                             <div className="grid md:grid-cols-2 gap-6">
-                                                <Select
-                                                    label="Budget Range"
-                                                    name="budget"
-                                                    value={formData.budget}
-                                                    onChange={handleChange}
-                                                    options={budgetOptions}
-                                                />
+                                                <div>
+                                                    <Select
+                                                        label="Budget Range"
+                                                        name="budget"
+                                                        value={formData.budget}
+                                                        onChange={handleChange}
+                                                        options={budgetOptions}
+                                                    />
+                                                    {formData.budget === 'custom' && (
+                                                        <div className="mt-4">
+                                                            <Input
+                                                                label="Custom Budget Amount"
+                                                                name="customBudget"
+                                                                type="text"
+                                                                value={customBudget}
+                                                                onChange={(e) => setCustomBudget(e.target.value)}
+                                                                placeholder="Enter amount in ₹"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 <Select
                                                     label="Timeline"
                                                     name="timeline"
@@ -303,7 +321,7 @@ export default function ContactPage() {
                                 <div className="text-6xl mb-4">🗺️</div>
                                 <p className="text-gray-400">Map Integration Placeholder</p>
                                 <p className="text-sm text-gray-500 mt-2">
-                                    San Francisco, California
+                                    Panaji Goa, India
                                 </p>
                             </div>
                         </div>

@@ -38,8 +38,8 @@ const OurProcess = () => {
   ];
 
   return (
-    <Section className="bg-gradient-to-b from-transparent to-blue-900/10">
-      <div className="text-center mb-16">
+    <Section className="pt-0 -mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
+      <div className="text-center mb-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

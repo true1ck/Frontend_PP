@@ -33,7 +33,7 @@ const TechStack = () => {
   ];
 
   return (
-    <Section className="bg-gradient-to-b from-blue-900/10 to-purple-900/10">
+    <Section className="-mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
       <div className="text-center mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

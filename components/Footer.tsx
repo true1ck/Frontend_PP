@@ -46,9 +46,9 @@ const Footer = () => {
           <div>
             <h4 className="footer-heading font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Contact</h4>
             <ul className="space-y-2 footer-text text-sm sm:text-base">
-              <li>Email: hello@pandapaths.com</li>
-              <li>Phone: +1 (555) 123-4567</li>
-              <li>Location: San Francisco, CA</li>
+              <li>Email: contactpanda@pandapath.in</li>
+              {/* <li>Phone: +1 (555) 123-4567</li> */}
+              <li>Location: Panaji Goa, India</li>
             </ul>
           </div>
         </div>

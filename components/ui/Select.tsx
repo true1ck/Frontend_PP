@@ -2,6 +2,7 @@
 
 import { forwardRef, SelectHTMLAttributes } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface SelectOption {
     value: string;
@@ -17,10 +18,12 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
     ({ label, error, helperText, options, className = '', ...props }, ref) => {
+        const { theme } = useTheme();
+
         return (
             <div className="w-full">
                 {label && (
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                    <label className={`block text-sm font-medium mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
                         {label}
                         {props.required && <span className="text-red-400 ml-1">*</span>}
                     </label>
@@ -32,7 +35,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                         className={`
               w-full px-4 py-3 rounded-lg
               glass border border-gray-700
-              bg-gray-900/50 text-white
+              bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
               focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
               transition-all duration-200
               appearance-none cursor-pointer
