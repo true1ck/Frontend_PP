@@ -18,6 +18,18 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
@@ -89,35 +101,62 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile/Tablet Menu */}
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden mt-4 sm:mt-6 pb-4 space-y-1"
-          >
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="nav-link block py-3 sm:py-4 px-4 -mx-4 font-semibold text-base sm:text-lg rounded-lg bg-transparent hover:bg-blue-500/10 transition-all touch-manipulation min-h-[44px] flex items-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <div className="pt-4 pb-2 flex items-center justify-between px-4 -mx-4">
-              <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400">Theme</span>
-            </div>
-            <Link href="/contact" className="block pt-2" onClick={() => setIsMobileMenuOpen(false)}>
-              <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white text-sm sm:text-base font-semibold neon-glow touch-manipulation min-h-[44px]">
-                Get Started
-              </button>
-            </Link>
-          </motion.div>
-        )}
       </div>
+
+      {/* Mobile/Tablet Menu Overlay */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
+          />
+          
+          {/* Menu Panel */}
+          <motion.div
+            initial={{ opacity: 0, x: '-100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '-100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white dark:bg-gray-900 shadow-2xl z-[60] lg:hidden overflow-y-auto"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-4 right-4 p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label="Close menu"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div className="p-6 pt-20 space-y-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="nav-link block py-3 sm:py-4 px-4 -mx-4 font-semibold text-base sm:text-lg rounded-lg bg-transparent hover:bg-blue-500/10 transition-all touch-manipulation min-h-[44px] flex items-center"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <div className="pt-4 pb-2 flex items-center justify-between px-4 -mx-4">
+                <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400">Theme</span>
+              </div>
+              <Link href="/contact" className="block pt-2" onClick={() => setIsMobileMenuOpen(false)}>
+                <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white text-sm sm:text-base font-semibold neon-glow touch-manipulation min-h-[44px]">
+                  Get Started
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        </>
+      )}
     </motion.nav>
   );
 };
