@@ -2,33 +2,32 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import Button from './Button';
-import TechSphere from './TechSphere';
-import FluidCursor from './FluidCursor';
 import Section from './Section';
+import { useTheme } from '@/contexts/ThemeContext';
+
+// Lazy load heavy 3D components to improve initial page load
+const TechSphere = dynamic(() => import('./TechSphere'), { 
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
+  )
+});
+
+const FluidCursor = dynamic(() => import('./FluidCursor'), { 
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
+  )
+});
 
 const Hero = () => {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Get initial theme
-    const isLight = document.documentElement.classList.contains('light');
-    setTheme(isLight ? 'light' : 'dark');
-
-    // Watch for theme changes
-    const observer = new MutationObserver(() => {
-      const isLight = document.documentElement.classList.contains('light');
-      setTheme(isLight ? 'light' : 'dark');
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    return () => observer.disconnect();
   }, []);
 
   return (
@@ -36,14 +35,15 @@ const Hero = () => {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
 
-      {/* Dynamic Background - FluidCursor for light mode, TechSphere for dark mode */}
+      {/* Dynamic Background - Keep both components mounted, just hide/show to prevent remounting */}
       {mounted && (
         <div className="absolute inset-0 w-full h-full">
-          {theme === 'light' ? (
-            <FluidCursor key="fluid-light" />
-          ) : (
-            <TechSphere key="sphere-dark" />
-          )}
+          <div className={theme === 'light' ? 'block' : 'hidden'}>
+            <FluidCursor />
+          </div>
+          <div className={theme === 'dark' ? 'block' : 'hidden'}>
+            <TechSphere />
+          </div>
         </div>
       )}
 

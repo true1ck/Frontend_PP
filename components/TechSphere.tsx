@@ -13,7 +13,7 @@ function NetworkSphere() {
   // Create network nodes on sphere surface
   const { nodePositions, connections } = useMemo(() => {
     const nodes: THREE.Vector3[] = [];
-    const nodeCount = 80;
+    const nodeCount = 50; // Reduced from 80 to 50 for better performance (37% reduction)
 
     // Generate nodes on sphere surface using Fibonacci sphere algorithm
     const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
@@ -29,19 +29,32 @@ function NetworkSphere() {
       nodes.push(new THREE.Vector3(x * 2.5, y * 2.5, z * 2.5));
     }
 
-    // Create connections between nearby nodes
+    // Optimized connection algorithm: limit connections per node to reduce complexity
     const linePositions: number[] = [];
     const maxDistance = 1.2;
+    const maxConnectionsPerNode = 4; // Limit connections to prevent O(n²) explosion
 
     for (let i = 0; i < nodes.length; i++) {
+      const nearbyNodes: { distance: number; index: number }[] = [];
+      
+      // Find all nearby nodes
       for (let j = i + 1; j < nodes.length; j++) {
         const distance = nodes[i].distanceTo(nodes[j]);
         if (distance < maxDistance) {
-          linePositions.push(
-            nodes[i].x, nodes[i].y, nodes[i].z,
-            nodes[j].x, nodes[j].y, nodes[j].z
-          );
+          nearbyNodes.push({ distance, index: j });
         }
+      }
+      
+      // Sort by distance and take only the closest ones
+      nearbyNodes.sort((a, b) => a.distance - b.distance);
+      const connectionsToAdd = Math.min(maxConnectionsPerNode, nearbyNodes.length);
+      
+      for (let k = 0; k < connectionsToAdd; k++) {
+        const j = nearbyNodes[k].index;
+        linePositions.push(
+          nodes[i].x, nodes[i].y, nodes[i].z,
+          nodes[j].x, nodes[j].y, nodes[j].z
+        );
       }
     }
 
@@ -113,9 +126,9 @@ function NetworkSphere() {
         />
       </points>
 
-      {/* Glowing Core Sphere */}
+      {/* Glowing Core Sphere - Reduced resolution for better performance */}
       <mesh>
-        <sphereGeometry args={[2.3, 64, 64]} />
+        <sphereGeometry args={[2.3, 32, 32]} />
         <meshStandardMaterial
           color="#1e40af"
           transparent
@@ -126,9 +139,9 @@ function NetworkSphere() {
         />
       </mesh>
 
-      {/* Wireframe Overlay */}
+      {/* Wireframe Overlay - Reduced resolution for better performance */}
       <mesh>
-        <sphereGeometry args={[2.35, 32, 32]} />
+        <sphereGeometry args={[2.35, 24, 24]} />
         <meshBasicMaterial
           color="#3b82f6"
           transparent

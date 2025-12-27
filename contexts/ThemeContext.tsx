@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -17,26 +17,45 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         setMounted(true);
-        // Get theme from localStorage or default to dark
+        
+        // Only run on client side
+        if (typeof window === 'undefined') return;
+        
+        // Get theme from localStorage or system preference
         const savedTheme = localStorage.getItem('theme') as Theme | null;
-        if (savedTheme) {
-            setTheme(savedTheme);
-            document.documentElement.classList.toggle('light', savedTheme === 'light');
-        }
+        const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        const initialTheme = savedTheme || systemTheme;
+        
+        setTheme(initialTheme);
+        document.documentElement.classList.toggle('light', initialTheme === 'light');
+        
+        // Listen for system theme changes
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+        const handleChange = (e: MediaQueryListEvent) => {
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'light' : 'dark';
+                setTheme(newTheme);
+                document.documentElement.classList.toggle('light', newTheme === 'light');
+            }
+        };
+        
+        mediaQuery.addEventListener('change', handleChange);
+        return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
-    const toggleTheme = () => {
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.classList.toggle('light', newTheme === 'light');
-    };
+    const toggleTheme = useCallback(() => {
+        setTheme((prev) => {
+            const newTheme = prev === 'dark' ? 'light' : 'dark';
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('theme', newTheme);
+                document.documentElement.classList.toggle('light', newTheme === 'light');
+            }
+            return newTheme;
+        });
+    }, []);
 
-    // Prevent flash of wrong theme
-    if (!mounted) {
-        return <>{children}</>;
-    }
-
+    // Always provide context, even when not mounted (prevents errors)
+    // Components can check mounted state if needed
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}

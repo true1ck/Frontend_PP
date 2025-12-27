@@ -2,30 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function ThemeToggle() {
-    const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+    const { theme, toggleTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setMounted(true);
-        // Get theme from localStorage
-        const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-        if (savedTheme) {
-            setTheme(savedTheme);
-            document.documentElement.classList.toggle('light', savedTheme === 'light');
-        }
     }, []);
 
-    const toggleTheme = () => {
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.classList.toggle('light', newTheme === 'light');
-    };
-
+    // Prevent hydration mismatch by showing placeholder until mounted
     if (!mounted) {
-        return <div className="w-12 h-12" />; // Placeholder to prevent layout shift
+        return <div className="w-12 h-12" />;
     }
 
     return (

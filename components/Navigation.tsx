@@ -51,7 +51,7 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative font-semibold text-sm lg:text-base px-4 py-2 rounded-lg bg-gray-700 text-white hover:bg-black hover:text-white dark:bg-transparent dark:text-gray-300 dark:hover:text-white dark:hover:bg-transparent transition-all group"
+                className="relative font-semibold text-sm lg:text-base px-4 py-2 rounded-lg bg-transparent text-black hover:bg-gray-100 dark:bg-transparent dark:text-gray-300 dark:hover:text-white dark:hover:bg-transparent transition-all group"
               >
                 {item.name}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300" />
@@ -96,7 +96,7 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="block py-3 px-4 -mx-4 font-semibold text-base rounded-lg bg-gray-700 text-white hover:bg-black hover:text-white dark:bg-transparent dark:text-gray-300 dark:hover:text-white dark:hover:bg-blue-500/10 transition-all touch-manipulation"
+                className="block py-3 px-4 -mx-4 font-semibold text-base rounded-lg bg-transparent text-black hover:bg-gray-100 dark:bg-transparent dark:text-gray-300 dark:hover:text-white dark:hover:bg-blue-500/10 transition-all touch-manipulation"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
