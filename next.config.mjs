@@ -8,7 +8,9 @@ const nextConfig = {
       },
     ],
   },
-  transpilePackages: ['three'],
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
+  // Turbopack config for Next.js 16 (Turbopack handles fs fallback automatically)
+  turbopack: {},
 };
 
 export default nextConfig;

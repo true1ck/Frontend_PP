@@ -38,7 +38,7 @@ export default function AboutPage() {
                     </ScrollReveal>
                     <ScrollReveal delay={0.2}>
                         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed px-4">
-                            We're a team of passionate engineers, designers, and innovators dedicated to crafting
+                            We&apos;re a team of passionate engineers, designers, and innovators dedicated to crafting
                             exceptional digital experiences that drive real business value.
                         </p>
                     </ScrollReveal>
@@ -60,7 +60,7 @@ export default function AboutPage() {
                                     fail not from lack of innovation, but from poor architecture and rushed implementation.
                                 </p>
                                 <p>
-                                    Today, we're a full-stack IT solutions company that partners with startups, enterprises,
+                                    Today, we&apos;re a full-stack IT solutions company that partners with startups, enterprises,
                                     and product teams to build software that scales. From AI-powered applications to
                                     cloud-native platforms, we bring technical excellence and strategic thinking to every project.
                                 </p>
@@ -222,7 +222,7 @@ export default function AboutPage() {
                             Ready to Build Something Amazing?
                         </h2>
                         <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
-                            Let's discuss how we can help bring your vision to life.
+                            Let&apos;s discuss how we can help bring your vision to life.
                         </p>
                         <a
                             href="/contact"

@@ -109,12 +109,12 @@ export default function ContactPage() {
                 <div className="max-w-4xl mx-auto text-center">
                     <ScrollReveal variant="fadeIn">
                         <h1 className="text-5xl md:text-7xl font-bold font-display mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                            Let's Build Something Amazing
+                            Let&apos;s Build Something Amazing
                         </h1>
                     </ScrollReveal>
                     <ScrollReveal delay={0.2}>
                         <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                            Tell us about your project and we'll get back to you within 24 hours.
+                            Tell us about your project and we&apos;ll get back to you within 24 hours.
                         </p>
                     </ScrollReveal>
                 </div>
@@ -133,7 +133,7 @@ export default function ContactPage() {
                                             Get in Touch
                                         </h2>
                                         <p className="text-gray-300 leading-relaxed mb-8">
-                                            Whether you have a project in mind or just want to chat about technology, we'd love to hear from you.
+                                            Whether you have a project in mind or just want to chat about technology, we&apos;d love to hear from you.
                                         </p>
                                     </div>
 
@@ -209,7 +209,7 @@ export default function ContactPage() {
                                                 Message Sent!
                                             </h3>
                                             <p className="text-xl text-gray-300 mb-8">
-                                                Thanks for reaching out. We'll get back to you within 24 hours.
+                                                Thanks for reaching out. We&apos;ll get back to you within 24 hours.
                                             </p>
                                             <button
                                                 onClick={() => setIsSubmitted(false)}

@@ -54,13 +54,14 @@ const caseStudiesData: Record<string, any> = {
 };
 
 interface PageProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const caseStudy = caseStudiesData[params.slug];
+    const { slug } = await params;
+    const caseStudy = caseStudiesData[slug];
 
     if (!caseStudy) {
         return {
@@ -74,8 +75,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
 }
 
-export default function CaseStudyPage({ params }: PageProps) {
-    const caseStudy = caseStudiesData[params.slug];
+export default async function CaseStudyPage({ params }: PageProps) {
+    const { slug } = await params;
+    const caseStudy = caseStudiesData[slug];
 
     if (!caseStudy) {
         notFound();
@@ -224,7 +226,7 @@ export default function CaseStudyPage({ params }: PageProps) {
                             <div className="glass p-8 md:p-12 rounded-2xl border border-gray-700 text-center">
                                 <div className="text-5xl mb-6">💬</div>
                                 <blockquote className="text-xl md:text-2xl text-gray-300 italic mb-6 leading-relaxed">
-                                    "{caseStudy.testimonial.quote}"
+                                    &ldquo;{caseStudy.testimonial.quote}&rdquo;
                                 </blockquote>
                                 <div className="text-cyan-400 font-semibold">
                                     {caseStudy.testimonial.author}
@@ -246,7 +248,7 @@ export default function CaseStudyPage({ params }: PageProps) {
                             Want Similar Results for Your Business?
                         </h2>
                         <p className="text-xl text-gray-300 mb-8">
-                            Let's discuss how we can help you achieve your goals.
+                            Let&apos;s discuss how we can help you achieve your goals.
                         </p>
                         <a
                             href="/contact"

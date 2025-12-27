@@ -85,7 +85,7 @@ export default function CaseStudiesPage() {
                     </ScrollReveal>
                     <ScrollReveal delay={0.2}>
                         <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                            Real projects, real results. See how we've helped businesses transform their digital presence.
+                            Real projects, real results. See how we&apos;ve helped businesses transform their digital presence.
                         </p>
                     </ScrollReveal>
                 </div>
@@ -140,7 +140,7 @@ export default function CaseStudiesPage() {
                             Ready to Create Your Success Story?
                         </h2>
                         <p className="text-xl text-gray-300 mb-8">
-                            Let's discuss how we can help you achieve similar results.
+                            Let&apos;s discuss how we can help you achieve similar results.
                         </p>
                         <a
                             href="/contact"

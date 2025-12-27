@@ -103,7 +103,7 @@ export default function ServicesPage() {
                     <ScrollReveal delay={0.2}>
                         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed px-4">
                             End-to-end technology solutions tailored to your business goals.
-                            From concept to deployment, we've got you covered.
+                            From concept to deployment, we&apos;ve got you covered.
                         </p>
                     </ScrollReveal>
                 </div>
@@ -217,7 +217,7 @@ export default function ServicesPage() {
                             Not Sure Which Service You Need?
                         </h2>
                         <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
-                            Book a free consultation and we'll help you find the perfect solution for your project.
+                            Book a free consultation and we&apos;ll help you find the perfect solution for your project.
                         </p>
                         <a
                             href="/contact"
