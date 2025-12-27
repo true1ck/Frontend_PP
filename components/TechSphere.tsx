@@ -13,7 +13,7 @@ function NetworkSphere() {
   // Create network nodes on sphere surface
   const { nodePositions, connections } = useMemo(() => {
     const nodes: THREE.Vector3[] = [];
-    const nodeCount = 50; // Reduced from 80 to 50 for better performance (37% reduction)
+    const nodeCount = 50; // Optimized for better performance
 
     // Generate nodes on sphere surface using Fibonacci sphere algorithm
     const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
@@ -26,12 +26,12 @@ function NetworkSphere() {
       const x = Math.cos(theta) * radius;
       const z = Math.sin(theta) * radius;
 
-      nodes.push(new THREE.Vector3(x * 2.5, y * 2.5, z * 2.5));
+      nodes.push(new THREE.Vector3(x * 4, y * 4, z * 4));
     }
 
     // Optimized connection algorithm: limit connections per node to reduce complexity
     const linePositions: number[] = [];
-    const maxDistance = 1.2;
+    const maxDistance = 1.8; // Increased to match larger sphere
     const maxConnectionsPerNode = 4; // Limit connections to prevent O(n²) explosion
 
     for (let i = 0; i < nodes.length; i++) {
@@ -118,7 +118,7 @@ function NetworkSphere() {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.08}
+          size={0.12}
           color="#22d3ee"
           transparent
           opacity={0.9}
@@ -128,7 +128,7 @@ function NetworkSphere() {
 
       {/* Glowing Core Sphere - Reduced resolution for better performance */}
       <mesh>
-        <sphereGeometry args={[2.3, 32, 32]} />
+        <sphereGeometry args={[3.8, 32, 32]} />
         <meshStandardMaterial
           color="#1e40af"
           transparent
@@ -141,7 +141,7 @@ function NetworkSphere() {
 
       {/* Wireframe Overlay - Reduced resolution for better performance */}
       <mesh>
-        <sphereGeometry args={[2.35, 24, 24]} />
+        <sphereGeometry args={[3.85, 24, 24]} />
         <meshBasicMaterial
           color="#3b82f6"
           transparent
@@ -161,8 +161,8 @@ function NetworkSphere() {
 const TechSphere = () => {
   return (
     <Canvas
-      camera={{ position: [0, 0, 6], fov: 60 }}
-      style={{ background: 'transparent' }}
+      camera={{ position: [0, 0, 8], fov: 60 }}
+      style={{ background: 'transparent', width: '100%', height: '100%' }}
       gl={{ antialias: true, alpha: true }}
     >
       <NetworkSphere />

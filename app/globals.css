@@ -72,6 +72,36 @@ body {
   html.light div {
     color: #1a1a1a;
   }
+
+  /* Navigation links - white in dark mode, dark in light mode */
+  .nav-link {
+    color: white;
+  }
+
+  html.light .nav-link {
+    color: #1a1a1a;
+  }
+
+  html.light .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  /* Footer text - white in dark mode, black in light mode */
+  .footer-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  html.light .footer-text {
+    color: #1a1a1a;
+  }
+
+  .footer-heading {
+    color: white;
+  }
+
+  html.light .footer-heading {
+    color: #1a1a1a;
+  }
 }
 
 /* Custom scrollbar - Dark mode */

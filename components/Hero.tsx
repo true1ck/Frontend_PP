@@ -37,11 +37,11 @@ const Hero = () => {
 
       {/* Dynamic Background - Keep both components mounted, just hide/show to prevent remounting */}
       {mounted && (
-        <div className="absolute inset-0 w-full h-full">
-          <div className={theme === 'light' ? 'block' : 'hidden'}>
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+          <div className={theme === 'light' ? 'block w-full h-full' : 'hidden w-full h-full'}>
             <FluidCursor />
           </div>
-          <div className={theme === 'dark' ? 'block' : 'hidden'}>
+          <div className={theme === 'dark' ? 'block w-full h-full' : 'hidden w-full h-full'}>
             <TechSphere />
           </div>
         </div>
