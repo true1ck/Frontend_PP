@@ -94,9 +94,7 @@ function NetworkSphere() {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={connections.length / 3}
-            array={connections}
-            itemSize={3}
+            args={[connections, 3]}
           />
         </bufferGeometry>
         <lineBasicMaterial
@@ -112,9 +110,7 @@ function NetworkSphere() {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            count={nodePositions.length / 3}
-            array={nodePositions}
-            itemSize={3}
+            args={[nodePositions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial

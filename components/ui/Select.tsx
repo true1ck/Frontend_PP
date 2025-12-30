@@ -29,21 +29,21 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                     </label>
                 )}
                 <div className="relative">
-                    <motion.select
-                        ref={ref}
-                        whileFocus={{ scale: 1.01 }}
-                        className={`
-              w-full px-4 py-3 rounded-lg
-              glass border border-gray-700
-              bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
-              focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
-              transition-all duration-200
-              appearance-none cursor-pointer
-              ${error ? 'border-red-500 focus:ring-red-500/50' : ''}
-              ${className}
-            `}
-                        {...props}
-                    >
+                                        <motion.select
+                                                ref={ref}
+                                                whileFocus={{ scale: 1.01 }}
+                                                className={`
+                            w-full px-4 py-3 rounded-lg
+                            glass border border-gray-700
+                            bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
+                            focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
+                            transition-all duration-200
+                            appearance-none cursor-pointer
+                            ${error ? 'border-red-500 focus:ring-red-500/50' : ''}
+                            ${className}
+                        `}
+                                                {...(props as any)}
+                                        >
                         <option value="" disabled className="bg-gray-900">
                             Select an option
                         </option>
