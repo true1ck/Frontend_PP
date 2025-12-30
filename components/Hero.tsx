@@ -28,7 +28,7 @@ const Hero = () => {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+  }, [theme]);
 
   return (
     <Section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-24 px-4 sm:px-6 md:px-8">
