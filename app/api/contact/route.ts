@@ -1,64 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { query } from '@/lib/db';
+import { checkContactRateLimit } from '@/lib/rateLimit';
 
-// Validation schema
-const contactSchema = z.object({
-    name: z.string().min(1, 'Name is required'),
-    email: z.string().email('Invalid email address'),
-    company: z.string().optional(),
-    projectDescription: z.string().min(20, 'Project description must be at least 20 characters'),
-    budget: z.string().optional(),
-    timeline: z.string().optional(),
-});
+// ============================================================================
+// Backend API Configuration
+// ============================================================================
+const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:3100';
+
+// ============================================================================
+// API Route Handler - Proxies requests to backend API
+// ============================================================================
 
 export async function POST(request: NextRequest) {
+    // Rate limiting: 10 requests per 15 minutes per IP
+    const rateLimitResponse = checkContactRateLimit(request);
+    if (rateLimitResponse) {
+        return rateLimitResponse;
+    }
+
     try {
         const body = await request.json();
 
-        // Validate input
-        const validatedData = contactSchema.parse(body);
+        // Extract metadata from request headers (backend will use these if provided)
+        const ipAddress = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 
+                         request.headers.get('x-real-ip') || null;
+        const userAgent = request.headers.get('user-agent') || null;
+        const referrerUrl = request.headers.get('referer') || null;
+        
+        // Extract UTM parameters from URL
+        const url = new URL(request.url);
+        const utmSource = url.searchParams.get('utm_source') || null;
+        const utmMedium = url.searchParams.get('utm_medium') || null;
+        const utmCampaign = url.searchParams.get('utm_campaign') || null;
 
-        // Insert into database
-        const insertQuery = `
-      INSERT INTO leads (name, email, company, project_description, budget, timeline, created_at)
-      VALUES ($1, $2, $3, $4, $5, $6, NOW())
-      RETURNING id
-    `;
-
-        const result = await query(insertQuery, [
-            validatedData.name,
-            validatedData.email,
-            validatedData.company || null,
-            validatedData.projectDescription,
-            validatedData.budget || null,
-            validatedData.timeline || null,
-        ]);
-
-        // TODO: Send email notification (integrate with SendGrid, AWS SES, etc.)
-        // await sendEmailNotification(validatedData);
-
-        return NextResponse.json(
-            {
-                success: true,
-                message: 'Thank you for your inquiry. We will get back to you within 24 hours.',
-                leadId: result.rows[0].id,
+        // Forward request to backend API with metadata
+        const backendResponse = await fetch(`${BACKEND_API_URL}/api/contact`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            { status: 201 }
-        );
+            body: JSON.stringify({
+                ...body,
+                ipAddress,
+                userAgent,
+                referrerUrl,
+                utmSource,
+                utmMedium,
+                utmCampaign,
+            }),
+        });
+
+        const data = await backendResponse.json();
+
+        // Forward the response from backend
+        return NextResponse.json(data, { status: backendResponse.status });
     } catch (error) {
         console.error('Contact form error:', error);
-
-        if (error instanceof z.ZodError) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Validation error',
-                    errors: error.errors,
-                },
-                { status: 400 }
-            );
-        }
 
         return NextResponse.json(
             {
@@ -68,4 +64,13 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
+}
+
+export async function GET(request: NextRequest) {
+    return NextResponse.json(
+        {
+            message: 'Contact API endpoint. Use POST to submit a contact form.',
+        },
+        { status: 200 }
+    );
 }

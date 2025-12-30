@@ -1,64 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { query } from '@/lib/db';
+import { checkCareerRateLimit } from '@/lib/rateLimit';
 
-// Validation schema
-const subscribeSchema = z.object({
-    email: z.string().email('Invalid email address'),
-});
+// ============================================================================
+// Backend API Configuration
+// ============================================================================
+const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:3100';
+
+// ============================================================================
+// API Route Handler
+// ============================================================================
 
 export async function POST(request: NextRequest) {
+    // Rate limiting: 5 requests per 15 minutes per IP
+    const rateLimitResponse = checkCareerRateLimit(request);
+    if (rateLimitResponse) {
+        return rateLimitResponse;
+    }
+
     try {
         const body = await request.json();
 
-        // Validate input
-        const validatedData = subscribeSchema.parse(body);
-
-        // Check if email already exists
-        const checkQuery = `
-      SELECT id FROM career_subscribers WHERE email = $1
-    `;
-        const existing = await query(checkQuery, [validatedData.email]);
-
-        if (existing.rows.length > 0) {
-            return NextResponse.json(
-                {
-                    success: true,
-                    message: 'You are already subscribed to our career updates.',
-                },
-                { status: 200 }
-            );
-        }
-
-        // Insert into database
-        const insertQuery = `
-      INSERT INTO career_subscribers (email, subscribed_at)
-      VALUES ($1, NOW())
-      RETURNING id
-    `;
-
-        await query(insertQuery, [validatedData.email]);
-
-        return NextResponse.json(
-            {
-                success: true,
-                message: 'Thank you for subscribing! We will notify you when positions open up.',
+        // Forward request to backend API
+        const backendResponse = await fetch(`${BACKEND_API_URL}/api/careers/subscribe`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            { status: 201 }
-        );
+            body: JSON.stringify({
+                ...body,
+                source: 'website', // Add source tracking
+            }),
+        });
+
+        const data = await backendResponse.json();
+
+        // Forward the response from backend
+        return NextResponse.json(data, { status: backendResponse.status });
     } catch (error) {
         console.error('Career subscription error:', error);
-
-        if (error instanceof z.ZodError) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: 'Validation error',
-                    errors: error.errors,
-                },
-                { status: 400 }
-            );
-        }
 
         return NextResponse.json(
             {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Section from '@/components/Section';
 import ScrollReveal from '@/components/ScrollReveal';
 import Input from '@/components/ui/Input';
@@ -14,16 +14,63 @@ export default function ContactPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         company: '',
         projectDescription: '',
         budget: '',
         timeline: '',
+        // Lead Quality Indicators
+        projectType: '',
+        industry: '',
+        companySize: '',
+        decisionMaker: false,
+        // Project Context
+        projectCategory: '',
+        techStack: [] as string[],
+        teamSize: '',
+        hasExistingSystem: false,
+        integrationRequirements: [] as string[],
+        complianceNeeds: [] as string[],
+        // Communication Preferences
+        preferredContactMethod: '',
+        preferredContactTime: '',
+        communicationLanguage: '',
+        newsletterOptIn: false,
+        projectUpdatesOptIn: false,
+        // Business Context
+        businessStage: '',
+        fundingStage: '',
+        annualRevenue: '',
+        competitors: [] as string[],
+        painPoints: [] as string[],
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [customBudget, setCustomBudget] = useState('');
+    const [scrollDepth, setScrollDepth] = useState(0);
+    const [formAbandonmentAttempts, setFormAbandonmentAttempts] = useState(0);
+
+    // Tracking data
+    const pageLoadTime = useRef<number>(Date.now());
+    const formStartTime = useRef<number | null>(null);
+    const maxScrollDepth = useRef<number>(0);
+    
+    // Get or create session ID
+    const getSessionId = (): string => {
+        if (typeof window !== 'undefined') {
+            let sid = sessionStorage.getItem('sessionId');
+            if (!sid) {
+                sid = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                sessionStorage.setItem('sessionId', sid);
+            }
+            return sid;
+        }
+        return '';
+    };
+    
+    const sessionId = useRef<string>(getSessionId());
 
     const budgetOptions = [
         { value: 'under-2l', label: 'Under ₹2,00,000' },
@@ -53,6 +100,135 @@ export default function ContactPage() {
         }
     };
 
+    // Track form interaction start and scroll depth
+    useEffect(() => {
+        const handleFirstInteraction = () => {
+            if (!formStartTime.current) {
+                formStartTime.current = Date.now();
+            }
+        };
+
+        // Track when user starts interacting with form
+        document.addEventListener('focusin', handleFirstInteraction, { once: true });
+        document.addEventListener('click', handleFirstInteraction, { once: true });
+
+        // Track scroll depth
+        const handleScroll = () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollPercentage = Math.round((scrollTop / (documentHeight - windowHeight)) * 100);
+            maxScrollDepth.current = Math.max(maxScrollDepth.current, scrollPercentage);
+            setScrollDepth(maxScrollDepth.current);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Track form abandonment (when user starts filling but doesn't submit)
+        const handleBeforeUnload = () => {
+            if (formStartTime.current && !isSubmitted) {
+                const attempts = parseInt(sessionStorage.getItem('formAbandonmentAttempts') || '0', 10);
+                sessionStorage.setItem('formAbandonmentAttempts', String(attempts + 1));
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            document.removeEventListener('focusin', handleFirstInteraction);
+            document.removeEventListener('click', handleFirstInteraction);
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [isSubmitted]);
+
+    // Collect device and browser information
+    const getDeviceInfo = () => {
+        if (typeof window === 'undefined') return {};
+
+        const ua = navigator.userAgent;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+        const isTablet = /iPad|Android/i.test(ua) && !/Mobile/i.test(ua);
+        const deviceType = isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop';
+
+        return {
+            deviceType,
+            screenResolution: `${window.screen.width}x${window.screen.height}`,
+            browserName: getBrowserName(),
+            browserVersion: getBrowserVersion(),
+            operatingSystem: getOperatingSystem(),
+            language: navigator.language || navigator.languages?.[0] || 'en',
+            isMobile,
+            isTablet,
+        };
+    };
+
+    const getBrowserName = () => {
+        const ua = navigator.userAgent;
+        if (ua.includes('Chrome')) return 'Chrome';
+        if (ua.includes('Firefox')) return 'Firefox';
+        if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
+        if (ua.includes('Edge')) return 'Edge';
+        return 'Unknown';
+    };
+
+    const getBrowserVersion = () => {
+        const ua = navigator.userAgent;
+        const match = ua.match(/(Chrome|Firefox|Safari|Edge)\/(\d+)/);
+        return match ? match[2] : 'Unknown';
+    };
+
+    const getOperatingSystem = () => {
+        const ua = navigator.userAgent;
+        if (ua.includes('Windows')) return 'Windows';
+        if (ua.includes('Mac OS')) return 'macOS';
+        if (ua.includes('Linux')) return 'Linux';
+        if (ua.includes('Android')) return 'Android';
+        if (ua.includes('iOS')) return 'iOS';
+        return 'Unknown';
+    };
+
+    // Get marketing attribution from URL and localStorage
+    const getMarketingData = () => {
+        if (typeof window === 'undefined') return {};
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const landingPage = window.location.href;
+        
+        // Get entry point
+        let entryPoint = 'direct';
+        if (document.referrer) {
+            const referrer = new URL(document.referrer);
+            if (referrer.hostname !== window.location.hostname) {
+                if (referrer.hostname.includes('google')) entryPoint = 'search';
+                else if (referrer.hostname.includes('facebook') || referrer.hostname.includes('linkedin')) entryPoint = 'social';
+                else entryPoint = 'referral';
+            }
+        }
+
+        // Get UTM and click IDs from URL
+        const gclid = urlParams.get('gclid');
+        const fbclid = urlParams.get('fbclid');
+        
+        // Store in sessionStorage for persistence
+        if (gclid) sessionStorage.setItem('gclid', gclid);
+        if (fbclid) sessionStorage.setItem('fbclid', fbclid);
+
+        return {
+            landingPage,
+            entryPoint,
+            utmSource: urlParams.get('utm_source') || null,
+            utmMedium: urlParams.get('utm_medium') || null,
+            utmCampaign: urlParams.get('utm_campaign') || null,
+            campaignId: urlParams.get('campaign_id') || null,
+            adGroup: urlParams.get('adgroup') || null,
+            keyword: urlParams.get('keyword') || null,
+            gclid: gclid || sessionStorage.getItem('gclid') || null,
+            fbclid: fbclid || sessionStorage.getItem('fbclid') || null,
+            sessionStartTime: new Date(pageLoadTime.current).toISOString(),
+        };
+    };
+
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
 
@@ -64,6 +240,12 @@ export default function ContactPage() {
             newErrors.email = 'Email is required';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = 'Invalid email format';
+        }
+
+        if (!formData.phone.trim()) {
+            newErrors.phone = 'Phone number is required';
+        } else if (!/^[+]?[0-9\s\-()]{10,}$/.test(formData.phone.replace(/\s/g, ''))) {
+            newErrors.phone = 'Please enter a valid phone number (at least 10 digits)';
         }
 
         if (!formData.projectDescription.trim()) {
@@ -84,22 +266,173 @@ export default function ContactPage() {
         }
 
         setIsSubmitting(true);
+        setErrors({}); // Clear previous errors
 
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        try {
+            // Calculate tracking metrics
+            const timeOnPage = Math.floor((Date.now() - pageLoadTime.current) / 1000);
+            const formFillDuration = formStartTime.current 
+                ? Math.floor((Date.now() - formStartTime.current) / 1000)
+                : null;
+            
+            // Get page views from sessionStorage
+            const pageViews = parseInt(sessionStorage.getItem('pageViews') || '1', 10);
+            sessionStorage.setItem('pageViews', String(pageViews + 1));
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
+            // Get visit number and previous visits from localStorage
+            const visitNumber = parseInt(localStorage.getItem('visitNumber') || '1', 10);
+            const previousVisits = Math.max(0, visitNumber - 1);
+            localStorage.setItem('visitNumber', String(visitNumber + 1));
 
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            company: '',
-            projectDescription: '',
-            budget: '',
-            timeline: '',
-        });
+            // Get form abandonment attempts
+            const abandonmentAttempts = parseInt(sessionStorage.getItem('formAbandonmentAttempts') || '0', 10);
+
+            // Calculate urgency based on timeline and budget
+            const calculateUrgency = (): 'low' | 'medium' | 'high' => {
+                const timeline = formData.timeline;
+                const budget = formData.budget;
+                
+                if (timeline === 'asap' || (timeline === '1-3-months' && (budget === 'over-20l' || budget === '10l-20l'))) {
+                    return 'high';
+                }
+                if (timeline === '1-3-months' || timeline === '3-6-months' || budget === 'over-20l' || budget === '10l-20l') {
+                    return 'medium';
+                }
+                return 'low';
+            };
+
+            // Collect all tracking data
+            const deviceInfo = getDeviceInfo();
+            const marketingData = getMarketingData();
+
+            // Prepare data for API
+            const payload = {
+                // Required fields
+                name: formData.name.trim(),
+                email: formData.email.trim(),
+                phone: formData.phone.trim(),
+                projectDescription: formData.projectDescription.trim(),
+                
+                // Optional form fields
+                company: formData.company.trim() || undefined,
+                budget: formData.budget || undefined,
+                timeline: formData.timeline || undefined,
+                customBudget: formData.budget === 'custom' ? customBudget : undefined,
+                
+                // User Behavior
+                timeOnPage,
+                formFillDuration,
+                pageViews,
+                scrollDepth: maxScrollDepth.current,
+                formAbandonmentAttempts: abandonmentAttempts,
+                sessionId: sessionId.current,
+                visitNumber,
+                previousVisits,
+                
+                // Device & Browser
+                ...deviceInfo,
+                
+                // Marketing & Attribution
+                ...marketingData,
+                
+                // Lead Quality Indicators
+                projectType: formData.projectType || undefined,
+                industry: formData.industry || undefined,
+                companySize: formData.companySize || undefined,
+                decisionMaker: formData.decisionMaker || undefined,
+                urgency: calculateUrgency(),
+                
+                // Project Context
+                projectCategory: formData.projectCategory || undefined,
+                techStack: formData.techStack.length > 0 ? formData.techStack : undefined,
+                teamSize: formData.teamSize ? parseInt(formData.teamSize, 10) : undefined,
+                hasExistingSystem: formData.hasExistingSystem || undefined,
+                integrationRequirements: formData.integrationRequirements.length > 0 ? formData.integrationRequirements : undefined,
+                complianceNeeds: formData.complianceNeeds.length > 0 ? formData.complianceNeeds : undefined,
+                
+                // Communication Preferences
+                preferredContactMethod: formData.preferredContactMethod || undefined,
+                preferredContactTime: formData.preferredContactTime || undefined,
+                communicationLanguage: formData.communicationLanguage || undefined,
+                newsletterOptIn: formData.newsletterOptIn || undefined,
+                projectUpdatesOptIn: formData.projectUpdatesOptIn || undefined,
+                
+                // Business Context
+                businessStage: formData.businessStage || undefined,
+                fundingStage: formData.fundingStage || undefined,
+                annualRevenue: formData.annualRevenue || undefined,
+                competitors: formData.competitors.length > 0 ? formData.competitors : undefined,
+                painPoints: formData.painPoints.length > 0 ? formData.painPoints : undefined,
+            };
+
+            // Call API endpoint
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Handle validation errors
+                if (data.errors && Array.isArray(data.errors)) {
+                    const newErrors: Record<string, string> = {};
+                    data.errors.forEach((error: { field: string; message: string }) => {
+                        newErrors[error.field] = error.message;
+                    });
+                    setErrors(newErrors);
+                    setIsSubmitting(false);
+                    return;
+                }
+                throw new Error(data.message || 'Failed to submit form');
+            }
+
+            // Success
+            setIsSubmitted(true);
+            
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                company: '',
+                projectDescription: '',
+                budget: '',
+                timeline: '',
+                projectType: '',
+                industry: '',
+                companySize: '',
+                decisionMaker: false,
+                projectCategory: '',
+                techStack: [],
+                teamSize: '',
+                hasExistingSystem: false,
+                integrationRequirements: [],
+                complianceNeeds: [],
+                preferredContactMethod: '',
+                preferredContactTime: '',
+                communicationLanguage: '',
+                newsletterOptIn: false,
+                projectUpdatesOptIn: false,
+                businessStage: '',
+                fundingStage: '',
+                annualRevenue: '',
+                competitors: [],
+                painPoints: [],
+            });
+            setCustomBudget('');
+            setScrollDepth(0);
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setErrors({
+                submit: error instanceof Error ? error.message : 'An error occurred. Please try again.',
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -243,6 +576,17 @@ export default function ContactPage() {
                                             </div>
 
                                             <Input
+                                                label="Phone Number"
+                                                name="phone"
+                                                type="tel"
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                                error={errors.phone}
+                                                required
+                                                placeholder="+91 98765 43210"
+                                            />
+
+                                            <Input
                                                 label="Company"
                                                 name="company"
                                                 value={formData.company}
@@ -294,6 +638,11 @@ export default function ContactPage() {
                                                 />
                                             </div>
 
+                                            {errors.submit && (
+                                                <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
+                                                    {errors.submit}
+                                                </div>
+                                            )}
                                             <motion.button
                                                 type="submit"
                                                 disabled={isSubmitting}
