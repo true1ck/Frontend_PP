@@ -14,6 +14,7 @@ export default function ContactPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        countryCode: '',
         phone: '',
         company: '',
         projectDescription: '',
@@ -93,7 +94,19 @@ export default function ContactPage() {
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        
+        // Restrict input based on field type
+        let processedValue = value;
+        
+        if (name === 'name') {
+            // Only allow letters, spaces, hyphens, and apostrophes
+            processedValue = value.replace(/[^a-zA-Z\s\-']/g, '');
+        } else if (name === 'phone' || name === 'countryCode') {
+            // Only allow numbers
+            processedValue = value.replace(/\D/g, '');
+        }
+        
+        setFormData((prev) => ({ ...prev, [name]: processedValue }));
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: '' }));
@@ -232,22 +245,37 @@ export default function ContactPage() {
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
 
+        // Name validation - only letters and spaces
         if (!formData.name.trim()) {
             newErrors.name = 'Name is required';
+        } else if (!/^[a-zA-Z\s\-']+$/.test(formData.name.trim())) {
+            newErrors.name = 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        } else if (formData.name.trim().length < 2) {
+            newErrors.name = 'Name must be at least 2 characters';
         }
 
+        // Email validation
         if (!formData.email.trim()) {
             newErrors.email = 'Email is required';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = 'Invalid email format';
         }
 
-        if (!formData.phone.trim()) {
-            newErrors.phone = 'Phone number is required';
-        } else if (!/^[+]?[0-9\s\-()]{10,}$/.test(formData.phone.replace(/\s/g, ''))) {
-            newErrors.phone = 'Please enter a valid phone number (at least 10 digits)';
+        // Country code validation - only numbers, 1-4 digits
+        if (!formData.countryCode.trim()) {
+            newErrors.countryCode = 'Country code is required';
+        } else if (!/^\d{1,4}$/.test(formData.countryCode)) {
+            newErrors.countryCode = 'Country code must be 1-4 digits';
         }
 
+        // Phone number validation - only numbers, 7-15 digits
+        if (!formData.phone.trim()) {
+            newErrors.phone = 'Phone number is required';
+        } else if (!/^\d{7,15}$/.test(formData.phone)) {
+            newErrors.phone = 'Phone number must be 7-15 digits';
+        }
+
+        // Project description validation
         if (!formData.projectDescription.trim()) {
             newErrors.projectDescription = 'Project description is required';
         } else if (formData.projectDescription.length < 20) {
@@ -305,12 +333,17 @@ export default function ContactPage() {
             const deviceInfo = getDeviceInfo();
             const marketingData = getMarketingData();
 
+            // Combine country code and phone number
+            const fullPhoneNumber = formData.countryCode.trim() 
+                ? `+${formData.countryCode.trim()}${formData.phone.trim()}`
+                : formData.phone.trim();
+
             // Prepare data for API
             const payload = {
                 // Required fields
                 name: formData.name.trim(),
                 email: formData.email.trim(),
-                phone: formData.phone.trim(),
+                phone: fullPhoneNumber,
                 projectDescription: formData.projectDescription.trim(),
                 
                 // Optional form fields
@@ -397,6 +430,7 @@ export default function ContactPage() {
             setFormData({
                 name: '',
                 email: '',
+                countryCode: '',
                 phone: '',
                 company: '',
                 projectDescription: '',
@@ -562,6 +596,7 @@ export default function ContactPage() {
                                                     error={errors.name}
                                                     required
                                                     placeholder="John Doe"
+                                                    helperText="Only letters, spaces, hyphens, and apostrophes allowed"
                                                 />
                                                 <Input
                                                     label="Email"
@@ -575,16 +610,34 @@ export default function ContactPage() {
                                                 />
                                             </div>
 
-                                            <Input
-                                                label="Phone Number"
-                                                name="phone"
-                                                type="tel"
-                                                value={formData.phone}
-                                                onChange={handleChange}
-                                                error={errors.phone}
-                                                required
-                                                placeholder="+91 98765 43210"
-                                            />
+                                            <div className="grid md:grid-cols-3 gap-4">
+                                                <Input
+                                                    label="Country Code"
+                                                    name="countryCode"
+                                                    type="tel"
+                                                    value={formData.countryCode}
+                                                    onChange={handleChange}
+                                                    error={errors.countryCode}
+                                                    required
+                                                    placeholder="91"
+                                                    maxLength={4}
+                                                    helperText="Numbers only (1-4 digits)"
+                                                    className="md:col-span-1"
+                                                />
+                                                <Input
+                                                    label="Phone Number"
+                                                    name="phone"
+                                                    type="tel"
+                                                    value={formData.phone}
+                                                    onChange={handleChange}
+                                                    error={errors.phone}
+                                                    required
+                                                    placeholder="9876543210"
+                                                    maxLength={15}
+                                                    helperText="Numbers only (7-15 digits)"
+                                                    className="md:col-span-2"
+                                                />
+                                            </div>
 
                                             <Input
                                                 label="Company"
