@@ -62,7 +62,10 @@ const OurProcess = () => {
 
       <div className="relative">
         {/* Connection Line */}
-        <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 transform -translate-y-1/2" />
+        <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 
+bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 
+transform translate-y-[6px]" />
+
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8 relative">
           {steps.map((step, index) => (
