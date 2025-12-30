@@ -14,6 +14,7 @@ export default function ContactPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        countryCode: '',
         phone: '',
         company: '',
         projectDescription: '',
@@ -56,7 +57,7 @@ export default function ContactPage() {
     const pageLoadTime = useRef<number>(Date.now());
     const formStartTime = useRef<number | null>(null);
     const maxScrollDepth = useRef<number>(0);
-    
+
     // Get or create session ID
     const getSessionId = (): string => {
         if (typeof window !== 'undefined') {
@@ -69,15 +70,15 @@ export default function ContactPage() {
         }
         return '';
     };
-    
+
     const sessionId = useRef<string>(getSessionId());
 
     const budgetOptions = [
-        { value: 'under-2l', label: 'Under ₹2,00,000' },
-        { value: '2l-5l', label: '₹2,00,000 - ₹5,00,000' },
-        { value: '5l-10l', label: '₹5,00,000 - ₹10,00,000' },
-        { value: '10l-20l', label: '₹10,00,000 - ₹20,00,000' },
-        { value: 'over-20l', label: 'Over ₹20,00,000' },
+        { value: 'under-2k', label: 'Under ₹20,000' },
+        { value: '2k-5k', label: '₹20,000 - ₹50,000' },
+        { value: '5k-10k', label: '₹50,000 - ₹100,000' },
+        { value: '10k-30k', label: '₹100,000 - ₹300,000' },
+        { value: 'over-30k', label: 'Over ₹300,000' },
         { value: 'custom', label: 'Custom' },
     ];
 
@@ -93,7 +94,19 @@ export default function ContactPage() {
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        
+        // Restrict input based on field type
+        let processedValue = value;
+        
+        if (name === 'name') {
+            // Only allow letters, spaces, hyphens, and apostrophes
+            processedValue = value.replace(/[^a-zA-Z\s\-']/g, '');
+        } else if (name === 'phone' || name === 'countryCode') {
+            // Only allow numbers
+            processedValue = value.replace(/\D/g, '');
+        }
+        
+        setFormData((prev) => ({ ...prev, [name]: processedValue }));
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: '' }));
@@ -194,7 +207,7 @@ export default function ContactPage() {
 
         const urlParams = new URLSearchParams(window.location.search);
         const landingPage = window.location.href;
-        
+
         // Get entry point
         let entryPoint = 'direct';
         if (document.referrer) {
@@ -209,7 +222,7 @@ export default function ContactPage() {
         // Get UTM and click IDs from URL
         const gclid = urlParams.get('gclid');
         const fbclid = urlParams.get('fbclid');
-        
+
         // Store in sessionStorage for persistence
         if (gclid) sessionStorage.setItem('gclid', gclid);
         if (fbclid) sessionStorage.setItem('fbclid', fbclid);
@@ -232,22 +245,37 @@ export default function ContactPage() {
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
 
+        // Name validation - only letters and spaces
         if (!formData.name.trim()) {
             newErrors.name = 'Name is required';
+        } else if (!/^[a-zA-Z\s\-']+$/.test(formData.name.trim())) {
+            newErrors.name = 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        } else if (formData.name.trim().length < 2) {
+            newErrors.name = 'Name must be at least 2 characters';
         }
 
+        // Email validation
         if (!formData.email.trim()) {
             newErrors.email = 'Email is required';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = 'Invalid email format';
         }
 
-        if (!formData.phone.trim()) {
-            newErrors.phone = 'Phone number is required';
-        } else if (!/^[+]?[0-9\s\-()]{10,}$/.test(formData.phone.replace(/\s/g, ''))) {
-            newErrors.phone = 'Please enter a valid phone number (at least 10 digits)';
+        // Country code validation - only numbers, 1-4 digits
+        if (!formData.countryCode.trim()) {
+            newErrors.countryCode = 'Country code is required';
+        } else if (!/^\d{1,4}$/.test(formData.countryCode)) {
+            newErrors.countryCode = 'Country code must be 1-4 digits';
         }
 
+        // Phone number validation - only numbers, 7-15 digits
+        if (!formData.phone.trim()) {
+            newErrors.phone = 'Phone number is required';
+        } else if (!/^\d{7,15}$/.test(formData.phone)) {
+            newErrors.phone = 'Phone number must be 7-15 digits';
+        }
+
+        // Project description validation
         if (!formData.projectDescription.trim()) {
             newErrors.projectDescription = 'Project description is required';
         } else if (formData.projectDescription.length < 20) {
@@ -271,10 +299,10 @@ export default function ContactPage() {
         try {
             // Calculate tracking metrics
             const timeOnPage = Math.floor((Date.now() - pageLoadTime.current) / 1000);
-            const formFillDuration = formStartTime.current 
+            const formFillDuration = formStartTime.current
                 ? Math.floor((Date.now() - formStartTime.current) / 1000)
                 : null;
-            
+
             // Get page views from sessionStorage
             const pageViews = parseInt(sessionStorage.getItem('pageViews') || '1', 10);
             sessionStorage.setItem('pageViews', String(pageViews + 1));
@@ -291,7 +319,7 @@ export default function ContactPage() {
             const calculateUrgency = (): 'low' | 'medium' | 'high' => {
                 const timeline = formData.timeline;
                 const budget = formData.budget;
-                
+
                 if (timeline === 'asap' || (timeline === '1-3-months' && (budget === 'over-20l' || budget === '10l-20l'))) {
                     return 'high';
                 }
@@ -305,20 +333,25 @@ export default function ContactPage() {
             const deviceInfo = getDeviceInfo();
             const marketingData = getMarketingData();
 
+            // Combine country code and phone number
+            const fullPhoneNumber = formData.countryCode.trim() 
+                ? `+${formData.countryCode.trim()}${formData.phone.trim()}`
+                : formData.phone.trim();
+
             // Prepare data for API
             const payload = {
                 // Required fields
                 name: formData.name.trim(),
                 email: formData.email.trim(),
-                phone: formData.phone.trim(),
+                phone: fullPhoneNumber,
                 projectDescription: formData.projectDescription.trim(),
-                
+
                 // Optional form fields
                 company: formData.company.trim() || undefined,
                 budget: formData.budget || undefined,
                 timeline: formData.timeline || undefined,
                 customBudget: formData.budget === 'custom' ? customBudget : undefined,
-                
+
                 // User Behavior
                 timeOnPage,
                 formFillDuration,
@@ -328,20 +361,20 @@ export default function ContactPage() {
                 sessionId: sessionId.current,
                 visitNumber,
                 previousVisits,
-                
+
                 // Device & Browser
                 ...deviceInfo,
-                
+
                 // Marketing & Attribution
                 ...marketingData,
-                
+
                 // Lead Quality Indicators
                 projectType: formData.projectType || undefined,
                 industry: formData.industry || undefined,
                 companySize: formData.companySize || undefined,
                 decisionMaker: formData.decisionMaker || undefined,
                 urgency: calculateUrgency(),
-                
+
                 // Project Context
                 projectCategory: formData.projectCategory || undefined,
                 techStack: formData.techStack.length > 0 ? formData.techStack : undefined,
@@ -349,14 +382,14 @@ export default function ContactPage() {
                 hasExistingSystem: formData.hasExistingSystem || undefined,
                 integrationRequirements: formData.integrationRequirements.length > 0 ? formData.integrationRequirements : undefined,
                 complianceNeeds: formData.complianceNeeds.length > 0 ? formData.complianceNeeds : undefined,
-                
+
                 // Communication Preferences
                 preferredContactMethod: formData.preferredContactMethod || undefined,
                 preferredContactTime: formData.preferredContactTime || undefined,
                 communicationLanguage: formData.communicationLanguage || undefined,
                 newsletterOptIn: formData.newsletterOptIn || undefined,
                 projectUpdatesOptIn: formData.projectUpdatesOptIn || undefined,
-                
+
                 // Business Context
                 businessStage: formData.businessStage || undefined,
                 fundingStage: formData.fundingStage || undefined,
@@ -392,11 +425,12 @@ export default function ContactPage() {
 
             // Success
             setIsSubmitted(true);
-            
+
             // Reset form
             setFormData({
                 name: '',
                 email: '',
+                countryCode: '',
                 phone: '',
                 company: '',
                 projectDescription: '',
@@ -509,7 +543,7 @@ export default function ContactPage() {
                                     </div>
 
                                     {/* Social Links */}
-                                    <div>
+                                    {/* <div>
                                         <div className="text-sm text-gray-400 mb-3">Follow Us</div>
                                         <div className="flex gap-3">
                                             {['Twitter', 'LinkedIn', 'GitHub'].map((social) => (
@@ -522,7 +556,7 @@ export default function ContactPage() {
                                                 </a>
                                             ))}
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </ScrollReveal>
                         </div>
@@ -562,6 +596,7 @@ export default function ContactPage() {
                                                     error={errors.name}
                                                     required
                                                     placeholder="John Doe"
+                                                    helperText="Only letters, spaces, hyphens, and apostrophes allowed"
                                                 />
                                                 <Input
                                                     label="Email"
@@ -575,16 +610,34 @@ export default function ContactPage() {
                                                 />
                                             </div>
 
-                                            <Input
-                                                label="Phone Number"
-                                                name="phone"
-                                                type="tel"
-                                                value={formData.phone}
-                                                onChange={handleChange}
-                                                error={errors.phone}
-                                                required
-                                                placeholder="+91 98765 43210"
-                                            />
+                                            <div className="grid md:grid-cols-3 gap-4">
+                                                <Input
+                                                    label="Country Code"
+                                                    name="countryCode"
+                                                    type="tel"
+                                                    value={formData.countryCode}
+                                                    onChange={handleChange}
+                                                    error={errors.countryCode}
+                                                    required
+                                                    placeholder="91"
+                                                    maxLength={4}
+                                                    helperText="Numbers only (1-4 digits)"
+                                                    className="md:col-span-1"
+                                                />
+                                                <Input
+                                                    label="Phone Number"
+                                                    name="phone"
+                                                    type="tel"
+                                                    value={formData.phone}
+                                                    onChange={handleChange}
+                                                    error={errors.phone}
+                                                    required
+                                                    placeholder="9876543210"
+                                                    maxLength={15}
+                                                    helperText="Numbers only (7-15 digits)"
+                                                    className="md:col-span-2"
+                                                />
+                                            </div>
 
                                             <Input
                                                 label="Company"
@@ -662,7 +715,7 @@ export default function ContactPage() {
             </Section>
 
             {/* Map Placeholder */}
-            <Section className="py-20">
+            {/* <Section className="py-20">
                 <ScrollReveal variant="fadeIn">
                     <div className="max-w-7xl mx-auto">
                         <div className="glass rounded-2xl border border-gray-700 overflow-hidden h-96 flex items-center justify-center">
@@ -676,7 +729,7 @@ export default function ContactPage() {
                         </div>
                     </div>
                 </ScrollReveal>
-            </Section>
+            </Section> */}
         </>
     );
 }
