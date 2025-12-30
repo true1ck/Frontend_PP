@@ -67,7 +67,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             ${error ? 'border-red-500 focus:ring-red-500/50' : ''}
             ${className}
           `}
-                    {...props}
+                    {...(props as any)}
                 />
                 <div className="flex justify-between items-start mt-2">
                     <div className="flex-1">
