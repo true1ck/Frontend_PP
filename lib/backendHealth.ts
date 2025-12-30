@@ -36,3 +36,4 @@ export function getBackendConnectionMessage(): string {
 3. Check BACKEND_API_URL environment variable if using a different URL`;
 }
 
+

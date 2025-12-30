@@ -487,7 +487,7 @@ export default function ContactPage() {
                         </h1>
                     </ScrollReveal>
                     <ScrollReveal delay={0.2}>
-                        <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
+                        <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
                             Tell us about your project and we&apos;ll get back to you within 24 hours.
                         </p>
                     </ScrollReveal>
@@ -503,7 +503,7 @@ export default function ContactPage() {
                             <ScrollReveal variant="slideRight">
                                 <div className="space-y-8">
                                     <div>
-                                        <h2 className="text-2xl font-bold font-display mb-6 text-blue-400">
+                                        <h2 className="text-2xl font-bold font-display mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
                                             Get in Touch
                                         </h2>
                                         <p className="text-gray-300 leading-relaxed mb-8">
