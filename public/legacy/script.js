@@ -1103,6 +1103,13 @@ function hashCode(s) {
     return hash;
 };
 
+
 // Overlay text will remain visible permanently
 // No auto-fade or click-to-dismiss functionality
+
+// Expose a global function to re-initialize the animation (minimal, safe approach)
+window.initFluidCursor = function() {
+    // As a last resort, reload the page to fully re-initialize the animation and script state
+    location.reload();
+};
 

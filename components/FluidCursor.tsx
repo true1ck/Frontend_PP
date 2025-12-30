@@ -1,9 +1,18 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
+
+// Add type definition for window.initFluidCursor
+declare global {
+    interface Window {
+        initFluidCursor?: () => void;
+    }
+}
 
 const FluidCursor = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const pathname = usePathname();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -11,7 +20,6 @@ const FluidCursor = () => {
 
         // Only load the script once, ever
         const existingScript = document.querySelector('script[data-fluid-script]');
-
         if (!existingScript) {
             const script = document.createElement('script');
             script.src = '/legacy/script.js';
@@ -20,10 +28,15 @@ const FluidCursor = () => {
             document.body.appendChild(script);
         }
 
+        // On homepage, call the global re-init function if it exists
+        if (pathname === '/' && typeof window !== 'undefined' && typeof window.initFluidCursor === 'function') {
+            window.initFluidCursor();
+        }
+
         return () => {
             // Don't remove the script
         };
-    }, []);
+    }, [pathname]);
 
     return (
         <canvas
