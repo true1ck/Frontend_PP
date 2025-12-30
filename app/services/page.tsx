@@ -1,12 +1,12 @@
+'use client';
+
 import type { Metadata } from 'next';
 import Section from '@/components/Section';
 import ScrollReveal from '@/components/ScrollReveal';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
-export const metadata: Metadata = {
-    title: 'Our Services - PandaPaths',
-    description: 'Comprehensive IT services including web development, mobile apps, AI/ML solutions, cloud infrastructure, and system architecture.',
-};
+// Metadata is now handled in layout or parent component since this is a client component
 
 const services = [
     {
@@ -90,6 +90,8 @@ const services = [
 ];
 
 export default function ServicesPage() {
+    const { theme } = useTheme();
+
     return (
         <>
             {/* Hero Section */}
@@ -101,7 +103,7 @@ export default function ServicesPage() {
                         </h1>
                     </ScrollReveal>
                     <ScrollReveal delay={0.2}>
-                        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed px-4">
+                        <p className={`text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed px-4 ${theme === 'light' ? 'text-gray-800' : 'text-gray-300'}`}>
                             End-to-end technology solutions tailored to your business goals.
                             From concept to deployment, we&apos;ve got you covered.
                         </p>
@@ -120,22 +122,24 @@ export default function ServicesPage() {
                                 variant="slideUp"
                             >
                                 <div className="glass p-6 sm:p-8 rounded-2xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 h-full flex flex-col group">
-                                    {/* Icon */}
-                                    <div className="text-5xl sm:text-6xl mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                                        {service.icon}
+                                    {/* Icon & Title */}
+                                    <div className="flex items-center gap-4 mb-3 sm:mb-4">
+                                        <div className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300">
+                                            {service.icon}
+                                        </div>
+                                        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-blue-400 group-hover:text-cyan-400 transition-colors">
+                                            {service.title}
+                                        </h2>
                                     </div>
 
-                                    {/* Title & Description */}
-                                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-display mb-3 sm:mb-4 text-blue-400 group-hover:text-cyan-400 transition-colors">
-                                        {service.title}
-                                    </h2>
-                                    <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 leading-relaxed">
+                                    {/* Description */}
+                                    <p className={`text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
                                         {service.description}
                                     </p>
 
                                     {/* Technologies */}
                                     <div className="mb-6">
-                                        <div className="text-sm font-semibold text-gray-400 mb-3">
+                                        <div className={`text-sm font-semibold mb-3 ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>
                                             Technologies:
                                         </div>
                                         <div className="flex flex-wrap gap-2">
@@ -152,14 +156,14 @@ export default function ServicesPage() {
 
                                     {/* Features */}
                                     <div className="flex-1">
-                                        <div className="text-sm font-semibold text-gray-400 mb-3">
+                                        <div className={`text-sm font-semibold mb-3 ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>
                                             Key Features:
                                         </div>
                                         <ul className="space-y-2">
                                             {service.features.map((feature) => (
                                                 <li
                                                     key={feature}
-                                                    className="flex items-start text-sm text-gray-300"
+                                                    className={`flex items-start text-sm ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
                                                 >
                                                     <svg
                                                         className="w-5 h-5 text-cyan-400 mr-2 flex-shrink-0 mt-0.5"
@@ -216,7 +220,7 @@ export default function ServicesPage() {
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-4 sm:mb-6">
                             Not Sure Which Service You Need?
                         </h2>
-                        <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 px-4">
+                        <p className={`text-base sm:text-lg md:text-xl mb-6 sm:mb-8 px-4 ${theme === 'light' ? 'text-gray-800' : 'text-gray-300'}`}>
                             Book a free consultation and we&apos;ll help you find the perfect solution for your project.
                         </p>
                         <a
