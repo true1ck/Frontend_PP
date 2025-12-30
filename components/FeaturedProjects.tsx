@@ -12,8 +12,8 @@ const FeaturedProjects = () => {
       client: 'RetailTech Inc.',
       description: 'Built a scalable e-commerce platform handling 100K+ daily transactions with AI-powered recommendations.',
       technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'Redis'],
-      badge: '8 Engineers',
-      badgeIcon: '👥',
+      badges: ['Scalable commerce architecture', 'Secure payment workflows', 'AI-ready personalization'],
+      // badgeIcon: '👥',
       badgeColor: 'cyan',
     },
     {
@@ -21,8 +21,8 @@ const FeaturedProjects = () => {
       client: 'MedHealth Solutions',
       description: 'Developed an intelligent chatbot using RAG and LLMs to assist patients with medical queries.',
       technologies: ['Python', 'LangChain', 'OpenAI', 'FastAPI'],
-      badge: '6 Month Build',
-      badgeIcon: '⏱️',
+      badges: ['RAG-powered intelligence', 'Privacy-first system design', 'Built for clinical scalability'],
+      // badgeIcon: '⏱️',
       badgeColor: 'purple',
     },
     {
@@ -30,8 +30,9 @@ const FeaturedProjects = () => {
       client: 'PayFlow',
       description: 'Cross-platform mobile app for seamless money transfers with biometric authentication.',
       technologies: ['Flutter', 'Firebase', 'AWS', 'Stripe'],
-      badge: 'Full Stack',
-      badgeIcon: '🚀',
+      badges: ['Cloud-native mobile stack ','Enterprise-grade security ','Real-time transaction flow'],
+
+      // badgeIcon: '🚀',
       badgeColor: 'yellow',
     },
   ];
@@ -90,11 +91,15 @@ const FeaturedProjects = () => {
                     project.badgeColor === 'cyan' ? 'border-cyan-400/30' :
                       'border-purple-400/30'
                     }`}>
-                    <div className="text-3xl sm:text-4xl mb-2">{project.badgeIcon}</div>
+                    <div className="text-3xl sm:text-4xl mb-2"></div>
                     <div className={`text-sm sm:text-base font-bold ${project.badgeColor === 'yellow' ? 'text-yellow-400' :
                       project.badgeColor === 'cyan' ? 'text-cyan-400' :
                         'text-purple-400'
-                      }`}>{project.badge}</div>
+                      }`}>
+                      {(project.badges || [project.badges]).map((badge, idx) => (
+                        <div key={idx}>{badge}</div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
