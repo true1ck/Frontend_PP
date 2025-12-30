@@ -26,16 +26,17 @@ export const metadata: Metadata = {
   description: "PandaPaths is a full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
   keywords: ["IT Services", "Software Development", "AI Solutions", "Cloud Computing", "Web Development", "Mobile Apps"],
   authors: [{ name: "PandaPaths" }],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   openGraph: {
     title: "PandaPaths - Engineering Digital Paths to the Future",
     description: "Full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
     type: "website",
   },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({

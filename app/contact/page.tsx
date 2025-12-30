@@ -320,10 +320,10 @@ export default function ContactPage() {
                 const timeline = formData.timeline;
                 const budget = formData.budget;
 
-                if (timeline === 'asap' || (timeline === '1-3-months' && (budget === 'over-20l' || budget === '10l-20l'))) {
+                if (timeline === 'asap' || (timeline === '1-3-months' && (budget === 'over-30k' || budget === '10k-30k'))) {
                     return 'high';
                 }
-                if (timeline === '1-3-months' || timeline === '3-6-months' || budget === 'over-20l' || budget === '10l-20l') {
+                if (timeline === '1-3-months' || timeline === '3-6-months' || budget === 'over-30k' || budget === '10k-30k') {
                     return 'medium';
                 }
                 return 'low';
@@ -333,17 +333,14 @@ export default function ContactPage() {
             const deviceInfo = getDeviceInfo();
             const marketingData = getMarketingData();
 
-            // Combine country code and phone number
-            const fullPhoneNumber = formData.countryCode.trim() 
-                ? `+${formData.countryCode.trim()}${formData.phone.trim()}`
-                : formData.phone.trim();
-
             // Prepare data for API
+            // Send country code and phone number separately
             const payload = {
                 // Required fields
                 name: formData.name.trim(),
                 email: formData.email.trim(),
-                phone: fullPhoneNumber,
+                countryCode: formData.countryCode.trim(),
+                phone: formData.phone.trim(), // Phone number without country code
                 projectDescription: formData.projectDescription.trim(),
 
                 // Optional form fields
@@ -420,6 +417,16 @@ export default function ContactPage() {
                     setIsSubmitting(false);
                     return;
                 }
+                
+                // Handle backend connection errors with helpful message
+                if (data.error === 'BACKEND_CONNECTION_ERROR') {
+                    const troubleshooting = data.troubleshooting || [];
+                    const fullMessage = data.message + (troubleshooting.length > 0 
+                        ? '\n\n' + troubleshooting.join('\n')
+                        : '');
+                    throw new Error(fullMessage);
+                }
+                
                 throw new Error(data.message || 'Failed to submit form');
             }
 
@@ -610,33 +617,85 @@ export default function ContactPage() {
                                                 />
                                             </div>
 
-                                            <div className="grid md:grid-cols-3 gap-4">
-                                                <Input
-                                                    label="Country Code"
-                                                    name="countryCode"
-                                                    type="tel"
-                                                    value={formData.countryCode}
-                                                    onChange={handleChange}
-                                                    error={errors.countryCode}
-                                                    required
-                                                    placeholder="91"
-                                                    maxLength={4}
-                                                    helperText="Numbers only (1-4 digits)"
-                                                    className="md:col-span-1"
-                                                />
-                                                <Input
-                                                    label="Phone Number"
-                                                    name="phone"
-                                                    type="tel"
-                                                    value={formData.phone}
-                                                    onChange={handleChange}
-                                                    error={errors.phone}
-                                                    required
-                                                    placeholder="9876543210"
-                                                    maxLength={15}
-                                                    helperText="Numbers only (7-15 digits)"
-                                                    className="md:col-span-2"
-                                                />
+                                            {/* Phone Number Field - Grouped Design */}
+                                            <div className="space-y-2">
+                                                <label className={`block text-sm font-medium ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
+                                                    Phone Number <span className="text-red-400">*</span>
+                                                </label>
+                                                <div className="flex items-start gap-2">
+                                                    {/* Country Code - Compact */}
+                                                    <div className="w-20 flex-shrink-0">
+                                                        <motion.input
+                                                            name="countryCode"
+                                                            type="tel"
+                                                            value={formData.countryCode}
+                                                            onChange={handleChange}
+                                                            placeholder="+91"
+                                                            maxLength={4}
+                                                            whileFocus={{ scale: 1.02 }}
+                                                            className={`
+                                                                w-full px-2.5 py-3 rounded-lg
+                                                                glass border ${errors.countryCode ? 'border-red-500' : 'border-gray-700'}
+                                                                bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
+                                                                placeholder:text-gray-500
+                                                                focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
+                                                                transition-all duration-200
+                                                                text-center text-sm font-semibold
+                                                            `}
+                                                        />
+                                                    </div>
+                                                    {/* Phone Number - Main Field */}
+                                                    <div className="flex-1">
+                                                        <motion.input
+                                                            name="phone"
+                                                            type="tel"
+                                                            value={formData.phone}
+                                                            onChange={handleChange}
+                                                            placeholder="9876543210"
+                                                            maxLength={15}
+                                                            whileFocus={{ scale: 1.01 }}
+                                                            className={`
+                                                                w-full px-4 py-3 rounded-lg
+                                                                glass border ${errors.phone ? 'border-red-500' : 'border-gray-700'}
+                                                                bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
+                                                                placeholder:text-gray-500
+                                                                focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
+                                                                transition-all duration-200
+                                                            `}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* Error Messages and Helper Text */}
+                                                <div className="flex items-start gap-2">
+                                                    <div className="w-20 flex-shrink-0">
+                                                        {errors.countryCode && (
+                                                            <motion.p
+                                                                initial={{ opacity: 0, y: -10 }}
+                                                                animate={{ opacity: 1, y: 0 }}
+                                                                className="text-xs text-red-400"
+                                                            >
+                                                                {errors.countryCode}
+                                                            </motion.p>
+                                                        )}
+                                                        {!errors.countryCode && !errors.phone && (
+                                                            <p className="text-xs text-gray-400">Code</p>
+                                                        )}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        {errors.phone && (
+                                                            <motion.p
+                                                                initial={{ opacity: 0, y: -10 }}
+                                                                animate={{ opacity: 1, y: 0 }}
+                                                                className="text-xs text-red-400"
+                                                            >
+                                                                {errors.phone}
+                                                            </motion.p>
+                                                        )}
+                                                        {!errors.phone && !errors.countryCode && (
+                                                            <p className="text-xs text-gray-400">Enter your phone number (7-15 digits)</p>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <Input
@@ -676,8 +735,13 @@ export default function ContactPage() {
                                                                 name="customBudget"
                                                                 type="text"
                                                                 value={customBudget}
-                                                                onChange={(e) => setCustomBudget(e.target.value)}
+                                                                onChange={(e) => {
+                                                                    // Only allow numbers
+                                                                    const numbersOnly = e.target.value.replace(/\D/g, '');
+                                                                    setCustomBudget(numbersOnly);
+                                                                }}
                                                                 placeholder="Enter amount in ₹"
+                                                                helperText="Numbers only"
                                                             />
                                                         </div>
                                                     )}
@@ -692,7 +756,7 @@ export default function ContactPage() {
                                             </div>
 
                                             {errors.submit && (
-                                                <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
+                                                <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm whitespace-pre-line">
                                                     {errors.submit}
                                                 </div>
                                             )}
