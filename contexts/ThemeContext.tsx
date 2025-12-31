@@ -12,23 +12,22 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setTheme] = useState<Theme>('dark');
+    const [theme, setTheme] = useState<Theme>('light');
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setMounted(true);
-        
+
         // Only run on client side
         if (typeof window === 'undefined') return;
-        
-        // Get theme from localStorage or system preference
+
+        // Get theme from localStorage, default to 'light' for first-time visitors
         const savedTheme = localStorage.getItem('theme') as Theme | null;
-        const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        const initialTheme = savedTheme || systemTheme;
-        
+        const initialTheme = savedTheme || 'light';
+
         setTheme(initialTheme);
         document.documentElement.classList.toggle('light', initialTheme === 'light');
-        
+
         // Listen for system theme changes
         const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
         const handleChange = (e: MediaQueryListEvent) => {
@@ -38,7 +37,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
                 document.documentElement.classList.toggle('light', newTheme === 'light');
             }
         };
-        
+
         mediaQuery.addEventListener('change', handleChange);
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
