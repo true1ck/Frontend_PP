@@ -22,17 +22,17 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "PandaPaths - Engineering Digital Paths to the Future",
-  description: "PandaPaths is a full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
+  title: "PandaPath - Engineering Digital Paths to the Future",
+  description: "PandaPath is a full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
   keywords: ["IT Services", "Software Development", "AI Solutions", "Cloud Computing", "Web Development", "Mobile Apps"],
-  authors: [{ name: "PandaPaths" }],
+  authors: [{ name: "PandaPath" }],
   viewport: {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
   },
   openGraph: {
-    title: "PandaPaths - Engineering Digital Paths to the Future",
+    title: "PandaPath - Engineering Digital Paths to the Future",
     description: "Full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
     type: "website",
   },

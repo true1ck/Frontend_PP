@@ -4,15 +4,15 @@ import ScrollReveal from '@/components/ScrollReveal';
 import JsonLd from '@/components/JsonLd';
 
 export const metadata: Metadata = {
-    title: 'About Us - PandaPaths',
-    description: 'Learn about PandaPaths, our mission to deliver world-class IT solutions, and our architecture-first approach to software development.',
+    title: 'About Us - PandaPath',
+    description: 'Learn about PandaPath, our mission to deliver world-class IT solutions, and our architecture-first approach to software development.',
 };
 
 export default function AboutPage() {
     const organizationSchema = {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: 'PandaPaths',
+        name: 'PandaPath',
         description: 'Full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.',
         url: 'https://pandapaths.com',
         logo: 'https://pandapaths.com/logo.png',
@@ -55,7 +55,7 @@ export default function AboutPage() {
                             </h2>
                             <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-gray-300 leading-relaxed">
                                 <p>
-                                    PandaPaths was founded with a simple yet powerful vision: to bridge the gap between
+                                    PandaPath was founded with a simple yet powerful vision: to bridge the gap between
                                     ambitious ideas and scalable, production-ready software. We saw too many projects
                                     fail not from lack of innovation, but from poor architecture and rushed implementation.
                                 </p>
@@ -167,12 +167,12 @@ export default function AboutPage() {
                 </div>
             </Section>
 
-            {/* Why PandaPaths */}
+            {/* Why PandaPath */}
             <Section className="py-4">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                            Why Choose PandaPaths?
+                            Why Choose PandaPath?
                         </h2>
                     </ScrollReveal>
 

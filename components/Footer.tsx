@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 sm:col-span-2 lg:col-span-2">
             <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-4 sm:mb-4">
-              🐼 PandaPaths
+              🐼 PandaPath
             </h1>
             <p className="footer-text font-bold text-sm sm:text-base mb-4 text-center">
               Building scalable software, AI, and cloud-native systems.
@@ -57,7 +57,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800/50 mt-6 sm:mt-8 md:mt-10 pt-6 sm:pt-8 md:pt-10 text-center footer-text text-xs sm:text-sm">
-          <p>&copy; 2025 PandaPaths. All rights reserved.</p>
+          <p>&copy; 2025 PandaPath. All rights reserved.</p>
         </div>
       </div>
     </footer>

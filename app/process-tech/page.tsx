@@ -5,7 +5,7 @@ import ProcessTimeline from '@/components/ProcessTimeline';
 import TechGrid from '@/components/TechGrid';
 
 export const metadata: Metadata = {
-    title: 'Our Process & Technology Stack - PandaPaths',
+    title: 'Our Process & Technology Stack - PandaPath',
     description: 'Discover our proven development process and the cutting-edge technologies we use to build world-class software.',
 };
 

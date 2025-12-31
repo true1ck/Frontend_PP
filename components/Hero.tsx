@@ -74,7 +74,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            PandaPaths is a full-stack IT solutions company delivering scalable software,
+            PandaPath is a full-stack IT solutions company delivering scalable software,
             AI systems, and cloud-ready digital products.
           </motion.p>
 

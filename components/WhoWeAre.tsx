@@ -17,7 +17,7 @@ const WhoWeAre = () => {
           Who We Are
         </h2>
         <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-4 sm:mb-6 px-4">
-          PandaPaths is a premium IT solutions company that transforms ambitious ideas into
+          PandaPath is a premium IT solutions company that transforms ambitious ideas into
           production-ready digital products. We specialize in building scalable, maintainable
           software systems that grow with your business.
         </p>

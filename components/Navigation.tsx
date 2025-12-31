@@ -55,7 +55,7 @@ const Navigation = () => {
               whileHover={{ scale: 1.05 }}
               className="text-lg sm:text-xl md:text-2xl font-bold font-display bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500 bg-clip-text text-transparent"
             >
-              🐼 PandaPaths
+              🐼 PandaPath
             </motion.div>
           </Link>
 
@@ -92,14 +92,14 @@ const Navigation = () => {
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
 
@@ -116,34 +116,32 @@ const Navigation = () => {
             onClick={() => setIsMobileMenuOpen(false)}
             className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
           />
-          
+
           {/* Menu Panel */}
           <motion.div
             initial={{ opacity: 0, x: '-100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] shadow-2xl z-[60] lg:hidden overflow-y-auto ${
-              theme === 'light' 
-                ? 'bg-white' 
+            className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] shadow-2xl z-[60] lg:hidden overflow-y-auto ${theme === 'light'
+                ? 'bg-white'
                 : 'bg-gray-900'
-            }`}
+              }`}
           >
             {/* Close Button */}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                theme === 'light'
+              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${theme === 'light'
                   ? 'text-gray-900 hover:bg-gray-100'
                   : 'text-white hover:bg-gray-800'
-              }`}
+                }`}
               aria-label="Close menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            
+
             <div className="p-6 pt-20 space-y-1">
               {navItems.map((item) => (
                 <Link
@@ -156,11 +154,10 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-4 pb-2 flex items-center justify-between px-4 -mx-4">
-                <span className={`text-sm sm:text-base ${
-                  theme === 'light'
+                <span className={`text-sm sm:text-base ${theme === 'light'
                     ? 'text-gray-500'
                     : 'text-gray-400'
-                }`}>Theme</span>
+                  }`}>Theme</span>
               </div>
               <Link href="/contact" className="block pt-2" onClick={() => setIsMobileMenuOpen(false)}>
                 <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white text-sm sm:text-base font-semibold neon-glow touch-manipulation min-h-[44px]">

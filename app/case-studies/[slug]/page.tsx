@@ -23,7 +23,7 @@ const caseStudiesData: Record<string, any> = {
         ],
         impact: 'The platform enabled TechCorp to offer predictive analytics as a service to their clients, opening a new revenue stream worth $2M annually. Processing speed improved by 60%, allowing real-time decision making.',
         testimonial: {
-            quote: 'PandaPaths delivered beyond our expectations. The platform is robust, scalable, and has become a key differentiator for our business.',
+            quote: 'PandaPath delivered beyond our expectations. The platform is robust, scalable, and has become a key differentiator for our business.',
             author: 'Sarah Johnson',
             role: 'CTO, TechCorp Inc.',
         },
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     return {
-        title: `${caseStudy.title} - Case Study | PandaPaths`,
+        title: `${caseStudy.title} - Case Study | PandaPath`,
         description: caseStudy.challenge,
     };
 }
@@ -90,7 +90,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         description: caseStudy.challenge,
         author: {
             '@type': 'Organization',
-            name: 'PandaPaths',
+            name: 'PandaPath',
         },
     };
 
