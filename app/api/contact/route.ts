@@ -5,7 +5,8 @@ import { sanitizeContactFormData } from '@/lib/sanitize';
 // ============================================================================
 // Backend API Configuration
 // ============================================================================
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:3100';
+import { BACKEND_URL } from '@/lib/config';
+
 const BACKEND_TIMEOUT = 30000; // 30 seconds timeout
 
 // ============================================================================
@@ -110,9 +111,9 @@ export async function POST(request: NextRequest) {
 
         try {
             // Log the backend URL being used (for debugging)
-            console.log(`[Contact API] Attempting to connect to backend: ${BACKEND_API_URL}/api/contact`);
+            console.log(`[Contact API] Attempting to connect to backend: ${BACKEND_URL}/api/contact`);
 
-            const backendResponse = await fetch(`${BACKEND_API_URL}/api/contact`, {
+            const backendResponse = await fetch(`${BACKEND_URL}/api/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ export async function POST(request: NextRequest) {
                 code: fetchError.code,
                 message: fetchError.message,
                 cause: fetchError.cause,
-                backendUrl: BACKEND_API_URL,
+                backendUrl: BACKEND_URL,
             });
             
             // Handle specific error types
@@ -174,7 +175,7 @@ export async function POST(request: NextRequest) {
                 fetchError.message?.includes('ECONNRESET') ||
                 fetchError.message?.includes('fetch failed')
             ) {
-                const errorMessage = `Cannot connect to backend server at ${BACKEND_API_URL}. ` +
+                const errorMessage = `Cannot connect to backend server at ${BACKEND_URL}. ` +
                     `Please ensure the backend server is running. ` +
                     `Start it by running 'npm run dev' in the Backend folder.`;
 
@@ -183,11 +184,11 @@ export async function POST(request: NextRequest) {
                         success: false,
                         message: errorMessage,
                         error: 'BACKEND_CONNECTION_ERROR',
-                        backendUrl: BACKEND_API_URL,
+                        backendUrl: BACKEND_URL,
                         troubleshooting: [
                             '1. Check if backend server is running: cd Backend && npm run dev',
                             '2. Verify backend is running on port 3100',
-                            '3. Check BACKEND_API_URL environment variable',
+                            '3. Check NEXT_PUBLIC_BACKEND_URL environment variable',
                             '4. Ensure no firewall is blocking the connection',
                         ],
                     },

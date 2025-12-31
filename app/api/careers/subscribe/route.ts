@@ -4,7 +4,7 @@ import { checkCareerRateLimit } from '@/lib/rateLimit';
 // ============================================================================
 // Backend API Configuration
 // ============================================================================
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:3100';
+import { BACKEND_URL } from '@/lib/config';
 
 // ============================================================================
 // API Route Handler
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
 
         // Forward request to backend API
-        const backendResponse = await fetch(`${BACKEND_API_URL}/api/careers/subscribe`, {
+        const backendResponse = await fetch(`${BACKEND_URL}/api/careers/subscribe`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
