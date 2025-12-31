@@ -15,7 +15,7 @@ export default function AboutPage() {
         name: 'PandaPath',
         description: 'Full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.',
         url: 'https://pandapaths.com',
-        logo: 'https://pandapaths.com/logo.png',
+        logo: '/images/logo.png',
         foundingDate: '2020',
         sameAs: [
             'https://twitter.com/pandapaths',

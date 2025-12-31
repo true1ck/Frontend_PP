@@ -8,10 +8,20 @@ const Footer = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* Company Info */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
-            <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-4 sm:mb-4">
-              🐼 PandaPath
-            </h1>
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2 flex flex-col items-center">
+            <div className="flex items-center space-x-2 mb-2">
+                <div className="flex items-center justify-center h-12 w-12 md:h-[3.2rem] md:w-[3.2rem] rounded-full bg-white overflow-hidden p-[1.5px]">
+                  <img src="/images/logo.png" alt="PandaPaths Logo" className="h-full w-full object-cover" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </div>
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-display select-none">
+                {/* Light mode: Panda in dark, Path in cyan */}
+                <span className="inline dark:hidden">
+                  <span style={{ color: '#232b36' }}>Panda</span><span style={{ color: '#19c3d6' }}>Path</span>
+                </span>
+                {/* Dark mode: fallback to white text */}
+                <span className="hidden dark:inline text-white">PandaPaths</span>
+              </span>
+            </div>
             <p className="footer-text font-bold text-sm sm:text-base mb-4 text-center">
               Building scalable software, AI, and cloud-native systems.
             </p>

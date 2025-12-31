@@ -51,12 +51,23 @@ const Navigation = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 md:py-5">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-lg sm:text-xl md:text-2xl font-bold font-display bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500 bg-clip-text text-transparent"
-            >
-              🐼 PandaPath
-            </motion.div>
+              <div className="flex items-center justify-center h-11 w-11 sm:h-[2.7rem] sm:w-[2.7rem] md:h-[3.2rem] md:w-[3.2rem] rounded-full bg-white overflow-hidden p-[1.5px]">
+                <motion.img
+                  whileHover={{ scale: 1.05 }}
+                  src="/images/logo.png"
+                  alt="PandaPaths Logo"
+                  className="h-full w-full object-cover"
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                />
+              </div>
+            <span className="text-lg sm:text-xl md:text-2xl font-bold font-display select-none">
+              {/* Light mode: Panda in dark, Path in cyan */}
+              <span className="inline dark:hidden">
+                <span style={{ color: '#232b36' }}>Panda</span><span style={{ color: '#19c3d6' }}>Path</span>
+              </span>
+              {/* Dark mode: fallback to white text */}
+              <span className="hidden dark:inline text-white">PandaPaths</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
