@@ -57,7 +57,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800/50 mt-6 sm:mt-8 md:mt-10 pt-6 sm:pt-8 md:pt-10 text-center footer-text text-xs sm:text-sm">
-          <p>&copy; {currentYear} PandaPaths. All rights reserved.</p>
+          <p>&copy; 2025 PandaPaths. All rights reserved.</p>
         </div>
       </div>
     </footer>
