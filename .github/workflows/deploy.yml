@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allow manual triggering from GitHub Actions UI
 
 env:
-  NODE_VERSION: '18.17.0' # Matches package.json engines requirement
+  NODE_VERSION: '20.18.0' # Next.js 16 requires Node.js >=20.9.0
   DEPLOY_PATH: /var/www/pandapath.in # Change to /var/www/app.pandapath.in for app repo
 
 jobs:
