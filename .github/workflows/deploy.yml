@@ -27,16 +27,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
       
       # Step 3: Install dependencies (using npm ci for reproducible builds)
       - name: Install dependencies
-        working-directory: ./Frontend_PP
         run: npm ci --prefer-offline --no-audit
       
       # Step 4: Validate required environment variables
       - name: Validate environment variables
-        working-directory: ./Frontend_PP
         run: |
           echo "Validating required environment variables..."
           
@@ -69,7 +67,6 @@ jobs:
       # 
       # Note: Build will fail if NEXT_PUBLIC_BACKEND_URL is missing (validated in lib/config.ts)
       - name: Build application
-        working-directory: ./Frontend_PP
         run: |
           # Set environment variables with fallback handling (GitHub Actions doesn't support || in YAML)
           export NODE_ENV=production
@@ -108,7 +105,6 @@ jobs:
       # Step 6: Prepare deployment artifacts in dist directory
       # Handles both static export (out/) and standard Next.js build (.next/)
       - name: Prepare deployment package
-        working-directory: ./Frontend_PP
         run: |
           mkdir -p dist
           
@@ -154,8 +150,8 @@ jobs:
       # Step 7: Create compressed archive for faster transfer
       - name: Create deployment archive
         run: |
-          cd Frontend_PP/dist
-          tar -czf ../../deploy.tar.gz .
+          cd dist
+          tar -czf ../deploy.tar.gz .
       
       # Step 8: Transfer archive to EC2 via SCP
       - name: Transfer files to EC2
