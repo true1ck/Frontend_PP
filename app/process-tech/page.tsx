@@ -13,10 +13,10 @@ export default function ProcessTechPage() {
     return (
         <>
             {/* Hero */}
-            <Section className="pt-32 pb-20">
+            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
                 <div className="max-w-4xl mx-auto text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-5xl md:text-7xl font-bold font-display mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
+                        <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight pb-2 mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
                             Process & Technology
                         </h1>
                     </ScrollReveal>
@@ -29,7 +29,7 @@ export default function ProcessTechPage() {
             </Section>
 
             {/* Process Section */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <div className="text-center mb-16">
@@ -47,7 +47,7 @@ export default function ProcessTechPage() {
             </Section>
 
             {/* Methodology */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 text-purple-400">
@@ -90,7 +90,7 @@ export default function ProcessTechPage() {
             </Section>
 
             {/* Technology Stack */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-7xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <div className="text-center mb-16">
@@ -108,7 +108,7 @@ export default function ProcessTechPage() {
             </Section>
 
             {/* Why Our Stack */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 text-cyan-400">
@@ -155,7 +155,7 @@ export default function ProcessTechPage() {
             </Section>
 
             {/* CTA */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <ScrollReveal variant="scale">
                     <div className="max-w-4xl mx-auto text-center glass p-12 rounded-2xl border border-gray-700">
                         <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">

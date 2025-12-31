@@ -134,7 +134,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </Section>
 
             {/* Challenge */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-5xl mx-auto">
                     <ScrollReveal variant="slideUp">
                         <div className="glass p-8 md:p-12 rounded-2xl border border-gray-700">
@@ -150,7 +150,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </Section>
 
             {/* Solution */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-5xl mx-auto">
                     <ScrollReveal variant="slideUp">
                         <div className="glass p-8 md:p-12 rounded-2xl border border-gray-700">
@@ -182,7 +182,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             </Section>
 
             {/* Results */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-5xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
@@ -220,7 +220,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
             {/* Testimonial */}
             {caseStudy.testimonial && (
-                <Section className="py-20">
+                <Section className="py-8">
                     <div className="max-w-4xl mx-auto">
                         <ScrollReveal variant="scale">
                             <div className="glass p-8 md:p-12 rounded-2xl border border-gray-700 text-center">
@@ -241,7 +241,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             )}
 
             {/* CTA */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <ScrollReveal variant="scale">
                     <div className="max-w-4xl mx-auto text-center glass p-12 rounded-2xl border border-gray-700">
                         <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">

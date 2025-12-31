@@ -94,10 +94,10 @@ export default function ContactPage() {
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        
+
         // Restrict input based on field type
         let processedValue = value;
-        
+
         if (name === 'name') {
             // Only allow letters, spaces, hyphens, and apostrophes
             processedValue = value.replace(/[^a-zA-Z\s\-']/g, '');
@@ -105,7 +105,7 @@ export default function ContactPage() {
             // Only allow numbers
             processedValue = value.replace(/\D/g, '');
         }
-        
+
         setFormData((prev) => ({ ...prev, [name]: processedValue }));
         // Clear error when user starts typing
         if (errors[name]) {
@@ -334,7 +334,7 @@ export default function ContactPage() {
             const marketingData = getMarketingData();
 
             // Combine country code and phone number
-            const fullPhoneNumber = formData.countryCode.trim() 
+            const fullPhoneNumber = formData.countryCode.trim()
                 ? `+${formData.countryCode.trim()}${formData.phone.trim()}`
                 : formData.phone.trim();
 
@@ -472,10 +472,10 @@ export default function ContactPage() {
     return (
         <>
             {/* Hero */}
-            <Section className="pt-32 pb-20">
+            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
                 <div className="max-w-4xl mx-auto text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-5xl md:text-7xl font-bold font-display mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
+                        <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight pb-2 mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
                             Let&apos;s Build Something Amazing
                         </h1>
                     </ScrollReveal>
@@ -488,7 +488,7 @@ export default function ContactPage() {
             </Section>
 
             {/* Contact Form & Info */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-3 gap-12">
                         {/* Contact Info */}

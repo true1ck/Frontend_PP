@@ -22,7 +22,7 @@ export default function Home() {
       */}
 
       {/* Technology Stack section from Process & Tech page */}
-      <Section className="py-20">
+      <Section className="py-8">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal variant="fadeIn">
             <div className="text-center mb-16">

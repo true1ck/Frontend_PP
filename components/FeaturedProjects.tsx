@@ -30,7 +30,7 @@ const FeaturedProjects = () => {
       client: 'PayFlow',
       description: 'Cross-platform mobile app for seamless money transfers with biometric authentication.',
       technologies: ['Flutter', 'Firebase', 'AWS', 'Stripe'],
-      badges: ['Cloud-native mobile stack ','Enterprise-grade security ','Real-time transaction flow'],
+      badges: ['Cloud-native mobile stack ', 'Enterprise-grade security ', 'Real-time transaction flow'],
 
       // badgeIcon: '🚀',
       badgeColor: 'yellow',
@@ -38,7 +38,7 @@ const FeaturedProjects = () => {
   ];
 
   return (
-    <Section className="pb-0 -mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
+    <Section className="py-8">
       <div className="text-center mb-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion';
 import Section from './Section';
 import Card from './Card';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const ServicesOverview = () => {
+  const { theme } = useTheme();
   const services = [
     {
       title: 'Web Development',
@@ -45,7 +47,7 @@ const ServicesOverview = () => {
   ];
 
   return (
-    <Section className="pt-0 -mt-12 sm:-mt-16 md:-mt-20 lg:-mt-24 -mb-12 sm:-mb-16 md:-mb-20 lg:-mb-24">
+    <Section className="py-8">
       <div className="text-center mb-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -78,7 +80,7 @@ const ServicesOverview = () => {
           >
             <Card className="h-full">
               <div className="text-4xl sm:text-5xl mb-3 sm:mb-4">{service.icon}</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">{service.title}</h3>
+              <h3 className={`text-xl sm:text-2xl font-bold mb-2 sm:mb-3 transition-colors ${theme === 'light' ? 'text-gray-900 hover:text-gray-700' : 'text-white hover:text-cyan-400'}`}>{service.title}</h3>
               <p className="text-sm sm:text-base text-gray-400 mb-3 sm:mb-4">{service.description}</p>
               <div className="flex flex-wrap gap-2">
                 {service.technologies.map((tech) => (

@@ -38,7 +38,7 @@ const OurProcess = () => {
   ];
 
   return (
-    <Section className="pt-0 -mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
+    <Section className="py-8">
       <div className="text-center mb-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

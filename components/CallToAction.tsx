@@ -6,7 +6,7 @@ import Button from './Button';
 
 const CallToAction = () => {
   return (
-    <Section className="relative overflow-hidden -mt-8 sm:-mt-12 md:-mt-16 -mb-8 sm:-mb-12 md:-mb-16">
+    <Section className="relative overflow-hidden py-8">
 
 
       <motion.div

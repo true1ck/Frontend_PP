@@ -8,14 +8,14 @@ import Section from './Section';
 import { useTheme } from '@/contexts/ThemeContext';
 
 // Lazy load heavy 3D components to improve initial page load
-const TechSphere = dynamic(() => import('./TechSphereWrapper'), { 
+const TechSphere = dynamic(() => import('./TechSphereWrapper'), {
   ssr: false,
   loading: () => (
     <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
   )
 });
 
-const FluidCursor = dynamic(() => import('./FluidCursor'), { 
+const FluidCursor = dynamic(() => import('./FluidCursor'), {
   ssr: false,
   loading: () => (
     <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
@@ -31,7 +31,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <Section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-24 px-4 sm:px-6 md:px-8">
+    <Section className="relative min-h-screen flex items-center justify-center overflow-hidden !pt-32 md:!pt-30 lg:!pt-40 px-4 sm:px-6 md:px-8">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
 

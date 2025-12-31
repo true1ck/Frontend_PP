@@ -95,10 +95,10 @@ export default function ServicesPage() {
     return (
         <>
             {/* Hero Section */}
-            <Section className="pt-32 pb-20">
+            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
                 <div className="max-w-4xl mx-auto text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-display mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold font-display leading-tight pb-2 mb-6 sm:mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
                             Our Services
                         </h1>
                     </ScrollReveal>
@@ -112,7 +112,7 @@ export default function ServicesPage() {
             </Section>
 
             {/* Services Grid */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                         {services.map((service, index) => (
@@ -127,7 +127,7 @@ export default function ServicesPage() {
                                         <div className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300">
                                             {service.icon}
                                         </div>
-                                        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-display text-blue-400 group-hover:text-cyan-400 transition-colors">
+                                        <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold font-display transition-colors ${theme === 'light' ? 'text-gray-900 group-hover:text-gray-600' : 'text-blue-400 group-hover:text-cyan-400'}`}>
                                             {service.title}
                                         </h2>
                                     </div>
@@ -214,7 +214,7 @@ export default function ServicesPage() {
             </Section>
 
             {/* CTA Section */}
-            <Section className="py-20">
+            <Section className="py-8">
                 <ScrollReveal variant="scale">
                     <div className="max-w-4xl mx-auto text-center glass p-6 sm:p-8 md:p-12 rounded-2xl border border-gray-700">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-4 sm:mb-6">

@@ -5,7 +5,7 @@ import Section from './Section';
 
 const WhoWeAre = () => {
   return (
-    <Section className="pb-0 -mt-12 sm:-mt-16 md:-mt-20 lg:-mt-24 -mb-12 sm:-mb-16 md:-mb-20 lg:-mb-24">
+    <Section className="py-8">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
