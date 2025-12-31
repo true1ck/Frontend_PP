@@ -1,0 +1,248 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual triggering from GitHub Actions UI
+
+env:
+  NODE_VERSION: '18.17.0' # Matches package.json engines requirement
+  DEPLOY_PATH: /var/www/pandapath.in # Change to /var/www/app.pandapath.in for app repo
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # Prevent hanging workflows
+    
+    steps:
+      # Step 1: Checkout repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Step 2: Setup Node.js with caching for faster builds
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: Frontend_PP/package-lock.json
+      
+      # Step 3: Install dependencies (using npm ci for reproducible builds)
+      - name: Install dependencies
+        working-directory: ./Frontend_PP
+        run: npm ci --prefer-offline --no-audit
+      
+      # Step 4: Validate required environment variables
+      - name: Validate environment variables
+        working-directory: ./Frontend_PP
+        run: |
+          echo "Validating required environment variables..."
+          
+          # Check if NEXT_PUBLIC_BACKEND_URL is set (required)
+          BACKEND_URL="${{ secrets.NEXT_PUBLIC_BACKEND_URL }}"
+          if [ -z "$BACKEND_URL" ]; then
+            echo "⚠️  NEXT_PUBLIC_BACKEND_URL not set in secrets, will use default: https://api.pandapath.in"
+          else
+            echo "✓ NEXT_PUBLIC_BACKEND_URL is set: $BACKEND_URL"
+          fi
+          
+          # Check Sanity configuration
+          if [ -z "${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}" ]; then
+            echo "⚠️  WARNING: NEXT_PUBLIC_SANITY_PROJECT_ID not set (Sanity features may not work)"
+          else
+            echo "✓ NEXT_PUBLIC_SANITY_PROJECT_ID is set"
+          fi
+          
+          echo "Environment validation complete"
+      
+      # Step 5: Build the application
+      # Using 'npm run build' (not 'npm run prod') because:
+      # - 'prod' runs 'build && start' which starts a Node.js server
+      # - For static file serving with Nginx, we only need build artifacts
+      # - Static export: ensure next.config.mjs has output: 'export'
+      # - Static export outputs to 'out' directory, which we'll copy to 'dist'
+      # 
+      # IMPORTANT: With static export (output: 'export'), NEXT_PUBLIC_* variables
+      # are baked into the JavaScript at build time. Changing backend URL requires rebuild.
+      # 
+      # Note: Build will fail if NEXT_PUBLIC_BACKEND_URL is missing (validated in lib/config.ts)
+      - name: Build application
+        working-directory: ./Frontend_PP
+        run: |
+          # Set environment variables with fallback handling (GitHub Actions doesn't support || in YAML)
+          export NODE_ENV=production
+          
+          # Backend API URL - required, fallback to production URL if not set
+          if [ -z "${{ secrets.NEXT_PUBLIC_BACKEND_URL }}" ]; then
+            export NEXT_PUBLIC_BACKEND_URL="https://api.pandapath.in"
+            echo "⚠️  Using default NEXT_PUBLIC_BACKEND_URL: https://api.pandapath.in"
+          else
+            export NEXT_PUBLIC_BACKEND_URL="${{ secrets.NEXT_PUBLIC_BACKEND_URL }}"
+            echo "✓ Using NEXT_PUBLIC_BACKEND_URL from secrets"
+          fi
+          
+          # Sanity CMS configuration (public variables only)
+          if [ -n "${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}" ]; then
+            export NEXT_PUBLIC_SANITY_PROJECT_ID="${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}"
+          fi
+          
+          if [ -n "${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}" ]; then
+            export NEXT_PUBLIC_SANITY_DATASET="${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}"
+          else
+            export NEXT_PUBLIC_SANITY_DATASET="production"
+          fi
+          
+          # Note: SANITY_API_TOKEN is server-only and should NOT be in frontend build
+          # It's only needed for server-side ISR revalidation or server-only queries
+          
+          echo "Building with environment:"
+          echo "  NODE_ENV=$NODE_ENV"
+          echo "  NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL"
+          echo "  NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID:-not set}"
+          echo "  NEXT_PUBLIC_SANITY_DATASET=$NEXT_PUBLIC_SANITY_DATASET"
+          
+          npm run build
+      
+      # Step 6: Prepare deployment artifacts in dist directory
+      # Handles both static export (out/) and standard Next.js build (.next/)
+      - name: Prepare deployment package
+        working-directory: ./Frontend_PP
+        run: |
+          mkdir -p dist
+          
+          # Check if static export was used (output: 'export' in next.config)
+          if [ -d "out" ]; then
+            echo "✓ Detected static export, copying from 'out' directory"
+            cp -r out/* dist/
+          elif [ -d ".next" ]; then
+            # Standard Next.js build detected - this requires Node.js server
+            echo "⚠️  WARNING: Standard Next.js build detected (.next directory)"
+            echo "   This requires 'next start' to run, not static file serving"
+            echo "   For static file serving with Nginx, configure static export:"
+            echo "   Add 'output: \"export\"' to next.config.mjs"
+            echo ""
+            echo "   Copying .next directory (will need Node.js server to run)"
+            cp -r .next dist/.next
+            # Copy public assets
+            if [ -d "public" ]; then
+              cp -r public dist/public
+            fi
+            # Copy package files needed for next start
+            cp package.json dist/ 2>/dev/null || true
+            cp package-lock.json dist/ 2>/dev/null || true
+            cp next.config.mjs dist/ 2>/dev/null || true
+          else
+            echo "✗ ERROR: No build output found (neither 'out' nor '.next' directory)"
+            echo "   Build may have failed. Check build logs above."
+            exit 1
+          fi
+          
+          # Verify dist directory has content
+          if [ ! "$(ls -A dist)" ]; then
+            echo "✗ ERROR: dist directory is empty after preparation"
+            exit 1
+          fi
+          
+          # Create deployment metadata (non-sensitive)
+          echo "Deployed: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" > dist/.deploy-info
+          echo "Commit: ${{ github.sha }}" >> dist/.deploy-info
+          echo "Branch: ${{ github.ref_name }}" >> dist/.deploy-info
+          echo "✓ Deployment package prepared successfully"
+      
+      # Step 7: Create compressed archive for faster transfer
+      - name: Create deployment archive
+        run: |
+          cd Frontend_PP/dist
+          tar -czf ../../deploy.tar.gz .
+      
+      # Step 8: Transfer archive to EC2 via SCP
+      - name: Transfer files to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: 22
+          source: "deploy.tar.gz"
+          target: "/tmp"
+          strip_components: 0
+          # Suppress output to avoid exposing secrets
+          debug: false
+      
+      # Step 9: Extract files and deploy on EC2 server
+      - name: Deploy files on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: 22
+          script: |
+            set -e  # Exit on error
+            
+            DEPLOY_PATH="${{ env.DEPLOY_PATH }}"
+            
+            # Create backup of existing deployment (safety measure)
+            if [ -d "$DEPLOY_PATH" ] && [ "$(ls -A $DEPLOY_PATH 2>/dev/null)" ]; then
+              BACKUP_DIR="/tmp/pandapath_backup_$(date +%Y%m%d_%H%M%S)"
+              echo "Creating backup at $BACKUP_DIR"
+              sudo cp -r "$DEPLOY_PATH" "$BACKUP_DIR" || true
+            fi
+            
+            # Ensure deployment directory exists
+            sudo mkdir -p "$DEPLOY_PATH"
+            
+            # Remove old files (clean deployment)
+            echo "Cleaning old files from $DEPLOY_PATH"
+            sudo find "$DEPLOY_PATH" -mindepth 1 -delete || true
+            
+            # Extract new deployment
+            echo "Extracting new deployment"
+            cd /tmp
+            sudo tar -xzf deploy.tar.gz -C "$DEPLOY_PATH"
+            
+            # Set proper ownership for Nginx (www-data on Ubuntu/Debian)
+            echo "Setting file ownership"
+            sudo chown -R www-data:www-data "$DEPLOY_PATH" 2>/dev/null || \
+            sudo chown -R nginx:nginx "$DEPLOY_PATH" 2>/dev/null || true
+            
+            # Set proper permissions (directories: 755, files: 644)
+            echo "Setting file permissions"
+            sudo find "$DEPLOY_PATH" -type d -exec chmod 755 {} \;
+            sudo find "$DEPLOY_PATH" -type f -exec chmod 644 {} \;
+            
+            # Harden permissions: remove other (world) read/write/execute
+            echo "Hardening permissions (removing world access)"
+            sudo chmod -R o-rwx "$DEPLOY_PATH"
+            
+            # Clean up temporary files
+            rm -f /tmp/deploy.tar.gz
+            
+            # Reload Nginx to ensure it serves new files
+            echo "Reloading Nginx"
+            sudo systemctl reload nginx 2>/dev/null || \
+            sudo service nginx reload 2>/dev/null || true
+            
+            echo "✓ Deployment completed successfully"
+      
+      # Step 10: Verify deployment was successful
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: 22
+          script: |
+            DEPLOY_PATH="${{ env.DEPLOY_PATH }}"
+            
+            if [ -d "$DEPLOY_PATH" ] && [ "$(ls -A $DEPLOY_PATH 2>/dev/null)" ]; then
+              echo "✓ Deployment verified: Files exist in $DEPLOY_PATH"
+              echo "File count: $(find $DEPLOY_PATH -type f | wc -l)"
+            else
+              echo "✗ Deployment verification failed: Directory is empty or missing"
+              exit 1
+            fi
+
