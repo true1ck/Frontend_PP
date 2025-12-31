@@ -51,12 +51,16 @@ const Navigation = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 md:py-5">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <motion.div
+            <motion.img
               whileHover={{ scale: 1.05 }}
-              className="text-lg sm:text-xl md:text-2xl font-bold font-display bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500 bg-clip-text text-transparent"
-            >
-              🐼 PandaPaths
-            </motion.div>
+              src="/images/logo.png"
+              alt="PandaPaths Logo"
+              className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 object-contain"
+              style={{ maxWidth: '3rem', maxHeight: '3rem' }}
+            />
+            <span className="text-lg sm:text-xl md:text-2xl font-bold font-display bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500 bg-clip-text text-transparent select-none">
+              PandaPaths
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

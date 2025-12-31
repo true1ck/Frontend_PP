@@ -8,10 +8,13 @@ const Footer = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* Company Info */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
-            <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-4 sm:mb-4">
-              🐼 PandaPaths
-            </h1>
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2 flex flex-col items-center">
+            <div className="flex items-center space-x-2 mb-2">
+              <img src="/images/logo.png" alt="PandaPaths Logo" className="h-12 w-12 md:h-16 md:w-16 object-contain" style={{ maxWidth: '4rem', maxHeight: '4rem' }} />
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent select-none">
+                PandaPaths
+              </span>
+            </div>
             <p className="footer-text font-bold text-sm sm:text-base mb-4 text-center">
               Building scalable software, AI, and cloud-native systems.
             </p>
