@@ -10,9 +10,16 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 sm:col-span-2 lg:col-span-2 flex flex-col items-center">
             <div className="flex items-center space-x-2 mb-2">
-              <img src="/images/logo.png" alt="PandaPaths Logo" className="h-12 w-12 md:h-16 md:w-16 object-contain" style={{ maxWidth: '4rem', maxHeight: '4rem' }} />
-              <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-display bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent select-none">
-                PandaPaths
+                <div className="flex items-center justify-center h-12 w-12 md:h-[3.2rem] md:w-[3.2rem] rounded-full bg-white overflow-hidden p-[1.5px]">
+                  <img src="/images/logo.png" alt="PandaPaths Logo" className="h-full w-full object-cover" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </div>
+              <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-display select-none">
+                {/* Light mode: Panda in dark, Path in cyan */}
+                <span className="inline dark:hidden">
+                  <span style={{ color: '#232b36' }}>Panda</span><span style={{ color: '#19c3d6' }}>Path</span>
+                </span>
+                {/* Dark mode: fallback to white text */}
+                <span className="hidden dark:inline text-white">PandaPaths</span>
               </span>
             </div>
             <p className="footer-text font-bold text-sm sm:text-base mb-4 text-center">

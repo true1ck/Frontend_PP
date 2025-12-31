@@ -312,9 +312,9 @@ export function sanitizeContactFormData(data: any): any {
     
     if (Array.isArray(data.techStack)) {
         sanitized.techStack = data.techStack
-            .filter(item => typeof item === 'string')
-            .map(item => sanitizeString(item, 100))
-            .filter(item => item.length > 0);
+            .filter((item: unknown): item is string => typeof item === 'string')
+            .map((item: string) => sanitizeString(item, 100))
+            .filter((item: string) => item.length > 0);
     }
     
     if (data.teamSize !== undefined) {
@@ -327,16 +327,16 @@ export function sanitizeContactFormData(data: any): any {
     
     if (Array.isArray(data.integrationRequirements)) {
         sanitized.integrationRequirements = data.integrationRequirements
-            .filter(item => typeof item === 'string')
-            .map(item => sanitizeString(item, 255))
-            .filter(item => item.length > 0);
+            .filter((item: unknown): item is string => typeof item === 'string')
+            .map((item: string) => sanitizeString(item, 255))
+            .filter((item: string) => item.length > 0);
     }
     
     if (Array.isArray(data.complianceNeeds)) {
         sanitized.complianceNeeds = data.complianceNeeds
-            .filter(item => typeof item === 'string')
-            .map(item => sanitizeString(item, 255))
-            .filter(item => item.length > 0);
+            .filter((item: unknown): item is string => typeof item === 'string')
+            .map((item: string) => sanitizeString(item, 255))
+            .filter((item: string) => item.length > 0);
     }
     
     // Communication preferences
@@ -375,16 +375,16 @@ export function sanitizeContactFormData(data: any): any {
     
     if (Array.isArray(data.competitors)) {
         sanitized.competitors = data.competitors
-            .filter(item => typeof item === 'string')
-            .map(item => sanitizeString(item, 255))
-            .filter(item => item.length > 0);
+            .filter((item: unknown): item is string => typeof item === 'string')
+            .map((item: string) => sanitizeString(item, 255))
+            .filter((item: string) => item.length > 0);
     }
     
     if (Array.isArray(data.painPoints)) {
         sanitized.painPoints = data.painPoints
-            .filter(item => typeof item === 'string')
-            .map(item => sanitizeString(item, 255))
-            .filter(item => item.length > 0);
+            .filter((item: unknown): item is string => typeof item === 'string')
+            .map((item: string) => sanitizeString(item, 255))
+            .filter((item: string) => item.length > 0);
     }
     
     return sanitized;
