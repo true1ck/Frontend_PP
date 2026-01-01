@@ -59,6 +59,13 @@ interface PageProps {
     }>;
 }
 
+// Generate static params for all case study slugs (required for static export)
+export async function generateStaticParams() {
+    return Object.keys(caseStudiesData).map((slug) => ({
+        slug: slug,
+    }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     const caseStudy = caseStudiesData[slug];
