@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://pandapaths.com';
+    const baseUrl = 'https://pandapath.in';
 
     // Static pages
     const staticPages = [
