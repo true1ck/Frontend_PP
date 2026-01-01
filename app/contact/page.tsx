@@ -8,6 +8,7 @@ import Textarea from '@/components/ui/Textarea';
 import Select from '@/components/ui/Select';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
+import { BACKEND_URL } from '@/lib/config';
 
 export default function ContactPage() {
     const { theme } = useTheme();
@@ -400,8 +401,8 @@ export default function ContactPage() {
                 painPoints: formData.painPoints.length > 0 ? formData.painPoints : undefined,
             };
 
-            // Call API endpoint
-            const response = await fetch('/api/contact', {
+            // Call backend API directly (static export doesn't support API routes)
+            const response = await fetch(`${BACKEND_URL}/api/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
