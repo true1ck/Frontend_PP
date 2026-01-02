@@ -11,6 +11,11 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,12 +66,16 @@ const Navigation = () => {
                 />
               </div>
             <span className="text-lg sm:text-xl md:text-2xl font-bold font-display select-none">
-              {/* Light mode: Panda in dark, Path in cyan */}
-              <span className="inline dark:hidden">
-                <span style={{ color: '#232b36' }}>Panda</span><span style={{ color: '#19c3d6' }}>Path</span>
-              </span>
-              {/* Dark mode: fallback to white text */}
-              <span className="hidden dark:inline text-white">PandaPaths</span>
+              {!mounted || theme === 'light' ? (
+                // Light mode: Panda in dark, Path in cyan
+                <>
+                  <span style={{ color: '#232b36' }}>Panda</span>
+                  <span style={{ color: '#19c3d6' }}>Path</span>
+                </>
+              ) : (
+                // Dark mode: white text
+                <span className="text-white">PandaPath</span>
+              )}
             </span>
           </Link>
 

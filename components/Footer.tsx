@@ -1,7 +1,17 @@
+'use client';
+
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <footer className="glass border-t border-gray-800/50">
@@ -14,12 +24,16 @@ const Footer = () => {
                   <img src="/images/logo.png" alt="PandaPaths Logo" className="h-full w-full object-cover" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                 </div>
               <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-display select-none">
-                {/* Light mode: Panda in dark, Path in cyan */}
-                <span className="inline dark:hidden">
-                  <span style={{ color: '#232b36' }}>Panda</span><span style={{ color: '#19c3d6' }}>Path</span>
-                </span>
-                {/* Dark mode: fallback to white text */}
-                <span className="hidden dark:inline text-white">PandaPaths</span>
+                {!mounted || theme === 'light' ? (
+                  // Light mode: Panda in dark, Path in cyan
+                  <>
+                    <span style={{ color: '#232b36' }}>Panda</span>
+                    <span style={{ color: '#19c3d6' }}>Path</span>
+                  </>
+                ) : (
+                  // Dark mode: white text
+                  <span className="text-white">PandaPath</span>
+                )}
               </span>
             </div>
             <p className="footer-text font-bold text-sm sm:text-base mb-4 text-center">

@@ -31,7 +31,7 @@ const Hero = () => {
   }, [theme]);
 
   return (
-    <Section className="relative min-h-screen flex items-center justify-center overflow-hidden !pt-32 md:!pt-30 lg:!pt-40 px-4 sm:px-6 md:px-8">
+    <Section className="relative min-h-screen flex items-center justify-center overflow-hidden !pt-20 sm:!pt-28 md:!pt-30 lg:!pt-40 px-4 sm:px-6 md:px-8">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />
 
@@ -43,7 +43,7 @@ const Hero = () => {
               <FluidCursor />
             </Suspense>
           </div>
-          <div className={theme === 'dark' ? 'block w-full h-full' : 'hidden w-full h-full'}>
+          <div className={`${theme === 'dark' ? 'block' : 'hidden'} w-full h-full transform translate-y-8 sm:translate-y-12`}>
             <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/20 to-transparent" />}>
               <TechSphere />
             </Suspense>
@@ -52,7 +52,7 @@ const Hero = () => {
       )}
 
       {/* Hero Content */}
-      <div className="relative z-10 text-center max-w-5xl mx-auto w-full pointer-events-none px-2 sm:px-4">
+      <div className="relative z-10 text-center max-w-5xl mx-auto w-full pointer-events-none px-2 sm:px-4 -mt-8 sm:mt-0">
         <motion.div
           className="pointer-events-none"
           initial={{ opacity: 0, y: 30 }}
@@ -60,7 +60,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.h1
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display mb-4 sm:mb-6 md:mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent pointer-events-none px-2 sm:px-4 leading-tight"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display mb-2 sm:mb-6 md:mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent pointer-events-none px-2 sm:px-4 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -69,7 +69,7 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p
-            className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-300 mb-6 sm:mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto pointer-events-none px-2 sm:px-4 leading-relaxed"
+            className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-300 mb-4 sm:mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto pointer-events-none px-2 sm:px-4 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -94,7 +94,7 @@ const Hero = () => {
 
           {/* Floating Tech Labels */}
           <motion.div
-            className="mt-8 sm:mt-12 md:mt-16 flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center px-2 sm:px-4"
+            className="mt-4 sm:mt-12 md:mt-16 flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center px-2 sm:px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 1 }}
@@ -112,18 +112,16 @@ const Hero = () => {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
-      </div>
 
-      {/* Scroll Indicator - Subtle & Centered */}
-      <motion.button
-        onClick={() => {
-          const nextSection = document.getElementById('who-we-are');
-          if (nextSection) {
-            nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }}
-        className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-20 pointer-events-auto cursor-pointer group"
+          {/* Scroll Indicator - Just Below Tech Tags */}
+          <motion.button
+            onClick={() => {
+              const nextSection = document.getElementById('who-we-are');
+              if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            className="mt-6 sm:mt-8 md:mt-12 pointer-events-auto cursor-pointer group"
         aria-label="Scroll to next section"
         animate={{ y: [0, 6, 0] }}
         transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
@@ -147,7 +145,9 @@ const Hero = () => {
             />
           </motion.svg>
         </div>
-      </motion.button>
+          </motion.button>
+        </motion.div>
+      </div>
     </Section>
   );
 };
