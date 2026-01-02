@@ -115,16 +115,39 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 hidden sm:block"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+      {/* Scroll Indicator - Subtle & Centered */}
+      <motion.button
+        onClick={() => {
+          const nextSection = document.getElementById('who-we-are');
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }}
+        className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-20 pointer-events-auto cursor-pointer group"
+        aria-label="Scroll to next section"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </motion.div>
+        <div className="flex flex-col items-center gap-1">
+          <motion.svg
+            className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400/60 group-hover:text-cyan-400/80 transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            animate={{ y: [0, 3, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </motion.svg>
+        </div>
+      </motion.button>
     </Section>
   );
 };
