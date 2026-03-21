@@ -3,6 +3,7 @@ import { Inter, Poppins, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const inter = Inter({
@@ -25,18 +26,13 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "PandaPath - Engineering Digital Paths to the Future",
-  description: "PandaPath is a full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
-  keywords: ["IT Services", "Software Development", "AI Solutions", "Cloud Computing", "Web Development", "Mobile Apps"],
+  title: "PandaPath — AI Products for Indian Startups",
+  description: "We build WhatsApp AI bots, RAG systems, and full-stack AI products for Indian startups — shipped in 2–4 weeks. Based in Bangalore.",
+  keywords: ["AI agency Bangalore", "WhatsApp chatbot India", "RAG system India", "AI startup India", "software agency Bangalore", "AI development India"],
   authors: [{ name: "PandaPath" }],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   openGraph: {
-    title: "PandaPath - Engineering Digital Paths to the Future",
-    description: "Full-stack IT solutions company delivering scalable software, AI systems, and cloud-ready digital products.",
+    title: "PandaPath — AI Products for Indian Startups",
+    description: "WhatsApp bots, RAG systems, and full-stack AI builds — shipped in 2–4 weeks. Trusted by founders in Bangalore, Mumbai, and Delhi.",
     type: "website",
   },
 };
@@ -61,6 +57,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <WhatsAppButton />
         </ThemeProvider>
       </body>
     </html>

@@ -8,7 +8,7 @@ import { useState } from 'react';
 interface CaseStudyCardProps {
     slug: string;
     title: string;
-    client: string;
+    descriptor: string;
     description: string;
     technologies: string[];
     image?: string;
@@ -18,7 +18,7 @@ interface CaseStudyCardProps {
 const CaseStudyCard = ({
     slug,
     title,
-    client,
+    descriptor,
     description,
     technologies,
     image,
@@ -68,7 +68,7 @@ const CaseStudyCard = ({
 
                 {/* Content */}
                 <div className="p-6 flex-1 flex flex-col">
-                    <div className="text-sm text-cyan-400 font-mono mb-2">{client}</div>
+                    <div className="text-sm text-cyan-400 font-mono mb-2">{descriptor}</div>
                     <h3 className="text-xl font-bold font-display mb-3 group-hover:text-blue-400 transition-colors">
                         {title}
                     </h3>

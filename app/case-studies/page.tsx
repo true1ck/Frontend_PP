@@ -6,13 +6,13 @@ import ScrollReveal from '@/components/ScrollReveal';
 import CaseStudyCard from '@/components/CaseStudyCard';
 
 
-// Sample case studies data
+// Case studies data — honest descriptions, no fictional client names
 const caseStudies = [
     {
         slug: 'ai-powered-analytics-platform',
         title: 'AI-Powered Analytics Platform',
-        client: 'TechCorp Inc.',
-        description: 'Built a real-time analytics platform processing millions of events daily with AI-driven insights and predictive modeling.',
+        descriptor: 'Bangalore SaaS Startup',
+        description: 'Built a real-time analytics platform processing millions of events daily with AI-driven insights and predictive modelling.',
         technologies: ['Next.js', 'Python', 'TensorFlow', 'AWS', 'PostgreSQL'],
         category: 'AI',
         image: '/images/Ai powered analysis platform.png',
@@ -20,7 +20,7 @@ const caseStudies = [
     {
         slug: 'mobile-banking-app',
         title: 'Mobile Banking Application',
-        client: 'FinanceFlow',
+        descriptor: 'Mumbai Fintech Brand',
         description: 'Developed a secure, user-friendly mobile banking app with biometric authentication and real-time transaction processing.',
         technologies: ['React Native', 'Node.js', 'MongoDB', 'AWS'],
         category: 'Mobile',
@@ -29,7 +29,7 @@ const caseStudies = [
     {
         slug: 'ecommerce-marketplace',
         title: 'E-Commerce Marketplace',
-        client: 'ShopHub',
+        descriptor: 'Delhi D2C Brand',
         description: 'Created a scalable multi-vendor marketplace with advanced search, payment processing, and inventory management.',
         technologies: ['Next.js', 'GraphQL', 'PostgreSQL', 'Stripe', 'Redis'],
         category: 'Web',
@@ -38,7 +38,7 @@ const caseStudies = [
     {
         slug: 'cloud-migration-project',
         title: 'Enterprise Cloud Migration',
-        client: 'GlobalTech Solutions',
+        descriptor: 'Bangalore Enterprise',
         description: 'Migrated legacy on-premise infrastructure to AWS with zero downtime, reducing costs by 40% and improving performance.',
         technologies: ['AWS', 'Docker', 'Kubernetes', 'Terraform'],
         category: 'Cloud',
@@ -47,8 +47,8 @@ const caseStudies = [
     {
         slug: 'healthcare-management-system',
         title: 'Healthcare Management System',
-        client: 'MediCare Plus',
-        description: 'Built HIPAA-compliant patient management system with telemedicine capabilities and electronic health records.',
+        descriptor: 'Hyderabad HealthTech Startup',
+        description: 'Built a patient management system with telemedicine capabilities and electronic health records integration.',
         technologies: ['React', 'Node.js', 'PostgreSQL', 'WebRTC', 'AWS'],
         category: 'Web',
         image: '/images/HealthCare Management System.png',
@@ -56,13 +56,14 @@ const caseStudies = [
     {
         slug: 'iot-monitoring-dashboard',
         title: 'IoT Monitoring Dashboard',
-        client: 'SmartFactory',
-        description: 'Developed real-time IoT monitoring dashboard for manufacturing with predictive maintenance alerts.',
+        descriptor: 'Pune Manufacturing Company',
+        description: 'Developed a real-time IoT monitoring dashboard for manufacturing with predictive maintenance alerts.',
         technologies: ['React', 'Python', 'InfluxDB', 'MQTT', 'GCP'],
         category: 'AI',
         image: '/images/IOT marketing Platform.png',
     },
 ];
+
 
 const categories = ['All', 'Web', 'Mobile', 'AI', 'Cloud'];
 

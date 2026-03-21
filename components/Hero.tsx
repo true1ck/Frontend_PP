@@ -65,7 +65,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Engineering Digital Paths to the Future
+            We build AI products for Indian startups. Fast.
           </motion.h1>
 
           <motion.p
@@ -74,8 +74,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
-            PandaPath is a full-stack IT solutions company delivering scalable software,
-            AI systems, and cloud-ready digital products.
+            WhatsApp bots, RAG systems, and full-stack AI builds — shipped in 2–4 weeks.
+            Trusted by founders in Bangalore, Mumbai, and Delhi.
           </motion.p>
 
           <motion.div
@@ -85,10 +85,10 @@ const Hero = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <Button href="/contact" variant="primary">
-              Book a Free Consultation
+              Book a Free 20-Min Call
             </Button>
-            <Button href="/services" variant="outline">
-              View Our Services
+            <Button href="/case-studies" variant="outline">
+              See Our Work
             </Button>
           </motion.div>
 
@@ -99,7 +99,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 1 }}
           >
-            {['AI', 'Cloud', 'Mobile', 'Web'].map((tech, index) => (
+            {['WhatsApp AI', 'RAG Systems', 'Full-Stack', 'Indian Startups'].map((tech, index) => (
               <motion.div
                 key={tech}
                 className="glass px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-full text-xs sm:text-sm font-mono text-cyan-400 pointer-events-auto"

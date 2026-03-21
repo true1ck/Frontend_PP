@@ -484,7 +484,6 @@ export default function ContactPage() {
 
     return (
         <>
-            {/* Hero */}
             <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
                 <div className="max-w-4xl mx-auto text-center">
                     <ScrollReveal variant="fadeIn">
@@ -494,7 +493,7 @@ export default function ContactPage() {
                     </ScrollReveal>
                     <ScrollReveal delay={0.2}>
                         <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
-                            Tell us about your project and we&apos;ll get back to you within 24 hours.
+                            Book a free 20-minute call. Tell me what you&apos;re building — I&apos;ll tell you if we can ship it in 2–4 weeks and what it would cost. No pitch, no pressure.
                         </p>
                     </ScrollReveal>
                 </div>
@@ -536,7 +535,7 @@ export default function ContactPage() {
                                                 <div>
                                                     <div className="text-sm text-gray-400">Location</div>
                                                     <div className="text-gray-300">
-                                                        Panaji Goa, India
+                                                        Bangalore, Karnataka, India
                                                     </div>
                                                 </div>
                                             </div>
@@ -548,8 +547,42 @@ export default function ContactPage() {
                                                 <div>
                                                     <div className="text-sm text-gray-400">Hours</div>
                                                     <div className="text-gray-300">
-                                                        Mon-Fri: 9AM - 6PM PST
+                                                        Mon–Fri, 9AM–7PM IST
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="glass p-4 rounded-xl border border-gray-700">
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-2xl">💬</div>
+                                                <div>
+                                                    <div className="text-sm text-gray-400">Prefer WhatsApp?</div>
+                                                    <a
+                                                        href="https://wa.me/917411147986"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-green-400 font-semibold hover:text-green-300 transition-colors"
+                                                    >
+                                                        Message us directly →
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="glass p-4 rounded-xl border border-gray-700">
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-2xl">💼</div>
+                                                <div>
+                                                    <div className="text-sm text-gray-400">LinkedIn</div>
+                                                    <a
+                                                        href="https://www.linkedin.com/in/pandapaths/"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-blue-400 font-semibold hover:text-blue-300 transition-colors"
+                                                    >
+                                                        linkedin.com/in/pandapaths
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -600,166 +633,38 @@ export default function ContactPage() {
                                         </motion.div>
                                     ) : (
                                         <form onSubmit={handleSubmit} className="space-y-6">
-                                            <div className="grid md:grid-cols-2 gap-6">
-                                                <Input
-                                                    label="Name"
-                                                    name="name"
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                    error={errors.name}
-                                                    required
-                                                    placeholder="John Doe"
-                                                    helperText="Only letters, spaces, hyphens, and apostrophes allowed"
-                                                />
-                                                <Input
-                                                    label="Email"
-                                                    name="email"
-                                                    type="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                    error={errors.email}
-                                                    required
-                                                    placeholder="john@company.com"
-                                                />
-                                            </div>
-
-                                            {/* Phone Number Field - Grouped Design */}
-                                            <div className="space-y-2">
-                                                <label className={`block text-sm font-medium ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
-                                                    Phone Number <span className="text-red-400">*</span>
-                                                </label>
-                                                <div className="flex items-start gap-2">
-                                                    {/* Country Code - Compact */}
-                                                    <div className="w-20 flex-shrink-0">
-                                                        <motion.input
-                                                            name="countryCode"
-                                                            type="tel"
-                                                            value={formData.countryCode}
-                                                            onChange={handleChange}
-                                                            placeholder="+91"
-                                                            maxLength={4}
-                                                            whileFocus={{ scale: 1.02 }}
-                                                            className={`
-                                                                w-full px-2.5 py-3 rounded-lg
-                                                                glass border ${errors.countryCode ? 'border-red-500' : 'border-gray-700'}
-                                                                bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
-                                                                placeholder:text-gray-500
-                                                                focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
-                                                                transition-all duration-200
-                                                                text-center text-sm font-semibold
-                                                            `}
-                                                        />
-                                                    </div>
-                                                    {/* Phone Number - Main Field */}
-                                                    <div className="flex-1">
-                                                        <motion.input
-                                                            name="phone"
-                                                            type="tel"
-                                                            value={formData.phone}
-                                                            onChange={handleChange}
-                                                            placeholder="9876543210"
-                                                            maxLength={15}
-                                                            whileFocus={{ scale: 1.01 }}
-                                                            className={`
-                                                                w-full px-4 py-3 rounded-lg
-                                                                glass border ${errors.phone ? 'border-red-500' : 'border-gray-700'}
-                                                                bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
-                                                                placeholder:text-gray-500
-                                                                focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
-                                                                transition-all duration-200
-                                                            `}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                {/* Error Messages and Helper Text */}
-                                                <div className="flex items-start gap-2">
-                                                    <div className="w-20 flex-shrink-0">
-                                                        {errors.countryCode && (
-                                                            <motion.p
-                                                                initial={{ opacity: 0, y: -10 }}
-                                                                animate={{ opacity: 1, y: 0 }}
-                                                                className="text-xs text-red-400"
-                                                            >
-                                                                {errors.countryCode}
-                                                            </motion.p>
-                                                        )}
-                                                        {!errors.countryCode && !errors.phone && (
-                                                            <p className="text-xs text-gray-400">Code</p>
-                                                        )}
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        {errors.phone && (
-                                                            <motion.p
-                                                                initial={{ opacity: 0, y: -10 }}
-                                                                animate={{ opacity: 1, y: 0 }}
-                                                                className="text-xs text-red-400"
-                                                            >
-                                                                {errors.phone}
-                                                            </motion.p>
-                                                        )}
-                                                        {!errors.phone && !errors.countryCode && (
-                                                            <p className="text-xs text-gray-400">Enter your phone number (7-15 digits)</p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                             <Input
-                                                label="Company"
-                                                name="company"
-                                                value={formData.company}
+                                                label="Your Name"
+                                                name="name"
+                                                value={formData.name}
                                                 onChange={handleChange}
-                                                placeholder="Your Company Name (Optional)"
+                                                error={errors.name}
+                                                required
+                                                placeholder="e.g. Rahul Sharma"
+                                            />
+                                            <Input
+                                                label="Email"
+                                                name="email"
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                error={errors.email}
+                                                required
+                                                placeholder="rahul@yourstartup.in"
                                             />
 
                                             <Textarea
-                                                label="Project Description"
+                                                label="What do you want to build?"
                                                 name="projectDescription"
                                                 value={formData.projectDescription}
                                                 onChange={handleChange}
                                                 error={errors.projectDescription}
                                                 required
-                                                rows={5}
-                                                maxLength={1000}
+                                                rows={4}
+                                                maxLength={500}
                                                 showCharCount
-                                                placeholder="Tell us about your project, goals, and any specific requirements..."
+                                                placeholder="e.g. A WhatsApp bot for my D2C brand to handle customer questions automatically..."
                                             />
-
-                                            <div className="grid md:grid-cols-2 gap-6">
-                                                <div>
-                                                    <Select
-                                                        label="Budget Range"
-                                                        name="budget"
-                                                        value={formData.budget}
-                                                        onChange={handleChange}
-                                                        options={budgetOptions}
-                                                    />
-                                                    {formData.budget === 'custom' && (
-                                                        <div className="mt-4">
-                                                            <Input
-                                                                label="Custom Budget Amount"
-                                                                name="customBudget"
-                                                                type="text"
-                                                                value={customBudget}
-                                                                onChange={(e) => {
-                                                                    // Only allow numbers
-                                                                    const numbersOnly = e.target.value.replace(/\D/g, '');
-                                                                    setCustomBudget(numbersOnly);
-                                                                }}
-                                                                placeholder="Enter amount in ₹"
-                                                                helperText="Numbers only"
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <Select
-                                                    label="Timeline"
-                                                    name="timeline"
-                                                    value={formData.timeline}
-                                                    onChange={handleChange}
-                                                    options={timelineOptions}
-                                                />
-                                            </div>
 
                                             {errors.submit && (
                                                 <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm whitespace-pre-line">
@@ -775,6 +680,18 @@ export default function ContactPage() {
                                             >
                                                 {isSubmitting ? 'Sending...' : 'Send Message'}
                                             </motion.button>
+
+                                            <p className="text-center text-sm text-gray-400">
+                                                Prefer a quick chat?{' '}
+                                                <a
+                                                    href="https://wa.me/917411147986"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-green-400 hover:text-green-300 font-semibold"
+                                                >
+                                                    Message us on WhatsApp →
+                                                </a>
+                                            </p>
                                         </form>
                                     )}
                                 </div>

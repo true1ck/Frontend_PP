@@ -10,84 +10,71 @@ import { useTheme } from '@/contexts/ThemeContext';
 
 const services = [
     {
-        icon: '🌐',
-        title: 'Web Development',
-        description: 'Build lightning-fast, SEO-optimized web applications that scale with your business.',
-        technologies: ['React', 'Next.js', 'Vue', 'TypeScript'],
+        icon: '💬',
+        title: 'WhatsApp AI Bot',
+        tagline: 'from ₹25,000 · 2 weeks',
+        description: 'Build a fully automated WhatsApp assistant that handles customer queries, lead capture, support tickets, and sales — 24/7, without a human agent.',
+        technologies: ['WhatsApp Business API', 'LLMs', 'Node.js', 'Webhooks'],
         features: [
-            'Server-side rendering for optimal performance',
-            'Progressive Web Apps (PWA)',
-            'Responsive design across all devices',
-            'Advanced state management',
-            'Real-time features with WebSockets',
+            'Natural language conversation (Hindi + English)',
+            'CRM & sheet integration out of the box',
+            'Lead capture and auto-follow-up flows',
+            'Custom trained on your product/FAQs',
+            'Analytics dashboard for conversation insights',
         ],
+        color: 'from-green-500/20 to-emerald-500/20',
+        borderColor: 'hover:border-green-500/50',
     },
     {
-        icon: '📱',
-        title: 'Mobile App Development',
-        description: 'Native and cross-platform mobile applications that deliver exceptional user experiences.',
-        technologies: ['React Native', 'Flutter', 'iOS', 'Android'],
+        icon: '🧠',
+        title: 'RAG Knowledge System',
+        tagline: 'from ₹40,000 · 3 weeks',
+        description: 'Turn your documents, PDFs, SOPs, and knowledge base into a smart AI assistant your team or customers can query in plain English — no hallucinations.',
+        technologies: ['RAG', 'OpenAI / Gemini', 'Vector DB', 'Python'],
         features: [
-            'Native iOS and Android development',
-            'Cross-platform solutions',
-            'Offline-first architecture',
-            'Push notifications and deep linking',
-            'App Store optimization',
+            'Ingest PDFs, Notion, Google Docs, websites',
+            'Accurate retrieval — no hallucinations',
+            'Private deployment (your data stays yours)',
+            'Slack / WhatsApp / web widget integration',
+            'Role-based access control',
         ],
+        color: 'from-purple-500/20 to-violet-500/20',
+        borderColor: 'hover:border-purple-500/50',
     },
     {
-        icon: '🤖',
-        title: 'AI & Machine Learning',
-        description: 'Harness the power of AI to automate processes and unlock insights from your data.',
-        technologies: ['LLMs', 'RAG Systems', 'TensorFlow', 'PyTorch'],
+        icon: '🚀',
+        title: 'Full AI Product Build',
+        tagline: 'from ₹80,000 · 4–6 weeks',
+        description: 'End-to-end build of your AI-powered product — web app, mobile app, or platform — with production-grade architecture, APIs, and deployment included.',
+        technologies: ['Next.js', 'React Native', 'AI APIs', 'AWS / GCP'],
         features: [
-            'Custom LLM integration and fine-tuning',
-            'RAG (Retrieval Augmented Generation) systems',
-            'Computer vision and NLP solutions',
-            'Predictive analytics and forecasting',
-            'AI-powered chatbots and assistants',
+            'Full-stack web or mobile application',
+            'AI feature integration (chat, recommendations, automation)',
+            'Production deployment & CI/CD pipeline',
+            'Direct WhatsApp with developer — no account managers',
+            'Post-launch support for 30 days',
         ],
+        color: 'from-blue-500/20 to-cyan-500/20',
+        borderColor: 'hover:border-blue-500/50',
     },
     {
-        icon: '🏗️',
-        title: 'System Design & Architecture',
-        description: 'Scalable, maintainable system architectures that grow with your business needs.',
-        technologies: ['Microservices', 'Event-Driven', 'CQRS', 'DDD'],
+        icon: '🔍',
+        title: 'AI Business Audit',
+        tagline: '₹6,000 · 2 hours',
+        description: 'Not sure where to start with AI? We spend 2 hours reviewing your business and tell you exactly which AI tool or automation will save you the most time and money.',
+        technologies: ['Strategy', 'Process mapping', 'Tooling review'],
         features: [
-            'Microservices architecture design',
-            'Event-driven systems',
-            'Database schema design and optimization',
-            'API design and documentation',
-            'Performance optimization strategies',
+            '2-hour 1-on-1 deep-dive call',
+            'Written report of top 3 AI opportunities',
+            'Cost vs benefit breakdown for each',
+            'Recommended tools and implementation order',
+            'First project scoped and quoted at the end',
         ],
-    },
-    {
-        icon: '☁️',
-        title: 'Cloud & DevOps',
-        description: 'Robust cloud infrastructure and CI/CD pipelines for reliable, automated deployments.',
-        technologies: ['AWS', 'GCP', 'Docker', 'Kubernetes'],
-        features: [
-            'Cloud migration and optimization',
-            'Infrastructure as Code (IaC)',
-            'CI/CD pipeline setup',
-            'Container orchestration',
-            'Monitoring and logging solutions',
-        ],
-    },
-    {
-        icon: '🔗',
-        title: 'Automation & API Integrations',
-        description: 'Streamline workflows and connect your tools with custom automation and integrations.',
-        technologies: ['REST', 'GraphQL', 'Webhooks', 'Zapier'],
-        features: [
-            'Third-party API integrations',
-            'Custom workflow automation',
-            'Data synchronization',
-            'Webhook implementations',
-            'Legacy system modernization',
-        ],
+        color: 'from-orange-500/20 to-amber-500/20',
+        borderColor: 'hover:border-orange-500/50',
     },
 ];
+
 
 export default function ServicesPage() {
     const { theme } = useTheme();
@@ -121,15 +108,20 @@ export default function ServicesPage() {
                                 delay={index * 0.1}
                                 variant="slideUp"
                             >
-                                <div className="glass p-6 sm:p-8 rounded-2xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 h-full flex flex-col group">
+                                <div className={`glass p-6 sm:p-8 rounded-2xl border border-gray-700 ${service.borderColor} transition-all duration-300 h-full flex flex-col group bg-gradient-to-br ${service.color}`}>
                                     {/* Icon & Title */}
-                                    <div className="flex items-center gap-4 mb-3 sm:mb-4">
-                                        <div className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300">
+                                    <div className="flex items-start gap-4 mb-3 sm:mb-4">
+                                        <div className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                                             {service.icon}
                                         </div>
-                                        <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold font-display transition-colors ${theme === 'light' ? 'text-gray-900 group-hover:text-gray-600' : 'text-blue-400 group-hover:text-cyan-400'}`}>
-                                            {service.title}
-                                        </h2>
+                                        <div>
+                                            <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold font-display transition-colors ${theme === 'light' ? 'text-gray-900 group-hover:text-gray-600' : 'text-blue-400 group-hover:text-cyan-400'}`}>
+                                                {service.title}
+                                            </h2>
+                                            <div className="text-sm font-semibold text-cyan-400 mt-1 font-mono">
+                                                {service.tagline}
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {/* Description */}
@@ -140,7 +132,7 @@ export default function ServicesPage() {
                                     {/* Technologies */}
                                     <div className="mb-6">
                                         <div className={`text-sm font-semibold mb-3 ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>
-                                            Technologies:
+                                            Stack:
                                         </div>
                                         <div className="flex flex-wrap gap-2">
                                             {service.technologies.map((tech) => (
@@ -157,7 +149,7 @@ export default function ServicesPage() {
                                     {/* Features */}
                                     <div className="flex-1">
                                         <div className={`text-sm font-semibold mb-3 ${theme === 'light' ? 'text-gray-700' : 'text-gray-400'}`}>
-                                            Key Features:
+                                            What&apos;s included:
                                         </div>
                                         <ul className="space-y-2">
                                             {service.features.map((feature) => (
@@ -184,26 +176,13 @@ export default function ServicesPage() {
                                         </ul>
                                     </div>
 
-                                    {/* Learn More Link */}
+                                    {/* CTA */}
                                     <div className="mt-6 pt-6 border-t border-gray-700">
                                         <a
                                             href="/contact"
                                             className="inline-flex items-center text-blue-400 hover:text-cyan-400 font-semibold transition-colors group/link"
                                         >
-                                            Get Started
-                                            <svg
-                                                className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M9 5l7 7-7 7"
-                                                />
-                                            </svg>
+                                            Book a free 20-min call →
                                         </a>
                                     </div>
                                 </div>
@@ -218,17 +197,27 @@ export default function ServicesPage() {
                 <ScrollReveal variant="scale">
                     <div className="max-w-4xl mx-auto text-center glass p-6 sm:p-8 md:p-12 rounded-2xl border border-gray-700">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display mb-4 sm:mb-6">
-                            Not Sure Which Service You Need?
+                            Not sure where to start?
                         </h2>
                         <p className={`text-base sm:text-lg md:text-xl mb-6 sm:mb-8 px-4 ${theme === 'light' ? 'text-gray-800' : 'text-gray-300'}`}>
-                            Book a free consultation and we&apos;ll help you find the perfect solution for your project.
+                            Start with our ₹6,000 AI Business Audit. We&apos;ll review your business and tell you exactly which AI tool will save you the most time — with a full written report and a scoped quote at the end.
                         </p>
-                        <a
-                            href="/contact"
-                            className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg neon-glow hover:shadow-xl transition-shadow"
-                        >
-                            Book Free Consultation
-                        </a>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a
+                                href="/contact"
+                                className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg neon-glow hover:shadow-xl transition-shadow"
+                            >
+                                Book a Free 20-Min Call
+                            </a>
+                            <a
+                                href="https://wa.me/917411147986"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block px-8 py-4 bg-green-600 hover:bg-green-500 rounded-full text-white font-semibold text-lg transition-colors"
+                            >
+                                💬 WhatsApp Us
+                            </a>
+                        </div>
                     </div>
                 </ScrollReveal>
             </Section>

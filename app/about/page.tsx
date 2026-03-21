@@ -4,8 +4,8 @@ import ScrollReveal from '@/components/ScrollReveal';
 import JsonLd from '@/components/JsonLd';
 
 export const metadata: Metadata = {
-    title: 'About Us - PandaPath',
-    description: 'Learn about PandaPath, our mission to deliver world-class IT solutions, and our architecture-first approach to software development.',
+    title: 'About PandaPath — AI-First Builds for Indian Startups',
+    description: 'PandaPath builds WhatsApp AI bots, RAG systems, and full-stack AI products for Indian startups — fast, lean, and founder-direct. Based in Bangalore.',
 };
 
 export default function AboutPage() {
@@ -55,18 +55,13 @@ export default function AboutPage() {
                             </h2>
                             <div className="space-y-3 sm:space-y-4 text-sm sm:text-base text-gray-300 leading-relaxed">
                                 <p>
-                                    PandaPath was founded with a simple yet powerful vision: to bridge the gap between
-                                    ambitious ideas and scalable, production-ready software. We saw too many projects
-                                    fail not from lack of innovation, but from poor architecture and rushed implementation.
+                                    PandaPath started with a simple frustration: Indian startups were overpaying for slow, bloated software agencies and getting junior developers doing the work while the founders took the calls.
                                 </p>
                                 <p>
-                                    Today, we&apos;re a full-stack IT solutions company that partners with startups, enterprises,
-                                    and product teams to build software that scales. From AI-powered applications to
-                                    cloud-native platforms, we bring technical excellence and strategic thinking to every project.
+                                    We built PandaPath to be the answer — lean, fast, AI-first builds that founders can actually afford, shipped in weeks instead of months. When you work with us, you work directly with the developer. No account managers. No middlemen.
                                 </p>
                                 <p>
-                                    Our name reflects our philosophy: like a panda navigating through bamboo forests,
-                                    we help our clients find clear paths through complex technical landscapes.
+                                    We’re based in Bangalore and focused entirely on the Indian startup ecosystem — building WhatsApp bots, RAG knowledge systems, and full-stack AI products for founders who want things shipped, not promised.
                                 </p>
                             </div>
                         </div>
@@ -172,45 +167,33 @@ export default function AboutPage() {
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal variant="fadeIn">
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                            Why Choose PandaPath?
+                            PandaPath vs a Big Agency
                         </h2>
                     </ScrollReveal>
 
-                    <div className="space-y-4 sm:space-y-6">
-                        {[
-                            {
-                                title: 'Full-Stack Expertise',
-                                description: 'From frontend to backend, cloud infrastructure to AI/ML, we have deep expertise across the entire technology stack.',
-                            },
-                            {
-                                title: 'Proven Track Record',
-                                description: 'We have delivered successful projects for startups that raised millions and enterprises serving millions of users.',
-                            },
-                            {
-                                title: 'Architecture-First Mindset',
-                                description: 'Unlike agencies that rush to code, we start with system design. This approach prevents costly rewrites and ensures scalability.',
-                            },
-                            {
-                                title: 'Modern Tech Stack',
-                                description: 'We use cutting-edge technologies like Next.js, React, AI/ML frameworks, and cloud-native solutions to build future-proof applications.',
-                            },
-                            {
-                                title: 'Transparent Communication',
-                                description: 'No black boxes. You will understand every decision we make and have full visibility into the development process.',
-                            },
-                        ].map((item, index) => (
-                            <ScrollReveal key={item.title} delay={index * 0.1} variant="slideUp">
-                                <div className="glass p-5 sm:p-6 md:p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold font-display mb-2 sm:mb-3 text-cyan-400">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                                        {item.description}
-                                    </p>
+                    <ScrollReveal variant="slideUp" delay={0.1}>
+                        <div className="glass rounded-2xl border border-gray-700 overflow-hidden">
+                            <div className="grid grid-cols-3 text-sm font-semibold">
+                                <div className="p-4 bg-gray-800/50 text-gray-400 border-b border-gray-700"></div>
+                                <div className="p-4 bg-red-900/20 text-red-300 border-b border-l border-gray-700 text-center">Big Agency</div>
+                                <div className="p-4 bg-cyan-900/20 text-cyan-300 border-b border-l border-gray-700 text-center">PandaPath</div>
+                            </div>
+                            {[
+                                ['Cost', '₹5L+ project', 'From ₹25,000'],
+                                ['Timeline', '3–6 months', '2–4 weeks'],
+                                ['Who you talk to', 'Account manager', 'Direct with developer'],
+                                ['Who does the work', 'Junior devs', 'Founder-level'],
+                                ['Communication', 'Weekly status calls', 'WhatsApp, any time'],
+                                ['AI expertise', 'Outsourced', 'Core specialty'],
+                            ].map(([label, agency, pandapath], i) => (
+                                <div key={label} className={`grid grid-cols-3 text-sm ${i % 2 === 0 ? 'bg-gray-900/30' : ''}`}>
+                                    <div className="p-4 text-gray-400 border-b border-gray-800">{label}</div>
+                                    <div className="p-4 text-red-300/70 border-b border-l border-gray-800 text-center">{agency}</div>
+                                    <div className="p-4 text-cyan-300 font-semibold border-b border-l border-gray-800 text-center">{pandapath}</div>
                                 </div>
-                            </ScrollReveal>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    </ScrollReveal>
                 </div>
             </Section>
 
