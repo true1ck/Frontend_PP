@@ -1,175 +1,208 @@
 import type { Metadata } from 'next';
+import { ArrowRight, GitBranch, ShieldCheck, Eye, Gauge, Users2, PackageOpen } from 'lucide-react';
 import Section from '@/components/Section';
+import SectionHeading from '@/components/SectionHeading';
 import ScrollReveal from '@/components/ScrollReveal';
 import ProcessTimeline from '@/components/ProcessTimeline';
 import TechGrid from '@/components/TechGrid';
+import Button from '@/components/Button';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbSchema } from '@/lib/seo';
+import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'Our Process & Technology Stack - PandaPath',
-    description: 'Discover our proven development process and the cutting-edge technologies we use to build world-class software.',
+    title: 'Our Process & Technology Stack — How PandaPath Builds AI Products',
+    description:
+        'How PandaPath scopes, designs, builds and ships AI products in 2–6 weeks, and the technology stack we use: Next.js, Python, RAG pipelines, Claude and Gemini, PostgreSQL, Docker and managed cloud.',
+    alternates: { canonical: '/process-tech' },
+    openGraph: {
+        title: 'Process & Technology Stack | PandaPath',
+        description: 'How we scope, build and ship AI products in 2–6 weeks — and the stack we do it on.',
+        url: `${SITE.url}/process-tech`,
+    },
 };
+
+const methodology = [
+    {
+        icon: Eye,
+        title: 'You watch it being built',
+        description:
+            'A staging link goes up in the first few days and updates continuously. You never wait for a milestone to see progress.',
+    },
+    {
+        icon: GitBranch,
+        title: 'Small, reviewable changes',
+        description:
+            'Work lands in small pull requests with CI running on each. Easier to review, far easier to roll back when something is wrong.',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Testing where it earns its keep',
+        description:
+            'Automated coverage on the logic that would genuinely hurt if it broke — payments, auth, data integrity — rather than chasing a coverage percentage.',
+    },
+    {
+        icon: Gauge,
+        title: 'Performance measured, not assumed',
+        description:
+            'Core Web Vitals and API latency are checked before launch. "It feels fast on my laptop" is not a benchmark.',
+    },
+    {
+        icon: Users2,
+        title: 'One senior engineer, start to finish',
+        description:
+            'The person who scoped your project is the person who builds and deploys it. Nothing is lost in a handover, because there is no handover.',
+    },
+    {
+        icon: PackageOpen,
+        title: 'A real handover at the end',
+        description:
+            'Source code, infrastructure in your own accounts, environment docs and a walkthrough call. You could take it to another team the next day.',
+    },
+];
+
+const stackRationale = [
+    {
+        title: 'Proven beats novel',
+        description:
+            'Everything here runs in production at scale somewhere serious. We are not experimenting on your budget.',
+    },
+    {
+        title: 'You can hire for it',
+        description:
+            'Every tool we use has a large Indian talent pool. When you bring development in-house, you will be able to staff it.',
+    },
+    {
+        title: 'Model-agnostic by design',
+        description:
+            'AI features sit behind an abstraction, so swapping Claude for Gemini — or adding a local model — is a config change, not a rewrite.',
+    },
+    {
+        title: 'Cheap to run',
+        description:
+            'We default to managed services and serverless where it fits, so a low-traffic product costs very little to keep alive.',
+    },
+    {
+        title: 'Portable',
+        description:
+            'Containerised and standards-based. Nothing traps you on one cloud vendor or on us.',
+    },
+];
 
 export default function ProcessTechPage() {
     return (
         <>
-            {/* Hero */}
-            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
-                <div className="max-w-4xl mx-auto text-center">
+            <JsonLd data={breadcrumbSchema([{ name: 'Process & Tech', path: '/process-tech' }])} />
+
+            <Section size="hero" aura>
+                <div className="mx-auto max-w-3xl text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight pb-2 mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                            Process & Technology
+                        <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-brand">
+                            Process &amp; technology
+                        </p>
+                        <h1 className="text-display-xl font-bold font-display text-balance">
+                            <span className="text-gradient">How the work</span>{' '}
+                            <span className="text-body">actually gets done</span>
                         </h1>
                     </ScrollReveal>
-                    <ScrollReveal delay={0.2}>
-                        <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                            A proven methodology combined with cutting-edge technology to deliver exceptional results.
+                    <ScrollReveal delay={0.15}>
+                        <p className="mx-auto mt-6 max-w-2xl text-lead text-muted text-pretty">
+                            The same five steps on every project, and a deliberately boring stack
+                            chosen so your product is cheap to run and easy to hand over.
                         </p>
                     </ScrollReveal>
                 </div>
             </Section>
 
-            {/* Process Section */}
-            <Section className="py-8">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-                                Our Development Process
-                            </h2>
-                            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                                We follow a structured, iterative approach that ensures quality, transparency, and timely delivery.
-                            </p>
-                        </div>
-                    </ScrollReveal>
-
+            <Section size="sm">
+                <SectionHeading
+                    eyebrow="The process"
+                    title="Five steps, start to handover"
+                    description="You always know which step you're in, what's next, and what it costs."
+                />
+                <div className="mt-16">
                     <ProcessTimeline />
                 </div>
             </Section>
 
-            {/* Methodology */}
-            <Section className="py-8">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 text-purple-400">
-                            Our Methodology
-                        </h2>
-                    </ScrollReveal>
+            <Section aura>
+                <SectionHeading
+                    eyebrow="How we build"
+                    title="Engineering practice"
+                    description="The habits that keep a two-week timeline from turning into a two-month one."
+                />
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: '🎯',
-                                title: 'Agile Development',
-                                description: 'Iterative sprints with regular demos and feedback loops to ensure alignment with your vision.',
-                            },
-                            {
-                                icon: '🔒',
-                                title: 'Quality Assurance',
-                                description: 'Comprehensive testing at every stage, from unit tests to end-to-end integration testing.',
-                            },
-                            {
-                                icon: '📊',
-                                title: 'Transparent Reporting',
-                                description: 'Regular updates, sprint reviews, and full visibility into development progress.',
-                            },
-                        ].map((item, index) => (
-                            <ScrollReveal key={item.title} delay={index * 0.1} variant="slideUp">
-                                <div className="glass p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 text-center">
-                                    <div className="text-5xl mb-4">{item.icon}</div>
-                                    <h3 className="text-xl font-bold font-display mb-3 text-blue-400">
+                <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {methodology.map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                            <ScrollReveal key={item.title} delay={index * 0.07} variant="slideUp">
+                                <div className="glass card-interactive h-full rounded-card p-6">
+                                    <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--surface))] text-brand">
+                                        <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                                    </span>
+                                    <h3 className="text-base font-semibold font-display text-body">
                                         {item.title}
                                     </h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed">
+                                    <p className="mt-2 text-sm leading-relaxed text-muted">
                                         {item.description}
                                     </p>
                                 </div>
                             </ScrollReveal>
-                        ))}
-                    </div>
+                        );
+                    })}
                 </div>
             </Section>
 
-            {/* Technology Stack */}
-            <Section className="py-8">
-                <div className="max-w-7xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                                Technology Stack
-                            </h2>
-                            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                                We leverage the best tools and frameworks to build scalable, performant, and maintainable solutions.
-                            </p>
-                        </div>
-                    </ScrollReveal>
-
+            <Section size="sm">
+                <SectionHeading
+                    eyebrow="Technology"
+                    title="The stack we build on"
+                    description="Filter by layer to see what we reach for and why."
+                />
+                <div className="mt-12">
                     <TechGrid />
                 </div>
             </Section>
 
-            {/* Why Our Stack */}
-            <Section className="py-8">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 text-cyan-400">
-                            Why These Technologies?
-                        </h2>
-                    </ScrollReveal>
+            <Section size="sm" width="narrow">
+                <SectionHeading
+                    eyebrow="Why these"
+                    title="How we choose tools"
+                    align="left"
+                />
 
-                    <div className="space-y-6">
-                        {[
-                            {
-                                title: 'Battle-Tested & Production-Ready',
-                                description: 'Every technology in our stack is proven at scale by companies like Netflix, Airbnb, and Uber.',
-                            },
-                            {
-                                title: 'Strong Community Support',
-                                description: 'Large, active communities mean better documentation, more libraries, and faster problem-solving.',
-                            },
-                            {
-                                title: 'Future-Proof',
-                                description: 'We choose technologies with strong roadmaps and backing from major tech companies.',
-                            },
-                            {
-                                title: 'Developer Experience',
-                                description: 'Modern tooling and great DX means faster development and fewer bugs.',
-                            },
-                            {
-                                title: 'Performance & Scalability',
-                                description: 'Our stack is optimized for both developer productivity and application performance.',
-                            },
-                        ].map((item, index) => (
-                            <ScrollReveal key={item.title} delay={index * 0.1} variant="slideUp">
-                                <div className="glass p-6 md:p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                                    <h3 className="text-xl md:text-2xl font-bold font-display mb-3 text-blue-400">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-gray-300 leading-relaxed">
-                                        {item.description}
-                                    </p>
-                                </div>
-                            </ScrollReveal>
-                        ))}
-                    </div>
-                </div>
+                <dl className="mt-10 divide-y divide-[rgb(var(--border))] border-y border-[rgb(var(--border))]">
+                    {stackRationale.map((item, index) => (
+                        <ScrollReveal key={item.title} delay={index * 0.06} variant="fadeIn">
+                            <div className="py-5">
+                                <dt className="text-base font-semibold font-display text-body">
+                                    {item.title}
+                                </dt>
+                                <dd className="mt-1.5 max-w-prose text-sm leading-relaxed text-muted">
+                                    {item.description}
+                                </dd>
+                            </div>
+                        </ScrollReveal>
+                    ))}
+                </dl>
             </Section>
 
-            {/* CTA */}
-            <Section className="py-8">
+            <Section>
                 <ScrollReveal variant="scale">
-                    <div className="max-w-4xl mx-auto text-center glass p-12 rounded-2xl border border-gray-700">
-                        <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">
-                            Ready to Experience Our Process?
+                    <div className="mx-auto max-w-3xl rounded-[1.75rem] border border-[rgb(var(--border-strong))] bg-[rgb(var(--surface))] p-8 text-center backdrop-blur-xl sm:p-12">
+                        <h2 className="text-display font-bold font-display">
+                            <span className="text-gradient">Want to see it applied to your project?</span>
                         </h2>
-                        <p className="text-xl text-gray-300 mb-8">
-                            Let&apos;s start building your next great product together.
+                        <p className="mx-auto mt-5 max-w-xl text-lead text-muted text-pretty">
+                            Bring the problem to a 20-minute call and you&apos;ll leave with a
+                            scope, a stack recommendation and a fixed number.
                         </p>
-                        <a
-                            href="/contact"
-                            className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg neon-glow hover:shadow-xl transition-shadow"
-                        >
-                            Get Started
-                        </a>
+                        <div className="mt-8 flex justify-center">
+                            <Button href="/contact" variant="primary" size="lg" trailingIcon={<ArrowRight className="h-4 w-4" />}>
+                                Book a free 20-min call
+                            </Button>
+                        </div>
                     </div>
                 </ScrollReveal>
             </Section>

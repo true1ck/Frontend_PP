@@ -1,154 +1,71 @@
-'use client';
-
-import { useState } from 'react';
+import type { Metadata } from 'next';
+import { ArrowRight } from 'lucide-react';
 import Section from '@/components/Section';
 import ScrollReveal from '@/components/ScrollReveal';
-import CaseStudyCard from '@/components/CaseStudyCard';
+import CaseStudiesGrid from '@/components/CaseStudiesGrid';
+import Button from '@/components/Button';
+import JsonLd from '@/components/JsonLd';
+import { caseStudiesSchema, breadcrumbSchema } from '@/lib/seo';
+import { SITE } from '@/lib/content';
 
-
-// Case studies data — honest descriptions, no fictional client names
-const caseStudies = [
-    {
-        slug: 'ai-powered-analytics-platform',
-        title: 'AI-Powered Analytics Platform',
-        descriptor: 'Bangalore SaaS Startup',
-        description: 'Built a real-time analytics platform processing millions of events daily with AI-driven insights and predictive modelling.',
-        technologies: ['Next.js', 'Python', 'TensorFlow', 'AWS', 'PostgreSQL'],
-        category: 'AI',
-        image: '/images/Ai powered analysis platform.png',
+export const metadata: Metadata = {
+    title: 'Case Studies — AI & Software Projects Built for Indian Startups',
+    description:
+        'Real projects from PandaPath: WhatsApp AI assistants, RAG knowledge systems, analytics platforms, marketplaces and cloud migrations built for startups across Bangalore, Mumbai, Delhi, Pune and Hyderabad.',
+    alternates: { canonical: '/case-studies' },
+    openGraph: {
+        title: 'PandaPath Case Studies — AI Projects for Indian Startups',
+        description:
+            'WhatsApp AI assistants, RAG knowledge systems, analytics platforms and cloud migrations delivered in 2–6 weeks.',
+        url: `${SITE.url}/case-studies`,
     },
-    {
-        slug: 'mobile-banking-app',
-        title: 'Mobile Banking Application',
-        descriptor: 'Mumbai Fintech Brand',
-        description: 'Developed a secure, user-friendly mobile banking app with biometric authentication and real-time transaction processing.',
-        technologies: ['React Native', 'Node.js', 'MongoDB', 'AWS'],
-        category: 'Mobile',
-        image: '/images/mobile-banking-app.jpg',
-    },
-    {
-        slug: 'ecommerce-marketplace',
-        title: 'E-Commerce Marketplace',
-        descriptor: 'Delhi D2C Brand',
-        description: 'Created a scalable multi-vendor marketplace with advanced search, payment processing, and inventory management.',
-        technologies: ['Next.js', 'GraphQL', 'PostgreSQL', 'Stripe', 'Redis'],
-        category: 'Web',
-        image: '/images/E commerce Makrketplace.png',
-    },
-    {
-        slug: 'cloud-migration-project',
-        title: 'Enterprise Cloud Migration',
-        descriptor: 'Bangalore Enterprise',
-        description: 'Migrated legacy on-premise infrastructure to AWS with zero downtime, reducing costs by 40% and improving performance.',
-        technologies: ['AWS', 'Docker', 'Kubernetes', 'Terraform'],
-        category: 'Cloud',
-        image: '/images/Enterprise Cloud Migration.png',
-    },
-    {
-        slug: 'healthcare-management-system',
-        title: 'Healthcare Management System',
-        descriptor: 'Hyderabad HealthTech Startup',
-        description: 'Built a patient management system with telemedicine capabilities and electronic health records integration.',
-        technologies: ['React', 'Node.js', 'PostgreSQL', 'WebRTC', 'AWS'],
-        category: 'Web',
-        image: '/images/HealthCare Management System.png',
-    },
-    {
-        slug: 'iot-monitoring-dashboard',
-        title: 'IoT Monitoring Dashboard',
-        descriptor: 'Pune Manufacturing Company',
-        description: 'Developed a real-time IoT monitoring dashboard for manufacturing with predictive maintenance alerts.',
-        technologies: ['React', 'Python', 'InfluxDB', 'MQTT', 'GCP'],
-        category: 'AI',
-        image: '/images/IOT marketing Platform.png',
-    },
-];
-
-
-const categories = ['All', 'Web', 'Mobile', 'AI', 'Cloud'];
+};
 
 export default function CaseStudiesPage() {
-    const [activeCategory, setActiveCategory] = useState('All');
-
-    const filteredCaseStudies = activeCategory === 'All'
-        ? caseStudies
-        : caseStudies.filter((study) => study.category === activeCategory);
-
     return (
         <>
-            {/* Hero Section */}
-            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
-                <div className="max-w-4xl mx-auto text-center">
+            <JsonLd data={caseStudiesSchema} />
+            <JsonLd data={breadcrumbSchema([{ name: 'Case Studies', path: '/case-studies' }])} />
+
+            <Section size="hero" aura>
+                <div className="mx-auto max-w-3xl text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight pb-2 mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                            Case Studies
+                        <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-brand">
+                            Case studies
+                        </p>
+                        <h1 className="text-display-xl font-bold font-display text-balance">
+                            <span className="text-gradient">Work we&apos;ve</span>{' '}
+                            <span className="text-body">actually shipped</span>
                         </h1>
                     </ScrollReveal>
-                    <ScrollReveal delay={0.2}>
-                        <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                            Real projects, real results. See how we&apos;ve helped businesses transform their digital presence.
+                    <ScrollReveal delay={0.15}>
+                        <p className="mx-auto mt-6 max-w-2xl text-lead text-muted text-pretty">
+                            Client names are withheld under NDA. Everything else — the problem, the
+                            approach, the stack and the timeline — is exactly as delivered.
                         </p>
                     </ScrollReveal>
                 </div>
             </Section>
 
-            {/* Category Filter */}
-            <Section className="py-10">
-                <ScrollReveal variant="fadeIn">
-                    <div className="flex flex-wrap justify-center gap-3">
-                        {categories.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setActiveCategory(category)}
-                                className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${activeCategory === category
-                                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white neon-glow'
-                                    : 'glass border border-gray-700 text-gray-300 hover:border-blue-500/50'
-                                    }`}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
-                </ScrollReveal>
+            <Section size="sm">
+                <CaseStudiesGrid />
             </Section>
 
-            {/* Case Studies Grid */}
-            <Section className="py-10 pb-20">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredCaseStudies.map((study, index) => (
-                            <div key={study.slug}>
-                                <CaseStudyCard {...study} />
-                            </div>
-                        ))}
-                    </div>
-
-                    {filteredCaseStudies.length === 0 && (
-                        <div className="text-center py-20">
-                            <p className="text-gray-400 text-lg">
-                                No case studies found in this category.
-                            </p>
-                        </div>
-                    )}
-                </div>
-            </Section>
-
-            {/* CTA */}
-            <Section className="py-8">
+            <Section>
                 <ScrollReveal variant="scale">
-                    <div className="max-w-4xl mx-auto text-center glass p-12 rounded-2xl border border-gray-700">
-                        <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">
-                            Ready to Create Your Success Story?
+                    <div className="mx-auto max-w-3xl rounded-[1.75rem] border border-[rgb(var(--border-strong))] bg-[rgb(var(--surface))] p-8 text-center backdrop-blur-xl sm:p-12">
+                        <h2 className="text-display font-bold font-display">
+                            <span className="text-gradient">Have something similar in mind?</span>
                         </h2>
-                        <p className="text-xl text-gray-300 mb-8">
-                            Let&apos;s discuss how we can help you achieve similar results.
+                        <p className="mx-auto mt-5 max-w-xl text-lead text-muted text-pretty">
+                            Tell us the problem in twenty minutes and we&apos;ll tell you what it
+                            takes to solve — scope, price and delivery date.
                         </p>
-                        <a
-                            href="/contact"
-                            className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg neon-glow hover:shadow-xl transition-shadow"
-                        >
-                            Start Your Project
-                        </a>
+                        <div className="mt-8 flex justify-center">
+                            <Button href="/contact" variant="primary" size="lg" trailingIcon={<ArrowRight className="h-4 w-4" />}>
+                                Start your project
+                            </Button>
+                        </div>
                     </div>
                 </ScrollReveal>
             </Section>

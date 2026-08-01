@@ -1113,3 +1113,11 @@ window.initFluidCursor = function() {
     location.reload();
 };
 
+
+// --- Added for the site-wide background layer (additive; simulation untouched) ---
+// Exposes the live config so React can pause the (expensive) simulation step
+// while the fluid layer is hidden in dark mode. `update()` already guards on
+// config.PAUSED, so nothing else needs to change.
+window.__fluidConfig = config;
+// Signals that the canvas reference is bound and the loop is running.
+window.__fluidReady = true;

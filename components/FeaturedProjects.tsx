@@ -1,120 +1,109 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import Section from './Section';
-import Card from './Card';
+import SectionHeading from './SectionHeading';
 import Button from './Button';
+import ProjectArtwork from './ProjectArtwork';
+import { featuredProjects } from '@/lib/content';
 
-const FeaturedProjects = () => {
-  const projects = [
-    {
-      title: 'E-Commerce Platform',
-      client: 'RetailTech Inc.',
-      description: 'Built a scalable e-commerce platform handling 100K+ daily transactions with AI-powered recommendations.',
-      technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'Redis'],
-      badges: ['Scalable commerce architecture', 'Secure payment workflows', 'AI-ready personalization'],
-      // badgeIcon: '👥',
-      badgeColor: 'cyan',
-    },
-    {
-      title: 'Healthcare AI Assistant',
-      client: 'MedHealth Solutions',
-      description: 'Developed an intelligent chatbot using RAG and LLMs to assist patients with medical queries.',
-      technologies: ['Python', 'LangChain', 'OpenAI', 'FastAPI'],
-      badges: ['RAG-powered intelligence', 'Privacy-first system design', 'Built for clinical scalability'],
-      // badgeIcon: '⏱️',
-      badgeColor: 'purple',
-    },
-    {
-      title: 'FinTech Mobile App',
-      client: 'PayFlow',
-      description: 'Cross-platform mobile app for seamless money transfers with biometric authentication.',
-      technologies: ['Flutter', 'Firebase', 'AWS', 'Stripe'],
-      badges: ['Cloud-native mobile stack ', 'Enterprise-grade security ', 'Real-time transaction flow'],
+const ease = [0.22, 1, 0.36, 1] as const;
 
-      // badgeIcon: '🚀',
-      badgeColor: 'yellow',
-    },
-  ];
+const FeaturedProjects = () => (
+    <Section id="work" aura>
+        <SectionHeading
+            eyebrow="Selected work"
+            title="What we've shipped"
+            description="A few recent builds. Client names are withheld under NDA — the problems, the approach and the timelines are exactly as delivered."
+        />
 
-  return (
-    <Section className="py-8">
-      <div className="text-center mb-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-3 sm:mb-4 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"
-        >
-          Featured Projects
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto px-4"
-        >
-          Real results for real businesses
-        </motion.p>
-      </div>
+        <div className="mt-14 space-y-6">
+            {featuredProjects.map((project, index) => (
+                <motion.article
+                    key={project.slug}
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.6, ease }}
+                    className="group glass card-interactive overflow-hidden rounded-card"
+                >
+                    <div className="grid lg:grid-cols-5">
+                        {/* Artwork — alternates sides so the eye zig-zags down
+                            the page instead of running down one rail. */}
+                        <div
+                            className={`relative min-h-[200px] overflow-hidden text-body sm:min-h-[240px] lg:col-span-2 lg:min-h-full ${
+                                index % 2 === 1 ? 'lg:order-2' : ''
+                            }`}
+                        >
+                            <ProjectArtwork
+                                variant={project.artwork}
+                                className="absolute inset-0 h-full w-full transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)]/45 to-transparent lg:bg-gradient-to-r" />
+                        </div>
 
-      <div className="space-y-8 mb-12">
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <Card>
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-                <div className="lg:col-span-2">
-                  <div className="text-xs sm:text-sm text-cyan-400 mb-2">{project.client}</div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">{project.title}</h3>
-                  <p className="text-sm sm:text-base text-gray-400 mb-3 sm:mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 text-xs bg-purple-500/20 text-purple-400 rounded-full border border-purple-500/30"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center">
-                  <div className={`glass p-4 sm:p-6 rounded-lg text-center border-2 ${project.badgeColor === 'yellow' ? 'border-yellow-400/30' :
-                    project.badgeColor === 'cyan' ? 'border-cyan-400/30' :
-                      'border-purple-400/30'
-                    }`}>
-                    <div className="text-3xl sm:text-4xl mb-2"></div>
-                    <div className={`text-sm sm:text-base font-bold ${project.badgeColor === 'yellow' ? 'text-yellow-400' :
-                      project.badgeColor === 'cyan' ? 'text-cyan-400' :
-                        'text-purple-400'
-                      }`}>
-                      {(project.badges || [project.badges]).map((badge, idx) => (
-                        <div key={idx}>{badge}</div>
-                      ))}
+                        {/* Copy */}
+                        <div className="p-6 sm:p-8 lg:col-span-3 lg:p-10">
+                            <div className="font-mono text-xs uppercase tracking-[0.16em] text-brand">
+                                {project.descriptor}
+                            </div>
+
+                            <h3 className="mt-3 text-title font-bold font-display text-body">
+                                {project.title}
+                            </h3>
+
+                            <div className="mt-5 space-y-4">
+                                <div>
+                                    <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-subtle">
+                                        The problem
+                                    </div>
+                                    <p className="text-sm leading-relaxed text-muted">{project.problem}</p>
+                                </div>
+                                <div>
+                                    <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-subtle">
+                                        What we built
+                                    </div>
+                                    <p className="text-sm leading-relaxed text-muted">{project.outcome}</p>
+                                </div>
+                            </div>
+
+                            {/* Outcome metrics */}
+                            <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-[rgb(var(--border))] pt-5">
+                                {project.metrics.map((metric) => (
+                                    <div key={metric.label}>
+                                        <dd className="font-mono text-base font-medium text-body tabular sm:text-lg">
+                                            {metric.value}
+                                        </dd>
+                                        <dt className="mt-0.5 text-[0.7rem] leading-tight text-subtle sm:text-xs">
+                                            {metric.label}
+                                        </dt>
+                                    </div>
+                                ))}
+                            </dl>
+
+                            <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technologies used">
+                                {project.technologies.map((tech) => (
+                                    <li
+                                        key={tech}
+                                        className="rounded-pill border border-[rgb(var(--border))] px-2.5 py-1 font-mono text-[0.7rem] text-subtle"
+                                    >
+                                        {tech}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+                </motion.article>
+            ))}
+        </div>
 
-      <div className="text-center">
-        <Button href="/case-studies" variant="secondary">
-          View All Case Studies
-        </Button>
-      </div>
+        <div className="mt-12 text-center">
+            <Button href="/case-studies" variant="outline" trailingIcon={<ArrowRight className="h-4 w-4" />}>
+                View all case studies
+            </Button>
+        </div>
     </Section>
-  );
-};
+);
 
 export default FeaturedProjects;

@@ -1,8 +1,7 @@
 'use client';
 
-import { forwardRef, SelectHTMLAttributes } from 'react';
-import { motion } from 'framer-motion';
-import { useTheme } from '@/contexts/ThemeContext';
+import { forwardRef, SelectHTMLAttributes, useId } from 'react';
+import { ChevronDown, AlertCircle } from 'lucide-react';
 
 interface SelectOption {
     value: string;
@@ -14,81 +13,83 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     error?: string;
     helperText?: string;
     options: SelectOption[];
+    placeholder?: string;
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
-    ({ label, error, helperText, options, className = '', ...props }, ref) => {
-        const { theme } = useTheme();
+    (
+        { label, error, helperText, options, className = '', id, placeholder = 'Select an option', ...props },
+        ref,
+    ) => {
+        const generatedId = useId();
+        const selectId = id ?? `select-${generatedId}`;
+        const errorId = `${selectId}-error`;
+        const helperId = `${selectId}-helper`;
 
         return (
             <div className="w-full">
                 {label && (
-                    <label className={`block text-sm font-medium mb-2 ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>
+                    <label htmlFor={selectId} className="mb-2 block text-sm font-medium text-body">
                         {label}
-                        {props.required && <span className="text-red-400 ml-1">*</span>}
+                        {props.required && (
+                            <span className="ml-1 text-red-400" aria-hidden="true">
+                                *
+                            </span>
+                        )}
+                        {props.required && <span className="sr-only"> (required)</span>}
                     </label>
                 )}
+
                 <div className="relative">
-                    <motion.select
+                    <select
                         ref={ref}
-                        whileFocus={{ scale: 1.01 }}
-                        className={`
-                            w-full px-4 py-3 rounded-lg
-                            glass border border-gray-700
-                            bg-gray-900/50 ${theme === 'light' ? 'text-gray-900' : 'text-white'}
-                            focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500
-                            transition-all duration-200
-                            appearance-none cursor-pointer
-                            ${error ? 'border-red-500 focus:ring-red-500/50' : ''}
-                            ${className}
-                        `}
-                        {...(props as any)}
+                        id={selectId}
+                        aria-invalid={error ? true : undefined}
+                        aria-describedby={error ? errorId : helperText ? helperId : undefined}
+                        className={`w-full min-h-[48px] cursor-pointer appearance-none rounded-xl border bg-[rgb(var(--surface))] px-4 py-3 pr-11 text-body transition-colors duration-200 focus:outline-none focus-visible:border-[var(--brand)] focus-visible:ring-2 focus-visible:ring-[var(--brand)]/35 ${
+                            error
+                                ? 'border-red-500/60 focus-visible:border-red-500 focus-visible:ring-red-500/30'
+                                : 'border-[rgb(var(--border-strong))]'
+                        } ${className}`}
+                        {...props}
                     >
-                        <option value="" disabled className={theme === 'light' ? 'bg-white text-black' : 'bg-gray-900 text-white'}>
-                            Select an option
+                        {/* Native option lists are painted by the OS, so they
+                            need a solid background — a translucent token would
+                            render as unreadable text on some platforms. */}
+                        <option value="" disabled className="bg-[var(--surface-solid)] text-body">
+                            {placeholder}
                         </option>
                         {options.map((option) => (
                             <option
                                 key={option.value}
                                 value={option.value}
-                                className={theme === 'light' ? 'bg-white text-black' : 'bg-gray-900 text-white'}
+                                className="bg-[var(--surface-solid)] text-body"
                             >
                                 {option.label}
                             </option>
                         ))}
-                    </motion.select>
-                    {/* Custom dropdown arrow */}
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg
-                            className="w-5 h-5 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 9l-7 7-7-7"
-                            />
-                        </svg>
-                    </div>
+                    </select>
+
+                    <ChevronDown
+                        className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle"
+                        aria-hidden="true"
+                    />
                 </div>
+
                 {error && (
-                    <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-2 text-sm text-red-400"
-                    >
+                    <p id={errorId} role="alert" className="mt-2 flex items-start gap-1.5 text-sm text-red-400">
+                        <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                         {error}
-                    </motion.p>
+                    </p>
                 )}
                 {helperText && !error && (
-                    <p className="mt-2 text-sm text-gray-400">{helperText}</p>
+                    <p id={helperId} className="mt-2 text-sm text-subtle">
+                        {helperText}
+                    </p>
                 )}
             </div>
         );
-    }
+    },
 );
 
 Select.displayName = 'Select';

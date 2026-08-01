@@ -1,63 +1,54 @@
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import Hero from "@/components/Hero";
-import Section from "@/components/Section";
-import ScrollReveal from "@/components/ScrollReveal";
-import TechGrid from "@/components/TechGrid";
+import Hero from '@/components/Hero';
+import Section from '@/components/Section';
+import SectionHeading from '@/components/SectionHeading';
+import TechGrid from '@/components/TechGrid';
+import JsonLd from '@/components/JsonLd';
+import { organizationSchema, websiteSchema, faqSchema, servicesSchema } from '@/lib/seo';
 
-// Lazy load below-the-fold components to improve initial page load
-// These components will load as the user scrolls, reducing initial bundle size
-const WhoWeAre = dynamic(() => import("@/components/WhoWeAre"), {
-  loading: () => <div className="min-h-[400px]" />, // Placeholder to prevent layout shift
-});
+export const metadata: Metadata = {
+  title: 'AI Development Agency in India — WhatsApp Bots & RAG Systems | PandaPath',
+  description:
+    'PandaPath builds WhatsApp AI bots, RAG knowledge systems and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks, direct access to your developer. Based in Bangalore.',
+  alternates: { canonical: '/' },
+};
 
-const ServicesOverview = dynamic(() => import("@/components/ServicesOverview"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const FeaturedProjects = dynamic(() => import("@/components/FeaturedProjects"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const OurProcess = dynamic(() => import("@/components/OurProcess"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const TechStack = dynamic(() => import("@/components/TechStack"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
-
-const CallToAction = dynamic(() => import("@/components/CallToAction"), {
-  loading: () => <div className="min-h-[400px]" />,
-});
+// Below-the-fold sections stay lazy so the hero (and its WebGL background)
+// gets the initial bundle to itself.
+const WhoWeAre = dynamic(() => import('@/components/WhoWeAre'));
+const ServicesOverview = dynamic(() => import('@/components/ServicesOverview'));
+const FeaturedProjects = dynamic(() => import('@/components/FeaturedProjects'));
+const OurProcess = dynamic(() => import('@/components/OurProcess'));
+const FAQ = dynamic(() => import('@/components/FAQ'));
+const CallToAction = dynamic(() => import('@/components/CallToAction'));
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={websiteSchema} />
+      <JsonLd data={servicesSchema} />
+      <JsonLd data={faqSchema} />
+
       <Hero />
       <WhoWeAre />
       <ServicesOverview />
       <FeaturedProjects />
       <OurProcess />
-      {/*
-      <TechStack />
-      */}
 
-      {/* Technology Stack section from Process & Tech page */}
-      <Section className="py-8">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal variant="fadeIn">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Technology Stack
-              </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                We leverage the best tools and frameworks to build scalable, performant, and maintainable solutions.
-              </p>
-            </div>
-          </ScrollReveal>
+      <Section id="tech-stack" aura>
+        <SectionHeading
+          eyebrow="Technology"
+          title="The stack we build on"
+          description="Boring, proven tools chosen because they are fast to build with and cheap for you to maintain after we hand over."
+        />
+        <div className="mt-12">
           <TechGrid />
         </div>
       </Section>
+
+      <FAQ />
       <CallToAction />
     </>
   );

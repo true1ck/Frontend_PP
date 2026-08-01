@@ -7,11 +7,29 @@ import Input from '@/components/ui/Input';
 import Textarea from '@/components/ui/Textarea';
 import Select from '@/components/ui/Select';
 import { motion } from 'framer-motion';
-import { useTheme } from '@/contexts/ThemeContext';
+import { Mail, MapPin, Clock, Check, ArrowRight, AlertCircle } from 'lucide-react';
+import { WhatsAppIcon, LinkedInIcon } from '@/components/icons/BrandIcons';
 import { BACKEND_URL } from '@/lib/config';
+import { SITE } from '@/lib/content';
+
+const WHATSAPP_URL = SITE.whatsapp;
+
+const contactChannels = [
+    { icon: Mail, label: 'Email', value: SITE.email, href: `mailto:${SITE.email}`, external: false },
+    { icon: WhatsAppIcon, label: 'WhatsApp', value: 'Message us directly', href: WHATSAPP_URL, external: true },
+    { icon: LinkedInIcon, label: 'LinkedIn', value: 'linkedin.com/in/pandapaths', href: 'https://www.linkedin.com/in/pandapaths/', external: true },
+    { icon: MapPin, label: 'Location', value: 'Bangalore, Karnataka, India', href: null, external: false },
+    { icon: Clock, label: 'Hours', value: 'Mon–Fri, 9:00–19:00 IST', href: null, external: false },
+] as const;
+
+const nextSteps = [
+    'We read it ourselves — no bot, no intake team.',
+    'You get a reply within one business day, usually sooner.',
+    'A 20-minute call to scope the problem properly.',
+    'A fixed quote and a delivery date, in writing.',
+];
 
 export default function ContactPage() {
-    const { theme } = useTheme();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -484,239 +502,225 @@ export default function ContactPage() {
 
     return (
         <>
-            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
-                <div className="max-w-4xl mx-auto text-center">
+            <Section size="hero" aura>
+                <div className="mx-auto max-w-3xl text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight pb-2 mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                            Let&apos;s Build Something Amazing
+                        <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-brand">
+                            Contact
+                        </p>
+                        <h1 className="text-display-xl font-bold font-display text-balance">
+                            <span className="text-gradient">Tell us what</span>{' '}
+                            <span className="text-body">you&apos;re building</span>
                         </h1>
                     </ScrollReveal>
-                    <ScrollReveal delay={0.2}>
-                        <p className="text-xl md:text-2xl text-gray-200 leading-relaxed">
-                            Book a free 20-minute call. Tell me what you&apos;re building — I&apos;ll tell you if we can ship it in 2–4 weeks and what it would cost. No pitch, no pressure.
+                    <ScrollReveal delay={0.15}>
+                        <p className="mx-auto mt-6 max-w-2xl text-lead text-muted text-pretty">
+                            Book a free 20-minute call. Describe the problem and you&apos;ll get an
+                            honest answer on whether we can ship it in 2–4 weeks and what it costs.
+                            No pitch deck, no pressure.
                         </p>
                     </ScrollReveal>
                 </div>
             </Section>
 
-            {/* Contact Form & Info */}
-            <Section className="py-8">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid lg:grid-cols-3 gap-12">
-                        {/* Contact Info */}
-                        <div className="lg:col-span-1">
-                            <ScrollReveal variant="slideRight">
-                                <div className="space-y-8">
-                                    <div>
-                                        <h2 className="text-2xl font-bold font-display mb-6 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                                            Get in Touch
-                                        </h2>
-                                        <p className="text-gray-300 leading-relaxed mb-8">
-                                            Whether you have a project in mind or just want to chat about technology, we&apos;d love to hear from you.
-                                        </p>
-                                    </div>
+            <Section size="sm">
+                <div className="grid gap-8 lg:grid-cols-5 lg:gap-10">
+                    {/* Contact details */}
+                    <div className="lg:col-span-2">
+                        <ScrollReveal variant="slideRight">
+                            <div className="space-y-3">
+                                {contactChannels.map((channel) => {
+                                    const Icon = channel.icon;
+                                    const body = (
+                                        <>
+                                            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--surface))] text-brand">
+                                                <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
+                                            </span>
+                                            <span className="min-w-0">
+                                                <span className="block text-xs uppercase tracking-wider text-subtle">
+                                                    {channel.label}
+                                                </span>
+                                                <span className="mt-0.5 block truncate text-sm font-medium text-body">
+                                                    {channel.value}
+                                                </span>
+                                            </span>
+                                        </>
+                                    );
 
-                                    <div className="space-y-6">
-                                        <div className="glass p-4 rounded-xl border border-gray-700">
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-2xl">📧</div>
-                                                <div>
-                                                    <div className="text-sm text-gray-400">Email</div>
-                                                    <div className="text-cyan-400 font-semibold">
-                                                        contactpanda@pandapath.in
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="glass p-4 rounded-xl border border-gray-700">
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-2xl">📍</div>
-                                                <div>
-                                                    <div className="text-sm text-gray-400">Location</div>
-                                                    <div className="text-gray-300">
-                                                        Bangalore, Karnataka, India
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="glass p-4 rounded-xl border border-gray-700">
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-2xl">🕐</div>
-                                                <div>
-                                                    <div className="text-sm text-gray-400">Hours</div>
-                                                    <div className="text-gray-300">
-                                                        Mon–Fri, 9AM–7PM IST
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="glass p-4 rounded-xl border border-gray-700">
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-2xl">💬</div>
-                                                <div>
-                                                    <div className="text-sm text-gray-400">Prefer WhatsApp?</div>
-                                                    <a
-                                                        href="https://wa.me/917411147986"
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-green-400 font-semibold hover:text-green-300 transition-colors"
-                                                    >
-                                                        Message us directly →
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="glass p-4 rounded-xl border border-gray-700">
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-2xl">💼</div>
-                                                <div>
-                                                    <div className="text-sm text-gray-400">LinkedIn</div>
-                                                    <a
-                                                        href="https://www.linkedin.com/in/pandapaths/"
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-blue-400 font-semibold hover:text-blue-300 transition-colors"
-                                                    >
-                                                        linkedin.com/in/pandapaths
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Social Links */}
-                                    {/* <div>
-                                        <div className="text-sm text-gray-400 mb-3">Follow Us</div>
-                                        <div className="flex gap-3">
-                                            {['Twitter', 'LinkedIn', 'GitHub'].map((social) => (
-                                                <a
-                                                    key={social}
-                                                    href="#"
-                                                    className={`glass px-4 py-2 rounded-lg border border-gray-700 hover:border-blue-500/50 text-sm ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'} hover:text-blue-400 transition-all duration-300`}
-                                                >
-                                                    {social}
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div> */}
-                                </div>
-                            </ScrollReveal>
-                        </div>
-
-                        {/* Contact Form */}
-                        <div className="lg:col-span-2">
-                            <ScrollReveal variant="slideLeft">
-                                <div className="glass p-8 md:p-12 rounded-2xl border border-gray-700">
-                                    {isSubmitted ? (
-                                        <motion.div
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            className="text-center py-12"
+                                    return channel.href ? (
+                                        <a
+                                            key={channel.label}
+                                            href={channel.href}
+                                            target={channel.external ? '_blank' : undefined}
+                                            rel={channel.external ? 'noopener noreferrer' : undefined}
+                                            className="glass card-interactive flex items-center gap-3.5 rounded-xl p-4"
                                         >
-                                            <div className="text-6xl mb-6">✓</div>
-                                            <h3 className="text-3xl font-bold font-display mb-4 text-green-400">
-                                                Message Sent!
-                                            </h3>
-                                            <p className="text-xl text-gray-300 mb-8">
-                                                Thanks for reaching out. We&apos;ll get back to you within 24 hours.
-                                            </p>
+                                            {body}
+                                        </a>
+                                    ) : (
+                                        <div key={channel.label} className="glass flex items-center gap-3.5 rounded-xl p-4">
+                                            {body}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="glass mt-6 rounded-card p-6">
+                                <h2 className="text-base font-semibold font-display text-body">
+                                    What happens next
+                                </h2>
+                                <ol className="mt-4 space-y-3">
+                                    {nextSteps.map((step, i) => (
+                                        <li key={step} className="flex gap-3 text-sm text-muted">
+                                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[rgb(var(--border-strong))] font-mono text-[0.65rem] text-brand tabular">
+                                                {i + 1}
+                                            </span>
+                                            <span className="leading-relaxed">{step}</span>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </div>
+                        </ScrollReveal>
+                    </div>
+
+                    {/* Form */}
+                    <div className="lg:col-span-3">
+                        <ScrollReveal variant="slideLeft">
+                            <div className="glass rounded-card p-6 sm:p-8 lg:p-10">
+                                {isSubmitted ? (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.96 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                        className="py-10 text-center"
+                                        role="status"
+                                        aria-live="polite"
+                                    >
+                                        <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400">
+                                            <Check className="h-8 w-8" strokeWidth={2.5} aria-hidden="true" />
+                                        </span>
+                                        <h2 className="mt-6 text-title font-bold font-display text-body">
+                                            Message sent
+                                        </h2>
+                                        <p className="mx-auto mt-3 max-w-md text-muted">
+                                            Thanks for reaching out — you&apos;ll hear back within one
+                                            business day. If it&apos;s urgent, WhatsApp is faster.
+                                        </p>
+                                        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                                             <button
                                                 onClick={() => setIsSubmitted(false)}
-                                                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold neon-glow hover:shadow-xl transition-shadow"
+                                                className="min-h-[48px] rounded-full border border-[rgb(var(--border-strong))] px-6 font-semibold text-body transition-colors hover:border-[var(--brand)] hover:text-brand"
                                             >
-                                                Send Another Message
+                                                Send another message
                                             </button>
-                                        </motion.div>
-                                    ) : (
-                                        <form onSubmit={handleSubmit} className="space-y-6">
-                                            <Input
-                                                label="Your Name"
-                                                name="name"
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                error={errors.name}
-                                                required
-                                                placeholder="e.g. Rahul Sharma"
-                                            />
-                                            <Input
-                                                label="Email"
-                                                name="email"
-                                                type="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
-                                                error={errors.email}
-                                                required
-                                                placeholder="rahul@yourstartup.in"
-                                            />
-
-                                            <Textarea
-                                                label="What do you want to build?"
-                                                name="projectDescription"
-                                                value={formData.projectDescription}
-                                                onChange={handleChange}
-                                                error={errors.projectDescription}
-                                                required
-                                                rows={4}
-                                                maxLength={500}
-                                                showCharCount
-                                                placeholder="e.g. A WhatsApp bot for my D2C brand to handle customer questions automatically..."
-                                            />
-
-                                            {errors.submit && (
-                                                <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm whitespace-pre-line">
-                                                    {errors.submit}
-                                                </div>
-                                            )}
-                                            <motion.button
-                                                type="submit"
-                                                disabled={isSubmitting}
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold text-lg neon-glow hover:shadow-xl transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                                            <a
+                                                href={WHATSAPP_URL}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[#25D366] px-6 font-semibold text-[#04231a] transition-transform active:scale-[0.98]"
                                             >
-                                                {isSubmitting ? 'Sending...' : 'Send Message'}
-                                            </motion.button>
-
-                                            <p className="text-center text-sm text-gray-400">
-                                                Prefer a quick chat?{' '}
-                                                <a
-                                                    href="https://wa.me/917411147986"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-green-400 hover:text-green-300 font-semibold"
-                                                >
-                                                    Message us on WhatsApp →
-                                                </a>
+                                                <WhatsAppIcon size={16} />
+                                                WhatsApp us
+                                            </a>
+                                        </div>
+                                    </motion.div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                                        <div>
+                                            <h2 className="text-title font-bold font-display text-body">
+                                                Start the conversation
+                                            </h2>
+                                            <p className="mt-2 text-sm text-muted">
+                                                Three fields. That&apos;s genuinely all we need to give
+                                                you a useful first answer.
                                             </p>
-                                        </form>
-                                    )}
-                                </div>
-                            </ScrollReveal>
-                        </div>
+                                        </div>
+
+                                        <Input
+                                            label="Your name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            error={errors.name}
+                                            required
+                                            autoComplete="name"
+                                            placeholder="e.g. Rahul Sharma"
+                                        />
+                                        <Input
+                                            label="Email"
+                                            name="email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            error={errors.email}
+                                            required
+                                            autoComplete="email"
+                                            inputMode="email"
+                                            placeholder="rahul@yourstartup.in"
+                                        />
+                                        <Textarea
+                                            label="What do you want to build?"
+                                            name="projectDescription"
+                                            value={formData.projectDescription}
+                                            onChange={handleChange}
+                                            error={errors.projectDescription}
+                                            required
+                                            rows={5}
+                                            maxLength={500}
+                                            showCharCount
+                                            placeholder="e.g. A WhatsApp bot for my D2C brand that answers product and sizing questions automatically..."
+                                        />
+
+                                        {errors.submit && (
+                                            <div
+                                                role="alert"
+                                                aria-live="assertive"
+                                                className="flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-400"
+                                            >
+                                                <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                                                <span className="whitespace-pre-line">{errors.submit}</span>
+                                            </div>
+                                        )}
+
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,#2563eb,#0891b2_55%,#7c3aed)] px-8 text-base font-semibold text-white shadow-[0_8px_28px_-8px_rgb(37_99_235/0.65)] transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                                        >
+                                            {isSubmitting ? (
+                                                <>
+                                                    <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                                    </svg>
+                                                    Sending…
+                                                </>
+                                            ) : (
+                                                <>
+                                                    Send message
+                                                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                                </>
+                                            )}
+                                        </button>
+
+                                        <p className="text-center text-sm text-subtle">
+                                            Prefer a quick chat?{' '}
+                                            <a
+                                                href={WHATSAPP_URL}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-semibold text-brand underline underline-offset-4"
+                                            >
+                                                Message us on WhatsApp
+                                            </a>
+                                        </p>
+                                    </form>
+                                )}
+                            </div>
+                        </ScrollReveal>
                     </div>
                 </div>
             </Section>
-
-            {/* Map Placeholder */}
-            {/* <Section className="py-20">
-                <ScrollReveal variant="fadeIn">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="glass rounded-2xl border border-gray-700 overflow-hidden h-96 flex items-center justify-center">
-                            <div className="text-center">
-                                <div className="text-6xl mb-4">🗺️</div>
-                                <p className="text-gray-400">Map Integration Placeholder</p>
-                                <p className="text-sm text-gray-500 mt-2">
-                                    Panaji Goa, India
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </ScrollReveal>
-            </Section> */}
         </>
     );
 }

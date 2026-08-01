@@ -1,195 +1,249 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
-import { useTheme } from '@/contexts/ThemeContext';
 
-
-const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileMenuOpen]);
-
-  const navItems = [
+const navItems = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
     { name: 'Case Studies', href: '/case-studies' },
     { name: 'Process & Tech', href: '/process-tech' },
     { name: 'Contact', href: '/contact' },
-  ];
+];
 
-  return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass shadow-lg' : 'bg-transparent'
-        }`}
-    >
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 md:py-5">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-              <div className="flex items-center justify-center h-11 w-11 sm:h-[2.7rem] sm:w-[2.7rem] md:h-[3.2rem] md:w-[3.2rem] rounded-full bg-white overflow-hidden p-[1.5px]">
-                <motion.img
-                  whileHover={{ scale: 1.05 }}
-                  src="/images/logo.png"
-                  alt="PandaPaths Logo"
-                  className="h-full w-full object-cover"
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
-                />
-              </div>
-            <span className="text-lg sm:text-xl md:text-2xl font-bold font-display select-none">
-              {!mounted || theme === 'light' ? (
-                // Light mode: Panda in dark, Path in cyan
-                <>
-                  <span style={{ color: '#232b36' }}>Panda</span>
-                  <span style={{ color: '#19c3d6' }}>Path</span>
-                </>
-              ) : (
-                // Dark mode: white text
-                <span className="text-white">PandaPath</span>
-              )}
-            </span>
-          </Link>
+const Navigation = () => {
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6 2xl:space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="nav-link relative font-semibold text-xs lg:text-sm xl:text-base px-2 lg:px-3 xl:px-4 py-2 rounded-lg bg-transparent hover:bg-transparent transition-all group"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
-            <ThemeToggle />
-            <Link href="/contact">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white text-xs lg:text-sm xl:text-base font-semibold neon-glow hover:shadow-xl transition-shadow whitespace-nowrap"
-              >
-                Get Started
-              </motion.button>
-            </Link>
-          </div>
+    // Reading-progress bar. Springing it stops the jitter you get from
+    // painting raw scroll values every frame.
+    const { scrollYProgress } = useScroll();
+    const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, mass: 0.3 });
 
-          {/* Tablet/Mobile Menu Button */}
-          <div className="flex lg:hidden items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-900 dark:text-white p-2 -mr-2 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-              aria-label="Toggle menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 24);
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-      </div>
+    // Close the drawer on navigation — otherwise it stays open over the new page.
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
 
-      {/* Mobile/Tablet Menu Overlay */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
-          />
+    useEffect(() => {
+        document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isMobileMenuOpen]);
 
-          {/* Menu Panel */}
-          <motion.div
-            initial={{ opacity: 0, x: '-100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '-100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] shadow-2xl z-[60] lg:hidden overflow-y-auto ${theme === 'light'
-                ? 'bg-white'
-                : 'bg-gray-900'
-              }`}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${theme === 'light'
-                  ? 'text-gray-900 hover:bg-gray-100'
-                  : 'text-white hover:bg-gray-800'
+    // Escape closes the drawer (WCAG: every modal needs a keyboard exit).
+    useEffect(() => {
+        if (!isMobileMenuOpen) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setIsMobileMenuOpen(false);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [isMobileMenuOpen]);
+
+    const isActive = (href: string) =>
+        href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+    return (
+        <motion.header
+            initial={{ y: -80 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                isScrolled
+                    ? 'glass-strong border-b border-[rgb(var(--border))] backdrop-blur-xl'
+                    : 'bg-transparent border-b border-transparent'
+            }`}
+        >
+            <nav aria-label="Primary" className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
+                    {/* Brand */}
+                    <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="PandaPath — home">
+                        <span className="relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-[rgb(var(--border-strong))] transition-transform duration-300 ease-out-expo group-hover:scale-105">
+                            <img
+                                src="/images/logo.png"
+                                alt=""
+                                className="h-full w-full object-cover"
+                                width={44}
+                                height={44}
+                            />
+                        </span>
+                        <span className="text-lg sm:text-xl font-bold font-display tracking-tight select-none">
+                            <span className="text-body">Panda</span>
+                            <span className="text-brand">Path</span>
+                        </span>
+                    </Link>
+
+                    {/* Desktop nav */}
+                    <div className="hidden lg:flex items-center gap-1">
+                        {navItems.map((item) => {
+                            const active = isActive(item.href);
+                            return (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    aria-current={active ? 'page' : undefined}
+                                    className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
+                                        active ? 'text-brand' : 'text-muted hover:text-body'
+                                    }`}
+                                >
+                                    {item.name}
+                                    {/* Shared-element underline that slides between items */}
+                                    {active && (
+                                        <motion.span
+                                            layoutId="nav-active"
+                                            className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-[linear-gradient(90deg,var(--accent),var(--brand))]"
+                                            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                                        />
+                                    )}
+                                </Link>
+                            );
+                        })}
+                    </div>
+
+                    <div className="hidden lg:flex items-center gap-3">
+                        <ThemeToggle />
+                        <Link
+                            href="/contact"
+                            className="group inline-flex items-center gap-1.5 rounded-full bg-[linear-gradient(100deg,#2563eb,#0891b2_55%,#7c3aed)] bg-[length:200%_100%] bg-left px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_rgb(37_99_235/0.7)] transition-[background-position,box-shadow] duration-300 ease-out-expo hover:bg-right hover:shadow-[0_12px_32px_-10px_rgb(37_99_235/0.8)] active:scale-[0.97]"
+                        >
+                            Book a call
+                            <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5" aria-hidden="true" />
+                        </Link>
+                    </div>
+
+                    {/* Mobile controls */}
+                    <div className="flex lg:hidden items-center gap-1">
+                        <ThemeToggle />
+                        <button
+                            onClick={() => setIsMobileMenuOpen(true)}
+                            className="flex h-11 w-11 items-center justify-center rounded-lg text-body transition-colors hover:bg-[rgb(var(--surface))] touch-manipulation"
+                            aria-label="Open menu"
+                            aria-expanded={isMobileMenuOpen}
+                            aria-controls="mobile-menu"
+                        >
+                            <Menu className="h-6 w-6" aria-hidden="true" />
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Reading progress — only meaningful once the user has scrolled */}
+            <motion.div
+                style={{ scaleX: progress }}
+                className={`h-[2px] origin-left bg-[linear-gradient(90deg,var(--accent),var(--brand),var(--accent-2))] transition-opacity duration-300 ${
+                    isScrolled ? 'opacity-100' : 'opacity-0'
                 }`}
-              aria-label="Close menu"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+                aria-hidden="true"
+            />
 
-            <div className="p-6 pt-20 space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="nav-link block py-3 sm:py-4 px-4 -mx-4 font-semibold text-base sm:text-lg rounded-lg bg-transparent hover:bg-blue-500/10 transition-all touch-manipulation min-h-[44px] flex items-center"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="pt-4 pb-2 flex items-center justify-between px-4 -mx-4">
-                <span className={`text-sm sm:text-base ${theme === 'light'
-                    ? 'text-gray-500'
-                    : 'text-gray-400'
-                  }`}>Theme</span>
-              </div>
-              <Link href="/contact" className="block pt-2" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white text-sm sm:text-base font-semibold neon-glow touch-manipulation min-h-[44px]">
-                  Get Started
-                </button>
-              </Link>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </motion.nav>
-  );
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <>
+                        <motion.div
+                            key="backdrop"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+                        />
+
+                        <motion.div
+                            key="drawer"
+                            id="mobile-menu"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-label="Site menu"
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', damping: 30, stiffness: 260 }}
+                            className="fixed top-0 right-0 z-[60] h-full w-[86vw] max-w-sm overflow-y-auto border-l border-[rgb(var(--border))] bg-[var(--surface-solid)] shadow-2xl lg:hidden"
+                        >
+                            <div className="flex items-center justify-between border-b border-[rgb(var(--border))] px-5 h-16">
+                                <span className="font-display font-bold text-lg">
+                                    <span className="text-body">Panda</span>
+                                    <span className="text-brand">Path</span>
+                                </span>
+                                <button
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex h-11 w-11 items-center justify-center rounded-lg text-body transition-colors hover:bg-[rgb(var(--surface))] touch-manipulation"
+                                    aria-label="Close menu"
+                                >
+                                    <X className="h-6 w-6" aria-hidden="true" />
+                                </button>
+                            </div>
+
+                            <div className="p-5">
+                                <ul className="space-y-1">
+                                    {navItems.map((item, i) => {
+                                        const active = isActive(item.href);
+                                        return (
+                                            <motion.li
+                                                key={item.name}
+                                                initial={{ opacity: 0, x: 20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.05 + i * 0.04, duration: 0.3 }}
+                                            >
+                                                <Link
+                                                    href={item.href}
+                                                    aria-current={active ? 'page' : undefined}
+                                                    className={`flex min-h-[48px] items-center justify-between rounded-xl px-4 text-base font-medium transition-colors ${
+                                                        active
+                                                            ? 'bg-[rgb(var(--surface))] text-brand'
+                                                            : 'text-muted hover:bg-[rgb(var(--surface))] hover:text-body'
+                                                    }`}
+                                                >
+                                                    {item.name}
+                                                    {active && <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />}
+                                                </Link>
+                                            </motion.li>
+                                        );
+                                    })}
+                                </ul>
+
+                                <Link
+                                    href="/contact"
+                                    className="mt-6 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,#2563eb,#0891b2_55%,#7c3aed)] px-6 font-semibold text-white shadow-[0_8px_24px_-10px_rgb(37_99_235/0.7)] active:scale-[0.98] transition-transform"
+                                >
+                                    Book a free 20-min call
+                                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                </Link>
+
+                                <p className="mt-6 text-sm text-subtle">
+                                    Prefer WhatsApp?{' '}
+                                    <a
+                                        href="https://wa.me/917411147986"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-medium text-brand underline underline-offset-4"
+                                    >
+                                        Message us directly
+                                    </a>
+                                </p>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
+        </motion.header>
+    );
 };
 
 export default Navigation;

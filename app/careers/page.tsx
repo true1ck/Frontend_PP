@@ -1,220 +1,143 @@
-'use client';
-
-import { useState } from 'react';
+import type { Metadata } from 'next';
+import { Mail, Code2, GraduationCap, Users, Clock, ArrowUpRight } from 'lucide-react';
 import Section from '@/components/Section';
+import SectionHeading from '@/components/SectionHeading';
 import ScrollReveal from '@/components/ScrollReveal';
-import Input from '@/components/ui/Input';
-import Button from '@/components/Button';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbSchema } from '@/lib/seo';
+import { SITE } from '@/lib/content';
 
+export const metadata: Metadata = {
+    title: 'Careers — Work With PandaPath in Bangalore',
+    description:
+        'PandaPath is a small AI product studio in Bangalore. We hire rarely and carefully. If you ship full-stack AI products end to end, send us something you have built.',
+    alternates: { canonical: '/careers' },
+};
+
+const reality = [
+    {
+        icon: Code2,
+        title: 'You own projects end to end',
+        description:
+            'There is no ticket queue to hide in. You scope with the client, build it, deploy it and support it. That is either exactly what you want or exactly what you do not.',
+    },
+    {
+        icon: Users,
+        title: 'The team is small',
+        description:
+            'That means real ownership and no politics. It also means no large engineering org to learn from, and you will be the most senior person on some calls.',
+    },
+    {
+        icon: GraduationCap,
+        title: 'You will work across the stack',
+        description:
+            'Frontend, APIs, model integration, deployment. Specialists are welcome, but generalists have a better time here.',
+    },
+    {
+        icon: Clock,
+        title: 'Short cycles, real deadlines',
+        description:
+            'Projects run two to six weeks. Shipping matters more than perfect abstractions, and the feedback loop is measured in days.',
+    },
+];
 
 export default function CareersPage() {
-    const [email, setEmail] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        setEmail('');
-    };
+    const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(
+        'Working with PandaPath',
+    )}&body=${encodeURIComponent(
+        'Hi PandaPath team,\n\nA bit about me:\n\nSomething I have built (link):\n\nWhat I would want to work on:\n\n',
+    )}`;
 
     return (
         <>
-            {/* Hero */}
-            <Section className="!pt-32 md:!pt-30 lg:!pt-40 !pb-20">
-                <div className="max-w-4xl mx-auto text-center">
+            <JsonLd data={breadcrumbSchema([{ name: 'Careers', path: '/careers' }])} />
+
+            <Section size="hero" aura>
+                <div className="mx-auto max-w-3xl text-center">
                     <ScrollReveal variant="fadeIn">
-                        <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight pb-2 mb-8 bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                            Join Our Team
+                        <p className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-brand">
+                            Careers
+                        </p>
+                        <h1 className="text-display-xl font-bold font-display text-balance">
+                            <span className="text-gradient">We hire rarely,</span>{' '}
+                            <span className="text-body">and carefully</span>
                         </h1>
                     </ScrollReveal>
-                    <ScrollReveal delay={0.2}>
-                        <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                            Build the future with a team of passionate engineers who value excellence, innovation, and continuous growth.
+                    <ScrollReveal delay={0.15}>
+                        <p className="mx-auto mt-6 max-w-2xl text-lead text-muted text-pretty">
+                            We&apos;re a small studio in Bangalore, so a new person changes how the
+                            whole place works. Here&apos;s an honest picture of the job before you
+                            decide whether to write to us.
                         </p>
                     </ScrollReveal>
                 </div>
             </Section>
 
-            {/* Culture */}
-            <Section className="py-8">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <h2 className="text-4xl md:text-5xl font-bold font-display text-center mb-16 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-                            Our Culture
-                        </h2>
-                    </ScrollReveal>
+            <Section size="sm">
+                <SectionHeading
+                    eyebrow="The reality"
+                    title="What working here is actually like"
+                    description="Including the parts that won't suit everyone."
+                />
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {[
-                            {
-                                icon: '🚀',
-                                title: 'Innovation First',
-                                description: 'We encourage experimentation and give you the freedom to explore new technologies and approaches.',
-                            },
-                            {
-                                icon: '🎓',
-                                title: 'Continuous Learning',
-                                description: 'Annual learning budget, conference tickets, and dedicated time for skill development.',
-                            },
-                            {
-                                icon: '🤝',
-                                title: 'Collaborative Environment',
-                                description: 'Work with talented engineers who are eager to share knowledge and grow together.',
-                            },
-                            {
-                                icon: '⚖️',
-                                title: 'Work-Life Balance',
-                                description: 'Flexible hours, remote work options, and a culture that respects your personal time.',
-                            },
-                        ].map((item, index) => (
-                            <ScrollReveal key={item.title} delay={index * 0.1} variant="slideUp">
-                                <div className="glass p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                                    <div className="text-5xl mb-4">{item.icon}</div>
-                                    <h3 className="text-2xl font-bold font-display mb-3 text-blue-400">
+                <div className="mt-14 grid gap-6 md:grid-cols-2">
+                    {reality.map((item, index) => {
+                        const Icon = item.icon;
+                        return (
+                            <ScrollReveal key={item.title} delay={index * 0.08} variant="slideUp">
+                                <div className="glass card-interactive h-full rounded-card p-6 sm:p-7">
+                                    <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))] text-brand">
+                                        <Icon className="h-[22px] w-[22px]" strokeWidth={1.75} aria-hidden="true" />
+                                    </span>
+                                    <h2 className="text-subtitle font-semibold font-display text-body">
                                         {item.title}
-                                    </h3>
-                                    <p className="text-gray-300 leading-relaxed">
+                                    </h2>
+                                    <p className="mt-2.5 text-sm leading-relaxed text-muted">
                                         {item.description}
                                     </p>
                                 </div>
                             </ScrollReveal>
-                        ))}
-                    </div>
+                        );
+                    })}
                 </div>
             </Section>
 
-            {/* Benefits */}
-            <Section className="py-8">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 text-purple-400">
-                            Benefits & Perks
+            {/* Open roles / how to reach us */}
+            <Section>
+                <ScrollReveal variant="scale">
+                    <div className="mx-auto max-w-3xl rounded-[1.75rem] border border-[rgb(var(--border-strong))] bg-[rgb(var(--surface))] p-8 text-center backdrop-blur-xl sm:p-12">
+                        <span className="inline-flex items-center gap-2 rounded-pill border border-[rgb(var(--border))] px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-subtle">
+                            No open roles right now
+                        </span>
+
+                        <h2 className="mt-6 text-display font-bold font-display">
+                            <span className="text-gradient">Write to us anyway</span>
                         </h2>
-                    </ScrollReveal>
 
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {[
-                            '💰 Competitive Salary',
-                            '🏥 Health Insurance',
-                            '🏖️ Unlimited PTO',
-                            '💻 Latest Equipment',
-                            '📚 Learning Budget',
-                            '🎯 Equity Options',
-                            '🏠 Remote Work',
-                            '🎉 Team Events',
-                            '☕ Free Snacks & Coffee',
-                        ].map((benefit, index) => (
-                            <ScrollReveal key={benefit} delay={index * 0.05} variant="scale">
-                                <div className="glass p-4 rounded-lg border border-gray-700 text-center text-gray-300 hover:border-blue-500/50 transition-all duration-300">
-                                    {benefit}
-                                </div>
-                            </ScrollReveal>
-                        ))}
+                        <p className="mx-auto mt-5 max-w-xl text-lead text-muted text-pretty">
+                            We don&apos;t keep a waitlist and we won&apos;t pretend to email you
+                            later. But if you send something you&apos;ve built and it&apos;s good,
+                            we&apos;ll remember — that&apos;s how our last two hires happened.
+                        </p>
+
+                        <a
+                            href={mailto}
+                            className="group mt-8 inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[linear-gradient(100deg,#2563eb,#0891b2_55%,#7c3aed)] px-7 font-semibold text-white shadow-[0_8px_28px_-8px_rgb(37_99_235/0.65)] transition-transform active:scale-[0.98]"
+                        >
+                            <Mail className="h-4 w-4" aria-hidden="true" />
+                            {SITE.email}
+                            <ArrowUpRight
+                                className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                aria-hidden="true"
+                            />
+                        </a>
+
+                        <p className="mt-5 text-sm text-subtle">
+                            Send a link to something real — a repo, a live product, a side project.
+                            A CV on its own tells us very little.
+                        </p>
                     </div>
-                </div>
-            </Section>
-
-            {/* What We Look For */}
-            <Section className="py-8">
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal variant="fadeIn">
-                        <h2 className="text-3xl md:text-4xl font-bold font-display text-center mb-12 text-cyan-400">
-                            What We Look For
-                        </h2>
-                    </ScrollReveal>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {[
-                            {
-                                title: 'Technical Excellence',
-                                description: 'Strong fundamentals in computer science and a passion for writing clean, maintainable code.',
-                            },
-                            {
-                                title: 'Problem Solving',
-                                description: 'Ability to break down complex problems and design elegant solutions.',
-                            },
-                            {
-                                title: 'Growth Mindset',
-                                description: 'Eagerness to learn, adapt, and continuously improve your skills.',
-                            },
-                            {
-                                title: 'Team Player',
-                                description: 'Strong communication skills and ability to collaborate effectively.',
-                            },
-                            {
-                                title: 'Ownership',
-                                description: 'Take responsibility for your work and see projects through to completion.',
-                            },
-                            {
-                                title: 'User Focus',
-                                description: 'Understanding that great engineering serves real user needs.',
-                            },
-                        ].map((item, index) => (
-                            <ScrollReveal key={item.title} delay={index * 0.1} variant="slideUp">
-                                <div className="glass p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                                    <h3 className="text-xl font-bold font-display mb-3 text-blue-400">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed">
-                                        {item.description}
-                                    </p>
-                                </div>
-                            </ScrollReveal>
-                        ))}
-                    </div>
-                </div>
-            </Section>
-
-            {/* Current Openings */}
-            <Section className="py-8">
-                <div className="max-w-4xl mx-auto">
-                    <ScrollReveal variant="scale">
-                        <div className="glass p-12 rounded-2xl border border-gray-700 text-center">
-                            <div className="text-6xl mb-6">🔔</div>
-                            <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">
-                                Future Openings Coming Soon
-                            </h2>
-                            <p className="text-xl text-gray-300 mb-8">
-                                We&apos;re always looking for exceptional engineers. Sign up to be notified when we have openings that match your skills.
-                            </p>
-
-                            {isSubmitted ? (
-                                <div className="glass p-6 rounded-xl border border-green-500/50 bg-green-900/20">
-                                    <p className="text-green-400 text-lg">
-                                        ✓ Thanks! We&apos;ll notify you when positions open up.
-                                    </p>
-                                </div>
-                            ) : (
-                                <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-                                    <div className="flex gap-3">
-                                        <Input
-                                            type="email"
-                                            placeholder="your@email.com"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            required
-                                            className="flex-1"
-                                        />
-                                        <Button
-                                            type="submit"
-                                            variant="primary"
-                                            disabled={isSubmitting}
-                                        >
-                                            {isSubmitting ? 'Subscribing...' : 'Notify Me'}
-                                        </Button>
-                                    </div>
-                                </form>
-                            )}
-                        </div>
-                    </ScrollReveal>
-                </div>
+                </ScrollReveal>
             </Section>
         </>
     );

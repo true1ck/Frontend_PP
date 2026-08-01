@@ -1,104 +1,80 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { Search, PenTool, Code2, Rocket, TrendingUp } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
+import { processSteps } from '@/lib/content';
 
-interface ProcessStep {
-    number: string;
-    title: string;
-    description: string;
-    icon: string;
-}
+const icons = {
+    search: Search,
+    pen: PenTool,
+    code: Code2,
+    rocket: Rocket,
+    trend: TrendingUp,
+} as const;
 
-const steps: ProcessStep[] = [
-    {
-        number: '01',
-        title: 'Discover',
-        description: 'We dive deep into your business goals, challenges, and requirements to understand the full scope of your project.',
-        icon: '🔍',
-    },
-    {
-        number: '02',
-        title: 'Design',
-        description: 'Our architects craft scalable system designs and user experiences that align with your vision and technical needs.',
-        icon: '✏️',
-    },
-    {
-        number: '03',
-        title: 'Build',
-        description: 'Expert engineers develop your solution using cutting-edge technologies and best practices for quality and performance.',
-        icon: '⚙️',
-    },
-    {
-        number: '04',
-        title: 'Deploy',
-        description: 'We ensure smooth deployment to production with comprehensive testing, monitoring, and infrastructure setup.',
-        icon: '🚀',
-    },
-    {
-        number: '05',
-        title: 'Scale',
-        description: 'Continuous optimization and support to help your product grow and adapt to changing business needs.',
-        icon: '📈',
-    },
-];
+/**
+ * Vertical alternating timeline — the detailed view used on /process-tech.
+ * Reads the same `processSteps` as the compact homepage version, so the two
+ * can't drift apart.
+ */
+const ProcessTimeline = () => (
+    <div className="relative">
+        {/* Spine: left-aligned on mobile, centred from md up */}
+        <div
+            aria-hidden="true"
+            className="absolute bottom-0 left-[27px] top-0 w-px bg-[linear-gradient(180deg,transparent,rgb(var(--border-strong))_6%,rgb(var(--border-strong))_94%,transparent)] md:left-1/2 md:-translate-x-1/2"
+        />
 
-const ProcessTimeline = () => {
-    return (
-        <div className="relative">
-            {/* Connecting Line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-cyan-400 to-purple-500 hidden md:block" />
+        <ol className="space-y-10 md:space-y-16">
+            {processSteps.map((step, index) => {
+                const Icon = icons[step.icon];
+                const flip = index % 2 === 1;
 
-            <div className="space-y-12 md:space-y-24">
-                {steps.map((step, index) => (
+                return (
                     <ScrollReveal
                         key={step.number}
-                        delay={index * 0.1}
-                        variant={index % 2 === 0 ? 'slideRight' : 'slideLeft'}
+                        delay={index * 0.08}
+                        variant={flip ? 'slideLeft' : 'slideRight'}
                     >
-                        <div
-                            className={`flex flex-col md:flex-row items-center gap-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                                }`}
-                        >
-                            {/* Content */}
-                            <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                                <motion.div
-                                    className="glass p-6 md:p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300"
-                                    whileHover={{ scale: 1.02 }}
+                        <li className="relative flex items-start gap-6 md:gap-0">
+                            {/* Marker */}
+                            <span className="relative z-[1] flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[rgb(var(--border-strong))] bg-[var(--bg)] text-brand md:absolute md:left-1/2 md:-translate-x-1/2">
+                                <Icon className="h-[22px] w-[22px]" strokeWidth={1.75} aria-hidden="true" />
+                            </span>
+
+                            {/* Card — sits on one side of the spine on desktop */}
+                            <div
+                                className={`flex-1 md:flex ${flip ? 'md:justify-end' : ''}`}
+                            >
+                                <div
+                                    className={`glass card-interactive w-full rounded-card p-6 md:w-[calc(50%-3rem)] sm:p-7 ${
+                                        flip ? '' : 'md:text-right'
+                                    }`}
                                 >
-                                    <div className="text-sm font-mono text-cyan-400 mb-2">
-                                        Step {step.number}
+                                    <div
+                                        className={`flex items-center gap-2 ${flip ? '' : 'md:justify-end'}`}
+                                    >
+                                        <span className="font-mono text-xs text-brand tabular">
+                                            Step {step.number}
+                                        </span>
+                                        <span className="h-3 w-px bg-[rgb(var(--border-strong))]" />
+                                        <span className="font-mono text-xs text-subtle">{step.duration}</span>
                                     </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold font-display mb-3 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+
+                                    <h3 className="mt-2.5 text-title font-bold font-display text-body">
                                         {step.title}
                                     </h3>
-                                    <p className="text-gray-300 leading-relaxed">
+                                    <p className="mt-2.5 text-sm leading-relaxed text-muted">
                                         {step.description}
                                     </p>
-                                </motion.div>
+                                </div>
                             </div>
-
-                            {/* Icon Circle */}
-                            <div className="relative flex-shrink-0">
-                                <motion.div
-                                    className="w-16 h-16 md:w-20 md:h-20 rounded-full glass border-2 border-blue-500 flex items-center justify-center text-3xl md:text-4xl relative z-10"
-                                    whileHover={{ scale: 1.1, rotate: 360 }}
-                                    transition={{ duration: 0.6 }}
-                                >
-                                    {step.icon}
-                                </motion.div>
-                                {/* Glow */}
-                                <div className="absolute inset-0 rounded-full bg-blue-500/30 blur-xl" />
-                            </div>
-
-                            {/* Spacer for alternating layout */}
-                            <div className="flex-1 hidden md:block" />
-                        </div>
+                        </li>
                     </ScrollReveal>
-                ))}
-            </div>
-        </div>
-    );
-};
+                );
+            })}
+        </ol>
+    </div>
+);
 
 export default ProcessTimeline;

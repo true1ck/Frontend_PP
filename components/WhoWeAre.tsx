@@ -1,54 +1,65 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Zap, MessagesSquare, Receipt, ShieldCheck } from 'lucide-react';
 import Section from './Section';
+import SectionHeading from './SectionHeading';
 
-const WhoWeAre = () => {
-  return (
-    <Section id="who-we-are" className="py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="text-center max-w-4xl mx-auto"
-      >
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-          Who We Are
-        </h2>
-        <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-4 sm:mb-6 px-4">
-          PandaPath is a premium IT solutions company that transforms ambitious ideas into
-          production-ready digital products. We specialize in building scalable, maintainable
-          software systems that grow with your business.
-        </p>
-        <p className="text-base sm:text-lg text-gray-300 leading-relaxed px-4">
-          Our architecture-first mindset ensures every solution we deliver is built on solid foundations,
-          optimized for performance, and designed for the future. From startups to enterprises, we engineer
-          digital paths that lead to success.
-        </p>
+const differentiators = [
+    {
+        icon: Zap,
+        title: 'Weeks, not quarters',
+        body: 'Scoped in one call, first working build inside two weeks. You see progress every few days, not at a monthly review.',
+    },
+    {
+        icon: MessagesSquare,
+        title: 'Talk to the developer',
+        body: 'No account managers, no relay. The person writing your code is the person on WhatsApp answering your questions.',
+    },
+    {
+        icon: Receipt,
+        title: 'Fixed price, quoted upfront',
+        body: 'You get a number before we start and it does not move. No hourly billing, no scope-creep invoices at the end.',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Yours to keep',
+        body: 'Full source code, your cloud accounts, your data. Nothing is locked to us — including the right to walk away.',
+    },
+];
 
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
-          {[
-            { number: '100+', label: 'Projects Delivered' },
-            { number: '50+', label: 'Happy Clients' },
-            { number: '10+', label: 'Years Experience' },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.2, duration: 0.5 }}
-              viewport={{ once: true }}
-              className="glass p-6 rounded-xl"
-            >
-              <div className="text-3xl sm:text-4xl font-bold text-cyan-400 mb-2">{stat.number}</div>
-              <div className="text-sm sm:text-base text-gray-400">{stat.label}</div>
-            </motion.div>
-          ))}
-        </div> */}
-      </motion.div>
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const WhoWeAre = () => (
+    <Section id="who-we-are" aura>
+        <SectionHeading
+            eyebrow="Who we are"
+            title="A small studio that ships"
+            description="PandaPath is an AI product studio in Bangalore. We exist because Indian founders kept paying big-agency prices for junior work delivered six months late."
+        />
+
+        <div className="mt-14 grid gap-6 sm:grid-cols-2">
+            {differentiators.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                    <motion.div
+                        key={item.title}
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-60px' }}
+                        transition={{ delay: index * 0.08, duration: 0.55, ease }}
+                        className="glass card-interactive rounded-card p-6 sm:p-7"
+                    >
+                        <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[linear-gradient(135deg,rgb(34_211_238/0.16),rgb(59_130_246/0.12))] text-brand">
+                            <Icon className="h-[22px] w-[22px]" strokeWidth={1.75} aria-hidden="true" />
+                        </span>
+                        <h3 className="text-subtitle font-semibold font-display text-body">{item.title}</h3>
+                        <p className="mt-2.5 text-sm leading-relaxed text-muted">{item.body}</p>
+                    </motion.div>
+                );
+            })}
+        </div>
     </Section>
-  );
-};
+);
 
 export default WhoWeAre;
