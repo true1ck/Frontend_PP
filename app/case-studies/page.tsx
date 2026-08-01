@@ -5,20 +5,22 @@ import ScrollReveal from '@/components/ScrollReveal';
 import CaseStudiesGrid from '@/components/CaseStudiesGrid';
 import Button from '@/components/Button';
 import JsonLd from '@/components/JsonLd';
-import { caseStudiesSchema, breadcrumbSchema } from '@/lib/seo';
+import { caseStudiesSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'Case Studies — AI & Software Projects Built for Indian Startups',
+    title: 'Case Studies — AI Projects for Indian Startups | PandaPath',
     description:
-        'Real projects from PandaPath: WhatsApp AI assistants, RAG knowledge systems, analytics platforms, marketplaces and cloud migrations built for startups across Bangalore, Mumbai, Delhi, Pune and Hyderabad.',
+        'Real projects from PandaPath: WhatsApp AI assistants, RAG systems, analytics platforms and cloud migrations built for startups across India.',
     alternates: { canonical: '/case-studies' },
     openGraph: {
         title: 'PandaPath Case Studies — AI Projects for Indian Startups',
         description:
             'WhatsApp AI assistants, RAG knowledge systems, analytics platforms and cloud migrations delivered in 2–6 weeks.',
         url: `${SITE.url}/case-studies`,
+        images: [OG_IMAGE],
     },
+    twitter: { images: [OG_IMAGE.url] },
 };
 
 export default function CaseStudiesPage() {

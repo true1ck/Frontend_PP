@@ -280,6 +280,72 @@ body {
 }
 
 /* ============================================================
+   PROJECT ARTWORK
+
+   The illustrations need their own surface ramp: reusing --surface
+   makes the panels sink into the wash on dark, where there is no
+   drop shadow to separate them. Dark is the default; light needs a
+   flatter wash and a real shadow instead.
+   ============================================================ */
+
+:root {
+  --pa-panel: #151d2e;
+  --pa-panel-a: 0.94;
+  --pa-tint-a: 0.02;
+  --pa-edge-a: 0.2;
+  --pa-wash-a: 0.24;
+  --pa-wash-b: 0.15;
+  --pa-wash-c: 0.26;
+  --pa-glow-a: 0.36;
+  --pa-glow-b: 0.32;
+  --pa-dot-a: 0.09;
+  --pa-shadow: #000000;
+  --pa-shadow-a: 0.42;
+}
+
+html.light {
+  --pa-panel: #ffffff;
+  --pa-panel-a: 0.9;
+  --pa-tint-a: 0.03;
+  --pa-edge-a: 0.1;
+  --pa-wash-a: 0.13;
+  --pa-wash-b: 0.07;
+  --pa-wash-c: 0.14;
+  --pa-glow-a: 0.28;
+  --pa-glow-b: 0.24;
+  --pa-dot-a: 0.1;
+  --pa-shadow: #0a1020;
+  --pa-shadow-a: 0.16;
+}
+
+/* Ambient motion. Opacity/transform only, and every keyframe
+   resolves to a sensible static state so the reduced-motion
+   override below doesn't strand an element mid-animation. */
+
+@keyframes pa-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.22; } }
+@keyframes pa-glow  { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes pa-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes pa-dash  { to { stroke-dashoffset: -24; } }
+@keyframes pa-ring {
+  0%   { transform: scale(0.42); opacity: 0; }
+  25%  { opacity: 0.45; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.pa-blink { animation: pa-blink 1.5s ease-in-out infinite; }
+.pa-glow  { animation: pa-glow 2.8s ease-in-out infinite; }
+.pa-dash  { stroke-dasharray: 5 7; animation: pa-dash 1.8s linear infinite; }
+
+/* fill-box so scale/translate pivot on the shape, not the SVG origin */
+.pa-float,
+.pa-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.pa-float { animation: pa-float 5s ease-in-out infinite; }
+.pa-ring  { animation: pa-ring 3.6s ease-out infinite; }
+
+/* ============================================================
    SCROLLBAR
    ============================================================ */
 

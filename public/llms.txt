@@ -1,0 +1,29 @@
+# PandaPath
+
+> AI product studio in Bangalore, India. We design and ship WhatsApp AI bots, RAG knowledge systems, and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks, direct access to the developer who builds it — no account managers or ticket queues in between.
+
+PandaPath is a small studio, not an agency with layers. Every project is scoped at a fixed price before work starts, built by the person you talk to, and typically delivered in two to six weeks.
+
+## Services
+
+- [WhatsApp AI Bot](https://pandapath.in/services#whatsapp-ai-bot): Automated WhatsApp support and lead capture in Hindi and English. From ₹25,000, 2 weeks.
+- [RAG Knowledge System](https://pandapath.in/services#rag-knowledge-system): Turns PDFs, Notion pages and contracts into a searchable AI assistant with cited answers. From ₹40,000, 3 weeks.
+- [Full AI Product Build](https://pandapath.in/services#full-ai-product-build): End-to-end web or mobile product with AI features, deployed with CI/CD. From ₹80,000, 4–6 weeks.
+- [AI Business Audit](https://pandapath.in/services#ai-business-audit): A two-hour working session identifying the top 3 places AI actually pays off in your business. ₹6,000.
+
+## Pages
+
+- [Home](https://pandapath.in/): Overview of what PandaPath builds and how engagements work.
+- [Services](https://pandapath.in/services): Full pricing, scope and technology for every service.
+- [Case Studies](https://pandapath.in/case-studies): Real projects delivered for Indian startups (client names withheld under NDA).
+- [Process & Technology](https://pandapath.in/process-tech): How work is scoped, built and shipped, and the stack used (Next.js, Python, RAG pipelines, Claude, Gemini, PostgreSQL, Docker).
+- [About](https://pandapath.in/about): Who PandaPath is and how the studio operates.
+- [Careers](https://pandapath.in/careers): Hiring is rare and direct — no recruiter layer.
+- [Contact](https://pandapath.in/contact): Book a free 20-minute scoping call.
+
+## Contact
+
+- Email: contactpanda@pandapath.in
+- WhatsApp: https://wa.me/917411147986
+- Location: Bangalore, Karnataka, India
+- LinkedIn: https://www.linkedin.com/in/pandapaths/

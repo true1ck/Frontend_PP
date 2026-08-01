@@ -11,6 +11,26 @@ import { SITE, services, faqs, caseStudies } from './content';
 const ORG_ID = `${SITE.url}/#organization`;
 const SITE_ID = `${SITE.url}/#website`;
 
+/**
+ * Social share image, referenced explicitly on every page.
+ *
+ * This used to be the `opengraph-image.tsx` file-convention route. Two bugs
+ * with that approach: (1) under `output: 'export'`, Next writes it to a file
+ * with no extension, so nginx serves it with no Content-Type header at all —
+ * WhatsApp/LinkedIn/Slack scrapers can silently refuse to render it; (2) any
+ * page that declares its own `openGraph` object (about, services,
+ * case-studies, contact, process-tech) replaces the inherited object
+ * wholesale and loses the auto-injected image, so those pages shared with
+ * zero image. A static PNG under /public with a real extension plus an
+ * explicit `images` array on every page's metadata sidesteps both.
+ */
+export const OG_IMAGE = {
+    url: `${SITE.url}/images/og-cover.png`,
+    width: 1200,
+    height: 630,
+    alt: 'PandaPath — AI products for Indian startups, shipped in weeks.',
+};
+
 export const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': ['Organization', 'ProfessionalService'],

@@ -5,20 +5,22 @@ import SectionHeading from '@/components/SectionHeading';
 import ScrollReveal from '@/components/ScrollReveal';
 import Button from '@/components/Button';
 import JsonLd from '@/components/JsonLd';
-import { organizationSchema, breadcrumbSchema } from '@/lib/seo';
+import { organizationSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
     title: 'About PandaPath — AI Product Studio in Bangalore',
     description:
-        'PandaPath is a small AI product studio in Bangalore building WhatsApp bots, RAG systems and full-stack AI products for Indian startups. Fixed pricing, 2–4 week delivery, and direct access to the developer writing your code.',
+        'PandaPath is a small AI studio in Bangalore building WhatsApp bots, RAG systems and full AI products. Fixed pricing, 2–4 week delivery.',
     alternates: { canonical: '/about' },
     openGraph: {
         title: 'About PandaPath — AI Product Studio in Bangalore',
         description:
             'A small AI studio building for Indian startups. Fixed pricing, 2–4 week delivery, founder-direct.',
         url: `${SITE.url}/about`,
+        images: [OG_IMAGE],
     },
+    twitter: { images: [OG_IMAGE.url] },
 };
 
 const principles = [

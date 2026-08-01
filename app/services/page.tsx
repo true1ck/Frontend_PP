@@ -9,19 +9,21 @@ import JsonLd from '@/components/JsonLd';
 import TechIcon from '@/components/icons/TechIcon';
 import { WhatsAppIcon } from '@/components/icons/BrandIcons';
 import { services, SITE } from '@/lib/content';
-import { servicesSchema, breadcrumbSchema } from '@/lib/seo';
+import { servicesSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 
 export const metadata: Metadata = {
-    title: 'AI Development Services — WhatsApp Bots, RAG Systems & AI Products',
+    title: 'AI Development Services — WhatsApp Bots & RAG | PandaPath',
     description:
-        'Fixed-price AI development services for Indian startups. WhatsApp AI bots from ₹25,000, RAG knowledge systems from ₹40,000, and full AI product builds from ₹80,000 — delivered in 2–6 weeks from Bangalore.',
+        'Fixed-price AI development for Indian startups. WhatsApp bots from ₹25,000, RAG systems from ₹40,000, full AI builds from ₹80,000. Live in 2–6 weeks.',
     alternates: { canonical: '/services' },
     openGraph: {
         title: 'AI Development Services in India | PandaPath',
         description:
             'WhatsApp AI bots from ₹25,000, RAG systems from ₹40,000, full AI product builds from ₹80,000. Fixed price, 2–6 weeks.',
         url: `${SITE.url}/services`,
+        images: [OG_IMAGE],
     },
+    twitter: { images: [OG_IMAGE.url] },
 };
 
 const icons = {

@@ -7,19 +7,21 @@ import ProcessTimeline from '@/components/ProcessTimeline';
 import TechGrid from '@/components/TechGrid';
 import Button from '@/components/Button';
 import JsonLd from '@/components/JsonLd';
-import { breadcrumbSchema } from '@/lib/seo';
+import { breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'Our Process & Technology Stack — How PandaPath Builds AI Products',
+    title: 'Process & Tech Stack — How PandaPath Builds AI | PandaPath',
     description:
-        'How PandaPath scopes, designs, builds and ships AI products in 2–6 weeks, and the technology stack we use: Next.js, Python, RAG pipelines, Claude and Gemini, PostgreSQL, Docker and managed cloud.',
+        'How PandaPath scopes, builds and ships AI products in 2–6 weeks, and the stack we use: Next.js, Python, RAG, Claude, Gemini, PostgreSQL, Docker.',
     alternates: { canonical: '/process-tech' },
     openGraph: {
         title: 'Process & Technology Stack | PandaPath',
         description: 'How we scope, build and ship AI products in 2–6 weeks — and the stack we do it on.',
         url: `${SITE.url}/process-tech`,
+        images: [OG_IMAGE],
     },
+    twitter: { images: [OG_IMAGE.url] },
 };
 
 const methodology = [

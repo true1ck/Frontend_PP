@@ -5,13 +5,22 @@ import Section from '@/components/Section';
 import SectionHeading from '@/components/SectionHeading';
 import TechGrid from '@/components/TechGrid';
 import JsonLd from '@/components/JsonLd';
-import { organizationSchema, websiteSchema, faqSchema, servicesSchema } from '@/lib/seo';
+import { organizationSchema, websiteSchema, faqSchema, servicesSchema, OG_IMAGE } from '@/lib/seo';
+import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'AI Development Agency in India — WhatsApp Bots & RAG Systems | PandaPath',
+  title: 'AI Development Agency in India — WhatsApp Bots & RAG | PandaPath',
   description:
-    'PandaPath builds WhatsApp AI bots, RAG knowledge systems and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks, direct access to your developer. Based in Bangalore.',
+    'PandaPath builds WhatsApp AI bots, RAG systems and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks.',
   alternates: { canonical: '/' },
+  openGraph: {
+    title: 'PandaPath — AI Products for Indian Startups, Shipped in Weeks',
+    description:
+      'WhatsApp AI bots, RAG systems, and full-stack AI builds. Fixed pricing from ₹25,000, live in 2–4 weeks. Bangalore-based, founder-direct.',
+    url: SITE.url,
+    images: [OG_IMAGE],
+  },
+  twitter: { images: [OG_IMAGE.url] },
 };
 
 // Below-the-fold sections stay lazy so the hero (and its WebGL background)
