@@ -10,7 +10,7 @@ import { SITE } from '@/lib/content';
 export const metadata: Metadata = {
     title: 'Careers — Work With Us in Bangalore',
     description:
-        'PandaPath is a small AI product studio in Bangalore. We hire rarely and carefully. If you ship full-stack AI products end to end, send us something you have built.',
+        "PandaPath is a small AI studio in Bangalore. We hire rarely and carefully — if you ship full-stack AI products end to end, send us something you've built.",
     alternates: { canonical: '/careers' },
     openGraph: {
         title: 'Careers — Work With PandaPath in Bangalore',

@@ -35,9 +35,9 @@ const CaseStudyCard = ({
             <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-brand">
                 {descriptor}
             </p>
-            <h3 className="mt-2 text-lg font-bold font-display text-body transition-colors group-hover:text-brand">
+            <h2 className="mt-2 text-lg font-bold font-display text-body transition-colors group-hover:text-brand">
                 {title}
-            </h3>
+            </h2>
             <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted">{description}</p>
 
             <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies used">
