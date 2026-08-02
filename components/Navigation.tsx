@@ -76,7 +76,7 @@ const Navigation = () => {
                         <span className="relative flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-[rgb(var(--border-strong))] transition-transform duration-300 ease-out-expo group-hover:scale-105">
                             <img
                                 src="/images/logo.png"
-                                alt=""
+                                alt="PandaPath logo"
                                 className="h-full w-full object-cover"
                                 width={44}
                                 height={44}

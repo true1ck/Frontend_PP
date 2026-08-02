@@ -36,7 +36,7 @@ const Footer = () => {
                     <div className="col-span-2 lg:col-span-4">
                         <Link href="/" className="inline-flex items-center gap-2.5" aria-label="PandaPath — home">
                             <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-[rgb(var(--border-strong))]">
-                                <img src="/images/logo.png" alt="" className="h-full w-full object-cover" width={44} height={44} />
+                                <img src="/images/logo.png" alt="PandaPath logo" className="h-full w-full object-cover" width={44} height={44} />
                             </span>
                             <span className="text-xl font-bold font-display tracking-tight">
                                 <span className="text-body">Panda</span>
