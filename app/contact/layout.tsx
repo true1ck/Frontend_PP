@@ -9,7 +9,7 @@ import { SITE } from '@/lib/content';
  * in the layout instead.
  */
 export const metadata: Metadata = {
-    title: 'Contact PandaPath — Book a Free AI Consultation',
+    title: 'Contact — Book a Free AI Consultation',
     description:
         'Talk to the developer who builds your project. Book a free 20-minute call to scope your WhatsApp AI bot or RAG system — fixed quote, no obligation.',
     alternates: { canonical: '/contact' },

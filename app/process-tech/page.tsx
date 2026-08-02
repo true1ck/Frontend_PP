@@ -11,7 +11,7 @@ import { breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'Process & Tech Stack — How PandaPath Builds AI | PandaPath',
+    title: 'Process & Tech — How We Build AI Products',
     description:
         'How PandaPath scopes, builds and ships AI products in 2–6 weeks, and the stack we use: Next.js, Python, RAG, Claude, Gemini, PostgreSQL, Docker.',
     alternates: { canonical: '/process-tech' },

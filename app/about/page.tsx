@@ -9,7 +9,9 @@ import { organizationSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'About PandaPath — AI Product Studio in Bangalore',
+    // Root template appends " · PandaPath"; naming the brand here too made it
+    // read "About PandaPath … · PandaPath" in results.
+    title: 'About — AI Product Studio in Bangalore',
     description:
         'PandaPath is a small AI studio in Bangalore building WhatsApp bots, RAG systems and full AI products. Fixed pricing, 2–4 week delivery.',
     alternates: { canonical: '/about' },

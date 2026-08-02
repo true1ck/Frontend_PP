@@ -12,7 +12,9 @@ import { services, SITE } from '@/lib/content';
 import { servicesSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 
 export const metadata: Metadata = {
-    title: 'AI Development Services — WhatsApp Bots & RAG | PandaPath',
+    // The root layout's template appends " · PandaPath" — repeating the brand
+    // here pushed the rendered title to 69 chars and past Google's truncation.
+    title: 'AI Development Services — WhatsApp Bots & RAG',
     description:
         'Fixed-price AI development for Indian startups. WhatsApp bots from ₹25,000, RAG systems from ₹40,000, full AI builds from ₹80,000. Live in 2–6 weeks.',
     alternates: { canonical: '/services' },

@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import FluidBackground from "@/components/FluidBackground";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { OG_IMAGE } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +37,7 @@ const SITE_URL = 'https://pandapath.in';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "PandaPath — AI Products for Indian Startups, Shipped in Weeks",
+    default: "AI Development Agency in Bangalore — WhatsApp Bots & RAG Systems | PandaPath",
     template: "%s · PandaPath",
   },
   description:
@@ -49,7 +50,9 @@ export const metadata: Metadata = {
     "software agency Bangalore",
     "AI product studio India",
   ],
-  authors: [{ name: "PandaPath" }],
+  authors: [{ name: "PandaPath", url: SITE_URL }],
+  creator: "PandaPath",
+  publisher: "PandaPath",
   alternates: { canonical: '/' },
   openGraph: {
     title: "PandaPath — AI Products for Indian Startups, Shipped in Weeks",
@@ -59,13 +62,19 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     siteName: 'PandaPath',
     url: SITE_URL,
+    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: "PandaPath — AI Products for Indian Startups",
     description: "WhatsApp AI bots, RAG systems, and full-stack AI builds — live in 2–4 weeks.",
+    images: [OG_IMAGE.url],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
   verification: {
     google: '8VkyNu2gGKWF_k6wnFLblT0JTJAhGJVgvtO8oPgxlt8',
   },

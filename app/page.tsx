@@ -9,11 +9,16 @@ import { organizationSchema, websiteSchema, faqSchema, servicesSchema, OG_IMAGE 
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'AI Development Agency in India — WhatsApp Bots & RAG | PandaPath',
+  // Leads with the primary query and keeps the brand, while staying under the
+  // ~60-char point where Google truncates. The homepage uses the `default`
+  // title rather than the " · PandaPath" template, so the brand sits here.
+  title: 'AI Development Agency India — WhatsApp & RAG | PandaPath',
   description:
     'PandaPath builds WhatsApp AI bots, RAG systems and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks.',
   alternates: { canonical: '/' },
   openGraph: {
+    // OG titles are standalone (no template, no truncation limit), so this one
+    // can be longer and more descriptive than the <title>.
     title: 'PandaPath — AI Products for Indian Startups, Shipped in Weeks',
     description:
       'WhatsApp AI bots, RAG systems, and full-stack AI builds. Fixed pricing from ₹25,000, live in 2–4 weeks. Bangalore-based, founder-direct.',

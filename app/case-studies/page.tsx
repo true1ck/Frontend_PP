@@ -9,7 +9,7 @@ import { caseStudiesSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'Case Studies — AI Projects for Indian Startups | PandaPath',
+    title: 'AI Project Case Studies — Indian Startups',
     description:
         'Real projects from PandaPath: WhatsApp AI assistants, RAG systems, analytics platforms and cloud migrations built for startups across India.',
     alternates: { canonical: '/case-studies' },
