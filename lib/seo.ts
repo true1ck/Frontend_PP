@@ -31,6 +31,17 @@ export const OG_IMAGE = {
     alt: 'PandaPath — AI products for Indian startups, shipped in weeks.',
 };
 
+/**
+ * Same "replaces wholesale" problem as OG_IMAGE above, but for og:type,
+ * og:locale and og:site_name: any page with its own `openGraph` object drops
+ * these unless it redeclares them. Spread this into every page's openGraph.
+ */
+export const OG_DEFAULTS = {
+    type: 'website' as const,
+    locale: 'en_IN',
+    siteName: 'PandaPath',
+};
+
 export const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': ['Organization', 'ProfessionalService'],

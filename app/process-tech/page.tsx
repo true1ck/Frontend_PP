@@ -7,7 +7,7 @@ import ProcessTimeline from '@/components/ProcessTimeline';
 import TechGrid from '@/components/TechGrid';
 import Button from '@/components/Button';
 import JsonLd from '@/components/JsonLd';
-import { breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
+import { breadcrumbSchema, OG_IMAGE, OG_DEFAULTS } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
         'How PandaPath scopes, builds and ships AI products in 2–6 weeks, and the stack we use: Next.js, Python, RAG, Claude, Gemini, PostgreSQL, Docker.',
     alternates: { canonical: '/process-tech' },
     openGraph: {
+        ...OG_DEFAULTS,
         title: 'Process & Technology Stack | PandaPath',
         description: 'How we scope, build and ship AI products in 2–6 weeks — and the stack we do it on.',
         url: `${SITE.url}/process-tech`,

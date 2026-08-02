@@ -4,7 +4,7 @@ import Section from '@/components/Section';
 import SectionHeading from '@/components/SectionHeading';
 import ScrollReveal from '@/components/ScrollReveal';
 import JsonLd from '@/components/JsonLd';
-import { breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
+import { breadcrumbSchema, OG_IMAGE, OG_DEFAULTS } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
         "PandaPath is a small AI studio in Bangalore. We hire rarely and carefully — if you ship full-stack AI products end to end, send us something you've built.",
     alternates: { canonical: '/careers' },
     openGraph: {
+        ...OG_DEFAULTS,
         title: 'Careers — Work With PandaPath in Bangalore',
         description:
             'A small AI studio in Bangalore. We hire rarely, and carefully — for people who ship full-stack AI products end to end.',

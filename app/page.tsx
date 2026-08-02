@@ -5,7 +5,7 @@ import Section from '@/components/Section';
 import SectionHeading from '@/components/SectionHeading';
 import TechGrid from '@/components/TechGrid';
 import JsonLd from '@/components/JsonLd';
-import { organizationSchema, websiteSchema, faqSchema, servicesSchema, OG_IMAGE } from '@/lib/seo';
+import { organizationSchema, websiteSchema, faqSchema, servicesSchema, OG_IMAGE, OG_DEFAULTS } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     'PandaPath builds WhatsApp AI bots, RAG systems and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks.',
   alternates: { canonical: '/' },
   openGraph: {
+    ...OG_DEFAULTS,
     // OG titles are standalone (no template, no truncation limit), so this one
     // can be longer and more descriptive than the <title>.
     title: 'PandaPath — AI Products for Indian Startups, Shipped in Weeks',

@@ -5,7 +5,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 import CaseStudiesGrid from '@/components/CaseStudiesGrid';
 import Button from '@/components/Button';
 import JsonLd from '@/components/JsonLd';
-import { caseStudiesSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
+import { caseStudiesSchema, breadcrumbSchema, OG_IMAGE, OG_DEFAULTS } from '@/lib/seo';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
         'Real projects from PandaPath: WhatsApp AI assistants, RAG systems, analytics platforms and cloud migrations built for startups across India.',
     alternates: { canonical: '/case-studies' },
     openGraph: {
+        ...OG_DEFAULTS,
         title: 'PandaPath Case Studies — AI Projects for Indian Startups',
         description:
             'WhatsApp AI assistants, RAG knowledge systems, analytics platforms and cloud migrations delivered in 2–6 weeks.',

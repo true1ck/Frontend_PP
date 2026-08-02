@@ -9,7 +9,7 @@ import JsonLd from '@/components/JsonLd';
 import TechIcon from '@/components/icons/TechIcon';
 import { WhatsAppIcon } from '@/components/icons/BrandIcons';
 import { services, SITE } from '@/lib/content';
-import { servicesSchema, breadcrumbSchema, OG_IMAGE } from '@/lib/seo';
+import { servicesSchema, breadcrumbSchema, OG_IMAGE, OG_DEFAULTS } from '@/lib/seo';
 
 export const metadata: Metadata = {
     // The root layout's template appends " · PandaPath" — repeating the brand
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
         'Fixed-price AI development for Indian startups. WhatsApp bots from ₹25,000, RAG systems from ₹40,000, full AI builds from ₹80,000. Live in 2–6 weeks.',
     alternates: { canonical: '/services' },
     openGraph: {
+        ...OG_DEFAULTS,
         title: 'AI Development Services in India | PandaPath',
         description:
             'WhatsApp AI bots from ₹25,000, RAG systems from ₹40,000, full AI product builds from ₹80,000. Fixed price, 2–6 weeks.',
