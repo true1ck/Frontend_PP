@@ -18,10 +18,35 @@ export const SITE = {
     city: 'Bangalore',
     region: 'Karnataka',
     country: 'IN',
-    tagline: 'AI products for Indian startups, shipped in weeks.',
+    tagline: 'AI products for startups, shipped in weeks.',
 } as const;
 
 /* ── Services ───────────────────────────────────────────────────── */
+
+/**
+ * Per-region starting price. `IN` is also the static fallback rendered in
+ * the HTML before any edge-side geo swap happens — see components/Price.tsx.
+ * `default` covers every country outside the IN/GB/EU buckets.
+ */
+export interface RegionalPrice {
+    IN: string;
+    US: string;
+    GB: string;
+    EU: string;
+    default: string;
+}
+
+/**
+ * Homepage hero stat tile only — not tied to a specific service, so it
+ * lives here as its own compact-format constant rather than on `Service`.
+ */
+export const heroPriceCompact: RegionalPrice = {
+    IN: '₹25k',
+    US: '$1.8k',
+    GB: '£1.4k',
+    EU: '€1.6k',
+    default: '$1.8k',
+};
 
 export interface Service {
     slug: string;
@@ -29,13 +54,25 @@ export interface Service {
     title: string;
     /** Short keyword-bearing phrase used as the card subtitle and in schema. */
     summary: string;
-    priceFrom: string;
+    priceFrom: RegionalPrice;
     timeline: string;
     description: string;
     features: string[];
     technologies: string[];
     stack: TechKey[];
     accent: 'emerald' | 'purple' | 'blue' | 'amber';
+    /**
+     * Non-Indian visitors see these instead, via RegionCopy — "WhatsApp"
+     * and "Hindi and English" are strong hooks in India, meaningless (or
+     * confusing) in most Western markets. Only whatsapp-ai-bot needs this;
+     * the other services are already channel-agnostic. `foreignFeatures`
+     * must be the same length/order as `features` — only the entries that
+     * actually differ need to change, the rest can repeat the original text.
+     */
+    foreignTitle?: string;
+    foreignSummary?: string;
+    foreignDescription?: string;
+    foreignFeatures?: string[];
 }
 
 export const services: Service[] = [
@@ -44,7 +81,7 @@ export const services: Service[] = [
         icon: 'chat',
         title: 'WhatsApp AI Bot',
         summary: 'Automated WhatsApp support and lead capture',
-        priceFrom: '₹25,000',
+        priceFrom: { IN: '₹25,000', US: '$1,800', GB: '£1,450', EU: '€1,650', default: '$1,800' },
         timeline: '2 weeks',
         description:
             'A WhatsApp assistant that answers customer questions, captures leads and books appointments around the clock — in Hindi and English, on the number your customers already message.',
@@ -58,13 +95,24 @@ export const services: Service[] = [
         technologies: ['WhatsApp Business API', 'LLMs', 'Node.js', 'Webhooks'],
         stack: ['whatsapp', 'node', 'anthropic', 'gemini'],
         accent: 'emerald',
+        foreignTitle: 'AI Chat Automation',
+        foreignSummary: 'Automated chat support and lead capture',
+        foreignDescription:
+            'An AI assistant that answers customer questions, captures leads and books appointments around the clock — on your website chat, SMS or wherever your customers already message you.',
+        foreignFeatures: [
+            'Natural, human-like conversation',
+            'Trained on your catalogue, pricing and FAQs',
+            'Leads pushed straight to your CRM or Google Sheet',
+            'Automatic follow-ups on unanswered enquiries',
+            'Dashboard showing what customers actually ask',
+        ],
     },
     {
         slug: 'rag-knowledge-system',
         icon: 'brain',
         title: 'RAG Knowledge System',
         summary: 'Your documents turned into a searchable AI assistant',
-        priceFrom: '₹40,000',
+        priceFrom: { IN: '₹40,000', US: '$3,500', GB: '£2,800', EU: '€3,200', default: '$3,500' },
         timeline: '3 weeks',
         description:
             'Point it at your PDFs, SOPs, Notion pages and contracts, and your team can ask questions in plain English. Answers cite the source document, so nobody has to take the model on faith.',
@@ -84,7 +132,7 @@ export const services: Service[] = [
         icon: 'rocket',
         title: 'Full AI Product Build',
         summary: 'End-to-end web or mobile product with AI built in',
-        priceFrom: '₹80,000',
+        priceFrom: { IN: '₹80,000', US: '$7,500', GB: '£6,000', EU: '€6,900', default: '$7,500' },
         timeline: '4–6 weeks',
         description:
             'The whole thing: product design, front end, APIs, database, AI features and production deployment. You finish with a live product, the source code and a running CI pipeline.',
@@ -104,7 +152,7 @@ export const services: Service[] = [
         icon: 'compass',
         title: 'AI Business Audit',
         summary: 'Find out where AI actually pays off in your business',
-        priceFrom: '₹6,000',
+        priceFrom: { IN: '₹6,000', US: '$250', GB: '£200', EU: '€230', default: '$250' },
         timeline: '2 hours',
         description:
             'A two-hour working session where we map your operations and tell you which three things are worth automating — and, just as usefully, which are not.',
@@ -362,5 +410,25 @@ export const faqs = [
         question: 'Can you integrate AI into an existing product?',
         answer:
             'Yes. A large share of our work is adding AI features — search, chat, summarisation, recommendations or document processing — to products that already exist and already have users. We work against your current stack rather than asking you to rewrite it.',
+    },
+    {
+        question: 'Should I build my own app myself, or hire someone to build it?',
+        answer:
+            'Depends what it is for. A no-code tool is genuinely fine for a personal project or a first test of an idea. It stops being fine once real customers depend on it, it needs to talk to your other business systems, or you hit the point where every new feature means fighting the platform instead of building on it. That is usually when a fixed-price build ends up cheaper than the hours lost debugging someone else\'s no-code builder.',
+    },
+    {
+        question: 'What makes PandaPath different from a typical software agency?',
+        answer:
+            'No account manager between you and the code. The person who scopes your project on the first call is the same senior engineer who builds and deploys it, and the price is fixed before any work starts — not an estimate that grows once you are committed. Most agencies quote ₹5L+ and three to six months; we start from ₹25,000 and two weeks.',
+    },
+    {
+        question: 'How can AI actually automate my business?',
+        answer:
+            'Three ways, in practice: a WhatsApp assistant that handles the customer questions your team answers all day, a RAG system that lets your team search your own documents in plain English instead of hunting through PDFs, or AI features built into a product you already have. If you are not sure which one applies, the AI Business Audit is built for exactly that — a two-hour session that tells you honestly which of these is worth doing for your business, and which are not.',
+    },
+    {
+        question: 'Can I get a technical co-founder instead of hiring an agency?',
+        answer:
+            'For a small number of startups, yes — as an equity partnership rather than a paid project, where we own the technical side full-time instead of billing for a fixed scope. It is a different relationship from hiring us for a build, and not something we do often. Details are on the Technical Co-Founder page — worth reading before reaching out, since it is deliberately not for every founder.',
     },
 ];

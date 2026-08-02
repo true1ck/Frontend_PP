@@ -110,7 +110,7 @@ export const organizationSchema = {
             name: service.title,
             description: service.description,
             priceCurrency: 'INR',
-            price: service.priceFrom.replace(/[₹,]/g, ''),
+            price: service.priceFrom.IN.replace(/[₹,]/g, ''),
             url: `${SITE.url}/services#${service.slug}`,
         })),
     },
@@ -157,11 +157,11 @@ export const servicesSchema = {
             offers: {
                 '@type': 'Offer',
                 priceCurrency: 'INR',
-                price: service.priceFrom.replace(/[₹,]/g, ''),
+                price: service.priceFrom.IN.replace(/[₹,]/g, ''),
                 priceSpecification: {
                     '@type': 'PriceSpecification',
                     priceCurrency: 'INR',
-                    minPrice: service.priceFrom.replace(/[₹,]/g, ''),
+                    minPrice: service.priceFrom.IN.replace(/[₹,]/g, ''),
                 },
             },
         },

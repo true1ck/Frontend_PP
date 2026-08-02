@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { MessagesSquare, BrainCircuit, Rocket, Compass, ArrowRight } from 'lucide-react';
 import Section from './Section';
 import SectionHeading from './SectionHeading';
+import Price from './Price';
+import RegionCopy from './RegionCopy';
 import TechIcon from './icons/TechIcon';
 import { services } from '@/lib/content';
 
@@ -57,19 +59,33 @@ const ServicesOverview = () => (
 
                             <div className="text-right">
                                 <div className="font-mono text-lg font-medium text-body tabular">
-                                    from {service.priceFrom}
+                                    from <Price value={service.priceFrom} />
                                 </div>
                                 <div className="mt-0.5 text-xs text-subtle">{service.timeline}</div>
                             </div>
                         </div>
 
                         <h3 className="mt-5 text-subtitle font-semibold font-display text-body">
-                            {service.title}
+                            {service.foreignTitle ? (
+                                <RegionCopy in={service.title} foreign={service.foreignTitle} />
+                            ) : (
+                                service.title
+                            )}
                         </h3>
-                        <p className="mt-1 text-sm font-medium text-brand">{service.summary}</p>
+                        <p className="mt-1 text-sm font-medium text-brand">
+                            {service.foreignSummary ? (
+                                <RegionCopy in={service.summary} foreign={service.foreignSummary} />
+                            ) : (
+                                service.summary
+                            )}
+                        </p>
 
                         <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
-                            {service.description}
+                            {service.foreignDescription ? (
+                                <RegionCopy in={service.description} foreign={service.foreignDescription} />
+                            ) : (
+                                service.description
+                            )}
                         </p>
 
                         <div className="mt-6 flex items-center justify-between gap-4 border-t border-[rgb(var(--border))] pt-5">

@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { Mail, MapPin, Clock, ArrowUpRight } from 'lucide-react';
 import { LinkedInIcon, WhatsAppIcon } from './icons/BrandIcons';
+import RegionCopy from './RegionCopy';
 
 const linkGroups = [
     {
         heading: 'Services',
         links: [
-            { label: 'WhatsApp AI Bots', href: '/services#whatsapp-ai-bot' },
+            { label: 'WhatsApp AI Bots', foreignLabel: 'AI Chat Automation', href: '/services#whatsapp-ai-bot' },
             { label: 'RAG Knowledge Systems', href: '/services#rag-knowledge-system' },
             { label: 'Full AI Product Builds', href: '/services#full-ai-product-build' },
             { label: 'AI Business Audit', href: '/services#ai-business-audit' },
@@ -21,6 +22,7 @@ const linkGroups = [
             { label: 'Case Studies', href: '/case-studies' },
             { label: 'Process & Tech', href: '/process-tech' },
             { label: 'Careers', href: '/careers' },
+            { label: 'Technical Co-Founder', href: '/co-founder' },
         ],
     },
 ];
@@ -83,7 +85,11 @@ const Footer = () => {
                                             href={link.href}
                                             className="text-sm text-muted transition-colors hover:text-brand"
                                         >
-                                            {link.label}
+                                            {'foreignLabel' in link && link.foreignLabel ? (
+                                                <RegionCopy in={link.label} foreign={link.foreignLabel} />
+                                            ) : (
+                                                link.label
+                                            )}
                                         </Link>
                                     </li>
                                 ))}

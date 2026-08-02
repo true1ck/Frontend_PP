@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import Button from './Button';
+import Price from './Price';
+import RegionCopy from './RegionCopy';
+import { heroPriceCompact } from '@/lib/content';
 import { useTheme } from '@/contexts/ThemeContext';
 
 // Lazy load heavy 3D components to improve initial page load
@@ -17,11 +20,11 @@ const TechSphere = dynamic(() => import('./TechSphereWrapper'), {
 
 const proofPoints = [
   { value: '2–4', label: 'weeks to launch' },
-  { value: '₹25k', label: 'starting price' },
+  { value: null, label: 'starting price' },
   { value: '1:1', label: 'with your developer' },
 ];
 
-const capabilities = ['WhatsApp AI', 'RAG Systems', 'Full-Stack AI', 'Made for India'];
+const capabilities = [null, 'RAG Systems', 'Full-Stack AI', 'Built for Startups'];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -79,7 +82,7 @@ const Hero = () => {
           transition={{ delay: 0.08, duration: 0.7, ease }}
           className="text-display-xl font-bold font-display text-balance"
         >
-          <span className="text-gradient">AI products for Indian startups,</span>
+          <span className="text-gradient">AI products for startups,</span>
           <br className="hidden sm:block" />{' '}
           <span className="text-body">shipped in weeks.</span>
         </motion.h1>
@@ -90,8 +93,11 @@ const Hero = () => {
           transition={{ delay: 0.18, duration: 0.7, ease }}
           className="mx-auto mt-5 max-w-2xl text-lead text-muted text-pretty sm:mt-6"
         >
-          WhatsApp AI bots, RAG knowledge systems and full-stack AI builds — scoped
-          at a fixed price, live in 2–4 weeks, built by the developer you actually talk to.
+          <RegionCopy
+            in="WhatsApp AI bots, RAG knowledge systems and full-stack AI builds"
+            foreign="AI chat assistants, RAG knowledge systems and full-stack AI builds"
+          />{' '}
+          — scoped at a fixed price, live in 2–4 weeks, built by the developer you actually talk to.
         </motion.p>
 
         <motion.div
@@ -120,7 +126,7 @@ const Hero = () => {
               <dt className="sr-only">{point.label}</dt>
               <dd>
                 <span className="block font-mono text-xl font-medium text-brand tabular sm:text-2xl">
-                  {point.value}
+                  {point.value === null ? <Price value={heroPriceCompact} /> : point.value}
                 </span>
                 <span className="mt-1 block text-[0.7rem] leading-tight text-subtle sm:text-xs">
                   {point.label}
@@ -138,13 +144,13 @@ const Hero = () => {
         >
           {capabilities.map((item, index) => (
             <motion.li
-              key={item}
+              key={item ?? 'channel'}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.55 + index * 0.06, duration: 0.4, ease }}
               className="rounded-pill border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-3.5 py-1.5 font-mono text-[0.7rem] tracking-wide text-muted backdrop-blur-md transition-colors duration-200 hover:border-[var(--brand)] hover:text-brand sm:text-xs"
             >
-              {item}
+              {item === null ? <RegionCopy in="WhatsApp AI" foreign="AI Chat Assistants" /> : item}
             </motion.li>
           ))}
         </motion.ul>

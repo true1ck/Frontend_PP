@@ -5,6 +5,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import FluidBackground from "@/components/FluidBackground";
+import GeoPricing from "@/components/GeoPricing";
+import RegionPreviewSwitcher from "@/components/RegionPreviewSwitcher";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { OG_IMAGE } from "@/lib/seo";
 
@@ -131,6 +133,8 @@ export default function RootLayout({
           </main>
           <Footer />
           <WhatsAppButton />
+          <GeoPricing />
+          <RegionPreviewSwitcher />
         </ThemeProvider>
       </body>
     </html>

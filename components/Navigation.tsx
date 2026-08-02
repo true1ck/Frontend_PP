@@ -13,6 +13,7 @@ const navItems = [
     { name: 'Services', href: '/services' },
     { name: 'Case Studies', href: '/case-studies' },
     { name: 'Process & Tech', href: '/process-tech' },
+    { name: 'Co-Founder', href: '/co-founder' },
     { name: 'Contact', href: '/contact' },
 ];
 
@@ -59,6 +60,7 @@ const Navigation = () => {
         href === '/' ? pathname === '/' : pathname.startsWith(href);
 
     return (
+        <>
         <motion.header
             initial={{ y: -80 }}
             animate={{ y: 0 }}
@@ -150,8 +152,13 @@ const Navigation = () => {
                 }`}
                 aria-hidden="true"
             />
+        </motion.header>
 
-            <AnimatePresence>
+        {/* Rendered as a header sibling, not a descendant — the header's
+            scroll-triggered backdrop-blur creates a new containing block for
+            `position: fixed` descendants, which was collapsing this drawer's
+            `h-full` down to the header's own height instead of the viewport. */}
+        <AnimatePresence>
                 {isMobileMenuOpen && (
                     <>
                         <motion.div
@@ -242,7 +249,7 @@ const Navigation = () => {
                     </>
                 )}
             </AnimatePresence>
-        </motion.header>
+        </>
     );
 };
 

@@ -6,6 +6,8 @@ import SectionHeading from '@/components/SectionHeading';
 import ScrollReveal from '@/components/ScrollReveal';
 import Button from '@/components/Button';
 import JsonLd from '@/components/JsonLd';
+import Price from '@/components/Price';
+import RegionCopy from '@/components/RegionCopy';
 import TechIcon from '@/components/icons/TechIcon';
 import { WhatsAppIcon } from '@/components/icons/BrandIcons';
 import { services, SITE } from '@/lib/content';
@@ -92,16 +94,28 @@ export default function ServicesPage() {
                                                 </span>
                                                 <div>
                                                     <h2 className="text-title font-bold font-display text-body">
-                                                        {service.title}
+                                                        {service.foreignTitle ? (
+                                                            <RegionCopy in={service.title} foreign={service.foreignTitle} />
+                                                        ) : (
+                                                            service.title
+                                                        )}
                                                     </h2>
                                                     <p className="mt-1 text-sm font-medium text-brand">
-                                                        {service.summary}
+                                                        {service.foreignSummary ? (
+                                                            <RegionCopy in={service.summary} foreign={service.foreignSummary} />
+                                                        ) : (
+                                                            service.summary
+                                                        )}
                                                     </p>
                                                 </div>
                                             </div>
 
                                             <p className="mt-5 max-w-prose text-[0.95rem] leading-relaxed text-muted">
-                                                {service.description}
+                                                {service.foreignDescription ? (
+                                                    <RegionCopy in={service.description} foreign={service.foreignDescription} />
+                                                ) : (
+                                                    service.description
+                                                )}
                                             </p>
 
                                             <div className="mt-6">
@@ -109,14 +123,20 @@ export default function ServicesPage() {
                                                     What&apos;s included
                                                 </h3>
                                                 <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
-                                                    {service.features.map((feature) => (
+                                                    {service.features.map((feature, featureIndex) => (
                                                         <li key={feature} className="flex items-start gap-2.5 text-sm text-muted">
                                                             <Check
                                                                 className="mt-0.5 h-4 w-4 shrink-0 text-brand"
                                                                 strokeWidth={2.5}
                                                                 aria-hidden="true"
                                                             />
-                                                            <span>{feature}</span>
+                                                            <span>
+                                                                {service.foreignFeatures?.[featureIndex] ? (
+                                                                    <RegionCopy in={feature} foreign={service.foreignFeatures[featureIndex]} />
+                                                                ) : (
+                                                                    feature
+                                                                )}
+                                                            </span>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -130,7 +150,7 @@ export default function ServicesPage() {
                                                     Starting at
                                                 </div>
                                                 <div className="mt-1 font-mono text-3xl font-medium text-body tabular">
-                                                    {service.priceFrom}
+                                                    <Price value={service.priceFrom} />
                                                 </div>
                                                 <div className="mt-2 flex items-center gap-2 text-sm text-muted">
                                                     <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />

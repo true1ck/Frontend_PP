@@ -33,6 +33,7 @@ export const metadata: Metadata = {
 // gets the initial bundle to itself.
 const WhoWeAre = dynamic(() => import('@/components/WhoWeAre'));
 const ServicesOverview = dynamic(() => import('@/components/ServicesOverview'));
+const CoFounderTeaser = dynamic(() => import('@/components/CoFounderTeaser'));
 const FeaturedProjects = dynamic(() => import('@/components/FeaturedProjects'));
 const OurProcess = dynamic(() => import('@/components/OurProcess'));
 const FAQ = dynamic(() => import('@/components/FAQ'));
@@ -49,6 +50,7 @@ export default function Home() {
       <Hero />
       <WhoWeAre />
       <ServicesOverview />
+      <CoFounderTeaser />
       <FeaturedProjects />
       <OurProcess />
 
