@@ -631,7 +631,7 @@ export default function ContactPage() {
                                                 Start the conversation
                                             </h2>
                                             <p className="mt-2 text-sm text-muted">
-                                                Three fields. That&apos;s genuinely all we need to give
+                                                Four fields. That&apos;s genuinely all we need to give
                                                 you a useful first answer.
                                             </p>
                                         </div>
@@ -658,6 +658,38 @@ export default function ContactPage() {
                                             inputMode="email"
                                             placeholder="rahul@yourstartup.in"
                                         />
+                                        <div className="grid grid-cols-3 gap-4">
+                                            <div className="col-span-1">
+                                                <Input
+                                                    label="Country code"
+                                                    name="countryCode"
+                                                    type="tel"
+                                                    value={formData.countryCode}
+                                                    onChange={handleChange}
+                                                    error={errors.countryCode}
+                                                    required
+                                                    autoComplete="tel-country-code"
+                                                    inputMode="numeric"
+                                                    maxLength={4}
+                                                    placeholder="91"
+                                                />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <Input
+                                                    label="Phone number"
+                                                    name="phone"
+                                                    type="tel"
+                                                    value={formData.phone}
+                                                    onChange={handleChange}
+                                                    error={errors.phone}
+                                                    required
+                                                    autoComplete="tel-national"
+                                                    inputMode="numeric"
+                                                    maxLength={15}
+                                                    placeholder="9876543210"
+                                                />
+                                            </div>
+                                        </div>
                                         <Textarea
                                             label="What do you want to build?"
                                             name="projectDescription"
