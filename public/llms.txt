@@ -1,21 +1,26 @@
 # PandaPath
 
-> AI product studio in Bangalore, India. We design and ship WhatsApp AI bots, RAG knowledge systems, and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks, direct access to the developer who builds it — no account managers or ticket queues in between.
+> AI product studio based in Bangalore, India, building for startups worldwide. We design and ship AI chat automation (WhatsApp-based in India, web chat/SMS elsewhere), RAG knowledge systems, and full-stack AI products. Fixed pricing agreed upfront, live in 2–4 weeks, direct access to the developer who builds it — no account managers or ticket queues in between. We also take on a small number of technical co-founder equity partnerships.
 
-PandaPath is a small studio, not an agency with layers. Every project is scoped at a fixed price before work starts, built by the person you talk to, and typically delivered in two to six weeks.
+PandaPath is a small studio, not an agency with layers. Every project is scoped at a fixed price before work starts, built by the person you talk to, and typically delivered in two to six weeks. Pricing is shown in local currency automatically based on where you're viewing from — India, US, UK and EU each have their own starting price.
 
 ## Services
 
-- [WhatsApp AI Bot](https://pandapath.in/services#whatsapp-ai-bot): Automated WhatsApp support and lead capture in Hindi and English. From ₹25,000, 2 weeks.
-- [RAG Knowledge System](https://pandapath.in/services#rag-knowledge-system): Turns PDFs, Notion pages and contracts into a searchable AI assistant with cited answers. From ₹40,000, 3 weeks.
-- [Full AI Product Build](https://pandapath.in/services#full-ai-product-build): End-to-end web or mobile product with AI features, deployed with CI/CD. From ₹80,000, 4–6 weeks.
-- [AI Business Audit](https://pandapath.in/services#ai-business-audit): A two-hour working session identifying the top 3 places AI actually pays off in your business. ₹6,000.
+- [AI Chat Automation](https://pandapath.in/services#whatsapp-ai-bot): Automated customer chat and lead capture — over WhatsApp in India, or web chat/SMS elsewhere. From ₹25,000 (India) / $1,800 (US) / £1,450 (UK) / €1,650 (EU). 2 weeks.
+- [RAG Knowledge System](https://pandapath.in/services#rag-knowledge-system): Turns PDFs, Notion pages and contracts into a searchable AI assistant with cited answers. From ₹40,000 / $3,500 / £2,800 / €3,200. 3 weeks.
+- [Full AI Product Build](https://pandapath.in/services#full-ai-product-build): End-to-end web or mobile product with AI features, deployed with CI/CD. From ₹80,000 / $7,500 / £6,000 / €6,900. 4–6 weeks.
+- [AI Business Audit](https://pandapath.in/services#ai-business-audit): A two-hour working session identifying the top 3 places AI actually pays off in your business. ₹6,000 / $250 / £200 / €230.
+
+## Technical Co-Founder
+
+For a small number of startups, PandaPath takes on equity partnerships instead of paid projects — owning the technical side full-time so the founder can focus on the rest of the business. Equity only, no fixed price, discussed directly with the founder. See [Technical Co-Founder](https://pandapath.in/co-founder).
 
 ## Pages
 
 - [Home](https://pandapath.in/): Overview of what PandaPath builds and how engagements work.
 - [Services](https://pandapath.in/services): Full pricing, scope and technology for every service.
-- [Case Studies](https://pandapath.in/case-studies): Real projects delivered for Indian startups (client names withheld under NDA).
+- [Technical Co-Founder](https://pandapath.in/co-founder): Equity partnership track for startups that need a technical co-founder, not a vendor.
+- [Case Studies](https://pandapath.in/case-studies): Real projects delivered for startups (client names withheld under NDA).
 - [Process & Technology](https://pandapath.in/process-tech): How work is scoped, built and shipped, and the stack used (Next.js, Python, RAG pipelines, Claude, Gemini, PostgreSQL, Docker).
 - [About](https://pandapath.in/about): Who PandaPath is and how the studio operates.
 - [Careers](https://pandapath.in/careers): Hiring is rare and direct — no recruiter layer.
