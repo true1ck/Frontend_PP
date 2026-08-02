@@ -39,27 +39,27 @@ const SITE_URL = 'https://pandapath.in';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AI Development Agency in Bangalore — WhatsApp Bots & RAG Systems | PandaPath",
+    default: "AI Development Agency for Startups | PandaPath",
     template: "%s · PandaPath",
   },
   description:
-    "We design and ship WhatsApp AI bots, RAG knowledge systems, and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, live in 2–4 weeks, straight to the developer who builds it.",
+    "We design and ship AI chatbots, automation, and full-stack AI products for startups. Fixed pricing from ₹25,000, live in 2–4 weeks, straight to the developer who builds it.",
   keywords: [
-    "AI agency Bangalore",
-    "WhatsApp chatbot India",
-    "RAG system India",
-    "AI development India",
-    "software agency Bangalore",
-    "AI product studio India",
+    "AI development agency",
+    "AI automation agency",
+    "custom AI app development",
+    "AI chatbot development company",
+    "hire AI developer for startup",
+    "technical co-founder for startup",
   ],
   authors: [{ name: "PandaPath", url: SITE_URL }],
   creator: "PandaPath",
   publisher: "PandaPath",
   alternates: { canonical: '/' },
   openGraph: {
-    title: "PandaPath — AI Products for Indian Startups, Shipped in Weeks",
+    title: "PandaPath — AI Products for Startups, Shipped in Weeks",
     description:
-      "WhatsApp AI bots, RAG systems, and full-stack AI builds. Fixed pricing from ₹25,000, live in 2–4 weeks. Bangalore-based, founder-direct.",
+      "AI chatbots, automation, and full-stack AI builds. Fixed pricing from ₹25,000, live in 2–4 weeks — direct access to the engineer who builds it.",
     type: "website",
     locale: 'en_IN',
     siteName: 'PandaPath',
@@ -68,8 +68,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "PandaPath — AI Products for Indian Startups",
-    description: "WhatsApp AI bots, RAG systems, and full-stack AI builds — live in 2–4 weeks.",
+    title: "PandaPath — AI Products for Startups",
+    description: "AI chatbots, automation, and full-stack AI builds — live in 2–4 weeks.",
     images: [OG_IMAGE.url],
   },
   robots: {

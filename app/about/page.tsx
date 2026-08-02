@@ -11,15 +11,15 @@ import { SITE } from '@/lib/content';
 export const metadata: Metadata = {
     // Root template appends " · PandaPath"; naming the brand here too made it
     // read "About PandaPath … · PandaPath" in results.
-    title: 'About — AI Product Studio in Bangalore',
+    title: 'About — AI Product Studio for Startups',
     description:
-        'PandaPath is a small AI studio in Bangalore building WhatsApp bots, RAG systems and full AI products. Fixed pricing, 2–4 week delivery.',
+        'PandaPath is a small AI studio building AI chatbots, automation, and full AI products for startups. Fixed pricing, 2–4 week delivery.',
     alternates: { canonical: '/about' },
     openGraph: {
         ...OG_DEFAULTS,
-        title: 'About PandaPath — AI Product Studio in Bangalore',
+        title: 'About PandaPath — AI Product Studio for Startups',
         description:
-            'A small AI studio building for Indian startups. Fixed pricing, 2–4 week delivery, founder-direct.',
+            'A small AI studio building for startups worldwide. Fixed pricing, 2–4 week delivery, founder-direct.',
         url: `${SITE.url}/about`,
         images: [OG_IMAGE],
     },

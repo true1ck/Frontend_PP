@@ -16,15 +16,15 @@ import { servicesSchema, breadcrumbSchema, OG_IMAGE, OG_DEFAULTS } from '@/lib/s
 export const metadata: Metadata = {
     // The root layout's template appends " · PandaPath" — repeating the brand
     // here pushed the rendered title to 69 chars and past Google's truncation.
-    title: 'AI Development Services — WhatsApp Bots & RAG',
+    title: 'AI Development Services — Chatbots & Automation',
     description:
-        'Fixed-price AI development for Indian startups. WhatsApp bots from ₹25,000, RAG systems from ₹40,000, full AI builds from ₹80,000. Live in 2–6 weeks.',
+        'Fixed-price AI development for startups. AI chatbots from ₹25,000, RAG knowledge systems from ₹40,000, full AI builds from ₹80,000. Live in 2–6 weeks.',
     alternates: { canonical: '/services' },
     openGraph: {
         ...OG_DEFAULTS,
-        title: 'AI Development Services in India | PandaPath',
+        title: 'AI Development Services for Startups | PandaPath',
         description:
-            'WhatsApp AI bots from ₹25,000, RAG systems from ₹40,000, full AI product builds from ₹80,000. Fixed price, 2–6 weeks.',
+            'AI chatbots from ₹25,000, RAG systems from ₹40,000, full AI product builds from ₹80,000. Fixed price, 2–6 weeks.',
         url: `${SITE.url}/services`,
         images: [OG_IMAGE],
     },

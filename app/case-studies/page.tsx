@@ -9,15 +9,15 @@ import { caseStudiesSchema, breadcrumbSchema, OG_IMAGE, OG_DEFAULTS } from '@/li
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-    title: 'AI Project Case Studies — Indian Startups',
+    title: 'AI Project Case Studies for Startups',
     description:
-        'Real projects from PandaPath: WhatsApp AI assistants, RAG systems, analytics platforms and cloud migrations built for startups across India.',
+        'Real projects from PandaPath: AI chat assistants, RAG systems, analytics platforms and cloud migrations built for startups worldwide.',
     alternates: { canonical: '/case-studies' },
     openGraph: {
         ...OG_DEFAULTS,
-        title: 'PandaPath Case Studies — AI Projects for Indian Startups',
+        title: 'PandaPath Case Studies — AI Projects for Startups',
         description:
-            'WhatsApp AI assistants, RAG knowledge systems, analytics platforms and cloud migrations delivered in 2–6 weeks.',
+            'AI chat assistants, RAG knowledge systems, analytics platforms and cloud migrations delivered in 2–6 weeks.',
         url: `${SITE.url}/case-studies`,
         images: [OG_IMAGE],
     },

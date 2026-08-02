@@ -28,7 +28,7 @@ export const OG_IMAGE = {
     url: `${SITE.url}/images/og-cover.png`,
     width: 1200,
     height: 630,
-    alt: 'PandaPath — AI products for Indian startups, shipped in weeks.',
+    alt: 'PandaPath — AI products for startups, shipped in weeks.',
 };
 
 /**
@@ -57,7 +57,7 @@ export const organizationSchema = {
     },
     image: `${SITE.url}/images/logo.png`,
     description:
-        'PandaPath is an AI product studio in Bangalore building WhatsApp AI bots, RAG knowledge systems and full-stack AI products for Indian startups. Fixed pricing from ₹25,000, delivered in 2–4 weeks.',
+        'PandaPath is an AI product studio building AI chatbots, automation, and full-stack AI products for startups. Fixed pricing from ₹25,000, delivered in 2–4 weeks.',
     slogan: SITE.tagline,
     email: SITE.email,
     telephone: SITE.phone,
