@@ -19,7 +19,18 @@ import { useEffect } from 'react';
  * under real traffic and starts failing silently (visitors just see the
  * India default with no error anywhere). One lookup per browser session is
  * enough; country essentially never changes mid-session.
+ *
+ * pandapath.site is the foreign-facing domain — pandapath.in stays the
+ * India-first canonical property. Visitors there get the 'default' (foreign)
+ * bucket immediately, before the geo-IP lookup even resolves, so the domain
+ * itself — not just the visitor's IP — has a genuinely different rendered
+ * default. This is also what Google's renderer sees when crawling
+ * pandapath.site, which is what keeps the two domains from reading as
+ * duplicate content. The geo-IP lookup still runs after and can refine this
+ * to a more specific bucket (e.g. GB) once it resolves.
  */
+const FOREIGN_DOMAIN = /(^|\.)pandapath\.site$/;
+
 const EU_COUNTRIES = new Set([
     'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE',
     'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE',
@@ -72,6 +83,10 @@ export default function GeoPricing() {
         if (cached) {
             applySwap(cached as Bucket);
             return;
+        }
+
+        if (FOREIGN_DOMAIN.test(window.location.hostname)) {
+            applySwap('default');
         }
 
         fetch('https://ipapi.co/json/')
